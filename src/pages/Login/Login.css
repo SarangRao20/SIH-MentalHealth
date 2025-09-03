@@ -1,6 +1,6 @@
 .auth-container {
   display: flex;
-  justify-content: right;     /* center horizontally */
+  justify-content: center;     /* center horizontally */
   align-items: center;         /* center vertically */
   min-height: 100vh;           /* full viewport height */
   width: 100%;                 /* full width */
