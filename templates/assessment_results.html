@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Assessment Results - MindCare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow">
+                <div class="card-header 
+                    {% if assessment.severity_level in ['Minimal', 'Good'] %}bg-success
+                    {% elif assessment.severity_level in ['Mild', 'Fair'] %}bg-warning
+                    {% else %}bg-danger{% endif %} text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="fas fa-chart-line"></i>
+                            {{ assessment.assessment_type }} Results
+                        </h4>
+                        <span class="badge bg-light text-dark fs-6">
+                            Completed: {{ assessment.completed_at.strftime('%m/%d/%Y at %I:%M %p') }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Score Summary -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="text-center p-4 border rounded">
+                                <h2 class="display-4 fw-bold 
+                                    {% if assessment.severity_level in ['Minimal', 'Good'] %}text-success
+                                    {% elif assessment.severity_level in ['Mild', 'Fair'] %}text-warning
+                                    {% else %}text-danger{% endif %}">
+                                    {{ assessment.score }}
+                                </h2>
+                                <p class="text-muted mb-0">Total Score</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <h5 class="text-primary">Score Interpretation</h5>
+                            <div class="alert 
+                                {% if assessment.severity_level in ['Minimal', 'Good'] %}alert-success
+                                {% elif assessment.severity_level in ['Mild', 'Fair'] %}alert-warning
+                                {% else %}alert-danger{% endif %}">
+                                <h6 class="alert-heading">{{ assessment.severity_level }} Level</h6>
+                                <p class="mb-0">{{ analysis.interpretation }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed Analysis -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="card-title mb-0">
+                                        <i class="fas fa-lightbulb text-warning"></i>
+                                        Recommendations
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        {% for recommendation in analysis.recommendations %}
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            {{ recommendation }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="card-title mb-0">
+                                        <i class="fas fa-tools text-info"></i>
+                                        Coping Strategies
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        {% for strategy in analysis.coping_strategies %}
+                                        <li class="mb-2">
+                                            <i class="fas fa-leaf text-success"></i>
+                                            {{ strategy }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Professional Help Recommendation -->
+                    {% if analysis.professional_help_recommended %}
+                    <div class="alert alert-info mt-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="alert-heading">
+                                    <i class="fas fa-user-md"></i>
+                                    Professional Support Recommended
+                                </h6>
+                                <p class="mb-0">
+                                    Based on your results, it would be beneficial to speak with a mental health professional.
+                                    {% if analysis.urgency_level == 'high' %}
+                                    <strong>Please consider seeking help soon.</strong>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <a href="{{ url_for('consultation') }}" class="btn btn-primary">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Request Consultation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Crisis Support (if urgency is high) -->
+                    {% if analysis.urgency_level == 'high' %}
+                    <div class="alert alert-danger">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="alert-heading">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Immediate Support Available
+                                </h6>
+                                <p class="mb-0">
+                                    If you're having thoughts of self-harm or suicide, please reach out for help immediately.
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <a href="tel:988" class="btn btn-danger me-2">
+                                    <i class="fas fa-phone"></i> Call 988
+                                </a>
+                                <a href="{{ url_for('chatbot') }}" class="btn btn-outline-danger">
+                                    <i class="fas fa-comments"></i> Chat Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Next Steps -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0">
+                                <i class="fas fa-arrow-right text-primary"></i>
+                                Next Steps
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6 col-lg-3">
+                                    <a href="{{ url_for('chatbot') }}" class="btn btn-outline-primary w-100">
+                                        <i class="fas fa-comments d-block mb-2"></i>
+                                        Chat Support
+                                    </a>
+                                </div>
+                                
+                                <div class="col-md-6 col-lg-3">
+                                    <a href="{{ url_for('meditation') }}" class="btn btn-outline-success w-100">
+                                        <i class="fas fa-leaf d-block mb-2"></i>
+                                        Meditation
+                                    </a>
+                                </div>
+                                
+                                <div class="col-md-6 col-lg-3">
+                                    <a href="{{ url_for('venting_hall') }}" class="btn btn-outline-info w-100">
+                                        <i class="fas fa-users d-block mb-2"></i>
+                                        Venting Hall
+                                    </a>
+                                </div>
+                                
+                                <div class="col-md-6 col-lg-3">
+                                    <a href="{{ url_for('assessments') }}" class="btn btn-outline-secondary w-100">
+                                        <i class="fas fa-clipboard-list d-block mb-2"></i>
+                                        More Assessments
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer text-center">
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                        <button class="btn btn-outline-primary" onclick="window.print()">
+                            <i class="fas fa-print"></i> Print Results
+                        </button>
+                        <button class="btn btn-outline-success" onclick="shareResults()">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    
+                    <p class="text-muted mt-3 mb-0">
+                        <small>
+                            <i class="fas fa-shield-alt"></i>
+                            Your assessment results are confidential and encrypted for your privacy.
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-share text-primary"></i>
+                    Share Results
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>You can share these results with:</p>
+                <div class="list-group">
+                    <a href="mailto:?subject=Mental Health Assessment Results&body=I recently completed a {{ assessment.assessment_type }} assessment. Please find my results summary attached." 
+                       class="list-group-item list-group-item-action">
+                        <i class="fas fa-envelope text-primary"></i>
+                        Email to Healthcare Provider
+                    </a>
+                    <a href="{{ url_for('consultation') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-user-md text-success"></i>
+                        Share with MindCare Consultation
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function shareResults() {
+    let modal = new bootstrap.Modal(document.getElementById('shareModal'));
+    modal.show();
+}
+
+// Add print styles
+if (window.matchMedia) {
+    const mediaQueryList = window.matchMedia('print');
+    mediaQueryList.addListener(function(mql) {
+        if (mql.matches) {
+            document.querySelector('.card-footer').style.display = 'none';
+        } else {
+            document.querySelector('.card-footer').style.display = 'block';
+        }
+    });
+}
+</script>
+{% endblock %}

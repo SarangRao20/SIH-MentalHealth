@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}{{ assessment_type }} Assessment - MindCare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header 
+                    {% if assessment_type == 'PHQ-9' %}bg-primary
+                    {% elif assessment_type == 'GAD-7' %}bg-success
+                    {% elif assessment_type == 'GHQ' %}bg-info
+                    {% endif %} text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            {% if assessment_type == 'PHQ-9' %}
+                                <i class="fas fa-brain"></i> PHQ-9 Depression Screening
+                            {% elif assessment_type == 'GAD-7' %}
+                                <i class="fas fa-heart-rate"></i> GAD-7 Anxiety Screening
+                            {% elif assessment_type == 'GHQ' %}
+                                <i class="fas fa-user-check"></i> GHQ General Health
+                            {% endif %}
+                        </h4>
+                        <a href="{{ url_for('assessments') }}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Instructions -->
+                    <div class="alert alert-info">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-info-circle"></i> Instructions
+                        </h6>
+                        <p class="mb-0">
+                            {% if assessment_type == 'PHQ-9' %}
+                                Over the last 2 weeks, how often have you been bothered by any of the following problems?
+                            {% elif assessment_type == 'GAD-7' %}
+                                Over the last 2 weeks, how often have you been bothered by the following problems?
+                            {% elif assessment_type == 'GHQ' %}
+                                Please read this carefully: We want to know how your health has been in general over the past few weeks.
+                            {% endif %}
+                        </p>
+                    </div>
+                    
+                    <!-- Assessment Form -->
+                    <form method="POST" action="{{ url_for('submit_assessment') }}" id="assessment-form">
+                        <input type="hidden" name="assessment_type" value="{{ assessment_type }}">
+                        
+                        <div class="progress mb-4">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" 
+                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progress-bar">
+                                0%
+                            </div>
+                        </div>
+                        
+                        {% for i, question in questions|enumerate %}
+                        <div class="question-group mb-4 p-3 border rounded" data-question="{{ i }}">
+                            <h6 class="question-number text-primary">
+                                Question {{ i + 1 }} of {{ questions|length }}
+                            </h6>
+                            
+                            <p class="question-text fw-bold mb-3">{{ question }}</p>
+                            
+                            <div class="row">
+                                {% for value, label in options %}
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" 
+                                               name="q{{ i }}" id="q{{ i }}_{{ value }}" 
+                                               value="{{ value }}" required
+                                               onchange="updateProgress()">
+                                        <label class="form-check-label" for="q{{ i }}_{{ value }}">
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submit-btn" disabled>
+                                <i class="fas fa-check"></i> Submit Assessment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card-footer text-muted text-center">
+                    <small>
+                        <i class="fas fa-shield-alt"></i>
+                        Your responses are confidential and will be used to provide personalized recommendations.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-check-circle text-success"></i>
+                    Confirm Submission
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to submit your assessment?</p>
+                <p class="text-muted small">
+                    You won't be able to change your answers after submission, 
+                    but you can take the assessment again later.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitForm()">
+                    <i class="fas fa-check"></i> Yes, Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let totalQuestions = {{ questions|length }};
+let answeredQuestions = 0;
+
+function updateProgress() {
+    answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+    let percentage = (answeredQuestions / totalQuestions) * 100;
+    
+    document.getElementById('progress-bar').style.width = percentage + '%';
+    document.getElementById('progress-bar').textContent = Math.round(percentage) + '%';
+    document.getElementById('progress-bar').setAttribute('aria-valuenow', percentage);
+    
+    // Enable submit button when all questions are answered
+    document.getElementById('submit-btn').disabled = answeredQuestions < totalQuestions;
+    
+    if (percentage === 100) {
+        document.getElementById('progress-bar').classList.add('bg-success');
+    }
+}
+
+// Form submission with confirmation
+document.getElementById('assessment-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Show confirmation modal
+    let modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    modal.show();
+});
+
+function submitForm() {
+    document.getElementById('assessment-form').submit();
+}
+
+// Auto-scroll to next question when answered
+document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        let currentQuestion = parseInt(this.name.substring(1));
+        let nextQuestion = currentQuestion + 1;
+        
+        setTimeout(function() {
+            let nextQuestionElement = document.querySelector(`[data-question="${nextQuestion}"]`);
+            if (nextQuestionElement) {
+                nextQuestionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 300);
+    });
+});
+</script>
+{% endblock %}
