@@ -26,10 +26,15 @@
 }
 
 .professional-card {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
+    background: linear-gradient(135deg, #283e51 0%, #485563 100%); /* dark blue-gray tone */
+    color: #fff;
     border: none;
     border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.professional-card .card-title i {
+    color: #a3c4f3; /* soft blue for icons */
 }
 
 .status-pending { color: #ffc107; }
@@ -37,11 +42,18 @@
 .status-completed { color: #28a745; }
 
 .crisis-banner {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-    color: white;
+    background: linear-gradient(135deg, #b00000 0%, #920101 100%);
+    color: #fff;
     border: none;
-    border-radius: 15px;
-    animation: pulse 2s infinite;
+    border-radius: 10px;
+    animation: sosPulse 1.5s infinite;
+    border: 3px solid #fc0707;
+}
+
+@keyframes sosPulse {
+    0% { box-shadow: 0 0 10px rgba(255,0,0,0.6); }
+    50% { box-shadow: 0 0 25px rgba(255,0,0,1); }
+    100% { box-shadow: 0 0 10px rgba(255,0,0,0.6); }
 }
 
 @keyframes pulse {
@@ -242,13 +254,13 @@
     </div>
 
     <!-- Information Section -->
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <div class="card professional-card">
-                <div class="card-body">
-                    <h5 class="card-title">
+    <div class="row mt-5 align-items-stretch" >
+        <div class="col-md-6 d-flex">
+            <div class="card professional-card h-100 w-100 d-flex flex-column">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h3 class="card-title">
                         <i class="fas fa-shield-alt"></i> What to Expect
-                    </h5>
+                    </h3>
                     <ul class="list-unstyled">
                         <li class="mb-2">
                             <i class="fas fa-clock"></i>
@@ -271,8 +283,8 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card">
+        <div class="col-md-6 d-flex">
+            <div class="card h-100 w-100">
                 <div class="card-header">
                     <h6 class="card-title mb-0">
                         <i class="fas fa-question-circle text-info"></i> Frequently Asked Questions
