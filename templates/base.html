@@ -150,18 +150,12 @@
         const sidebar = document.getElementById("sidebar");
         const content = document.getElementById("content");
         const toggleBtn = document.getElementById("sidebarCollapse");
-        const logo = document.querySelector(".logo-section");
+        
 
         toggleBtn.addEventListener("click", function () {
             sidebar.classList.toggle("collapsed");
             content.classList.toggle("expanded");
 
-            // Toggle logo visibility
-            if (sidebar.classList.contains("collapsed")) {
-                logo.style.display = "none";
-            } else {
-                logo.style.display = "flex";
-            }
         });
     </script>
 

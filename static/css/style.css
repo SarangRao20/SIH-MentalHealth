@@ -753,3 +753,61 @@ footer {
     margin-left: 70px;
 }
 
+/* Hide username (label) in footer when sidebar collapsed */
+.sidebar.collapsed .sidebar-footer .user-info .label {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-footer .user-info {
+    justify-content: center; /* center just the icon */
+}
+
+/* Sidebar footer user info layout */
+.sidebar-footer .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+/* Hide username when collapsed */
+.sidebar.collapsed .sidebar-footer .user-info .label {
+    display: none;
+}
+
+/* Collapsed layout → stack icon + badge vertically */
+.sidebar.collapsed .sidebar-footer .user-info {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+/* Make badge a little smaller under the icon */
+.sidebar.collapsed .sidebar-footer .user-info .badge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+}
+
+/* Expanded (default) */
+.sidebar-header .logo-section {
+    display: flex !important;   /* show logo */
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-header .btn-toggle-sidebar {
+    display: inline-flex !important;   /* hide hamburger */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Collapsed */
+.sidebar.collapsed .logo-section {
+    display: none !important;   /* hide logo */
+}
+
+.sidebar.collapsed .btn-toggle-sidebar {
+    display: inline-flex !important; /* show hamburger */
+    align-items: center;
+    justify-content: center;
+}
