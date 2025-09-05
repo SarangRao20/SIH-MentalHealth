@@ -79,11 +79,13 @@ whisper_model = load_whisper_model()
 def get_conversation_chain():
     llm = ChatOllama(model="llama3.1:latest")
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a warm, empathetic, and friendly companion."
+        ("system", "You are a warm, empathetic,gentle coach and friendly companion."
         "give the answer point wise."
-        "the user can use hindi or english language give the result in the same language as the user"
-        "highlight the main keywords in the response"
-        "keep the response more humanly "),
+        "use the same language as used by the user (hindi or english or hinglish)follow this rule strictly"
+        "keep the response more humanly "
+        "give the responses keeping in mind the user is based in India"
+        "suggest some small step to overcome the situation if it is very bad"
+        ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
     ])
