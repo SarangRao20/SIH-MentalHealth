@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MindCare - Mental Health Support{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar d-flex flex-column">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header d-flex align-items-center justify-content-between px-3 py-2">
+            <a class="navbar-brand text-white d-flex align-items-center logo-section" href="{{ url_for('index') }}">
+                <i class="fas fa-heart me-2"></i>
+                <span class="label">MindCare</span>
+            </a>
+            <button class="btn btn-sm btn-toggle-sidebar" id="sidebarCollapse">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Menu -->
+        <ul class="list-unstyled sidebar-menu flex-grow-1 mt-3">
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fas fa-tachometer-alt icon"></i>
+                        <span class="label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('chatbot') }}">
+                        <i class="fas fa-comments icon"></i>
+                        <span class="label">Chat Support</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('assessments') }}">
+                        <i class="fas fa-clipboard-list icon"></i>
+                        <span class="label">Assessments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('meditation') }}">
+                        <i class="fas fa-leaf icon"></i>
+                        <span class="label">Meditation</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('venting_room') }}" class="sidebar-nav-item">
+                        <i class="fas fa-fire"></i> <span class="sidebar-text">Private Venting Room</span>
+                    </a>
+                    <a href="{{ url_for('venting_hall') }}" class="sidebar-nav-item">
+                        <i class="fas fa-users"></i> <span class="sidebar-text">Community Support</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('consultation') }}">
+                        <i class="fas fa-user-md icon"></i>
+                        <span class="label">Consultation</span>
+                    </a>
+                </li>
+                {% if current_user.role in ['teacher', 'admin'] %}
+                <li>
+                    <a href="{{ url_for('mentor_dashboard') }}">
+                        <i class="fas fa-chart-bar icon"></i>
+                        <span class="label">Mentor Dashboard</span>
+                    </a>
+                </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+
+        <!-- Footer -->
+        <div class="sidebar-footer mt-auto">
+            {% if current_user.is_authenticated %}
+                <div class="user-info px-3 py-2">
+                    <i class="fas fa-user icon"></i>
+                    <span class="label">{{ current_user.username }}</span>
+                    {% if current_user.login_streak > 0 %}
+                        <span class="badge bg-success">{{ current_user.login_streak }} days</span>
+                    {% endif %}
+                </div>
+                <a class="btn btn-sm btn-danger w-100 mt-2" href="{{ url_for('logout') }}">
+                    <i class="fas fa-sign-out-alt icon"></i>
+                    <span class="label">Logout</span>
+                </a>
+            {% else %}
+                <a class="btn btn-sm btn-primary w-100 mb-2" href="{{ url_for('login') }}">
+                    <i class="fas fa-sign-in-alt icon"></i>
+                    <span class="label">Login</span>
+                </a>
+                <a class="btn btn-sm btn-success w-100" href="{{ url_for('register') }}">
+                    <i class="fas fa-user-plus icon"></i>
+                    <span class="label">Register</span>
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content" class="content">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Main Content Block -->
+        <main class="container-fluid py-4">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-4 mt-5">
+            <p class="text-muted mb-2">
+                <i class="fas fa-heart text-danger"></i>
+                MindCare - Your Mental Health Companion
+            </p>
+            <p class="small text-muted">
+                <strong>Crisis Hotlines:</strong>
+                National Suicide Prevention Lifeline: 988 |
+                Crisis Text Line: Text HOME to 741741
+            </p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Sidebar Toggle JS -->
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+        const toggleBtn = document.getElementById("sidebarCollapse");
+        
+
+        toggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("collapsed");
+            content.classList.toggle("expanded");
+
+        });
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

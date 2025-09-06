@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - MindCare{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center py-4">
+                <h1 class="h2 text-primary">
+                    <i class="fas fa-tachometer-alt"></i> Welcome, {{ current_user.full_name }}
+                </h1>
+                <div class="streak-badge">
+                    <span class="badge bg-primary fs-6">
+                        <i class="fas fa-fire"></i> {{ current_user.login_streak }} Day Streak
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Stats -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Login Streak</h6>
+                            <h2 class="mb-0">{{ current_user.login_streak }}</h2>
+                            <small>Days in a row</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-fire fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Meditation This Week</h6>
+                            <h2 class="mb-0">{{ meditation_streak }}</h2>
+                            <small>Sessions completed</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-leaf fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Assessments Taken</h6>
+                            <h2 class="mb-0">{{ recent_assessments|length }}</h2>
+                            <small>Recent evaluations</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-clipboard-list fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+            <div class="card {% if crisis_sessions > 0 %}bg-warning{% else %}bg-secondary{% endif %} text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Support Sessions</h6>
+                            <h2 class="mb-0">{{ crisis_sessions }}</h2>
+                            <small>Crisis interventions</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Dashboard Content -->
+    <div class="row g-4">
+        <!-- Quick Actions -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-rocket text-primary"></i> Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="{{ url_for('chatbot') }}" class="btn btn-outline-primary w-100 py-3">
+                                <i class="fas fa-comments fa-2x mb-2 d-block"></i>
+                                <h6>Chat Support</h6>
+                                <small>“Because sometimes, you just need to talk.”</small>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <a href="{{ url_for('meditation') }}" class="btn btn-outline-success w-100 py-3">
+                                <i class="fas fa-leaf fa-2x mb-2 d-block"></i>
+                                <h6>Meditation & Music </h6>
+                                <small>“Relax. Restore. Reconnect – start your journey now.”</small>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <a href="{{ url_for('assessments') }}" class="btn btn-outline-info w-100 py-3">
+                                <i class="fas fa-clipboard-list fa-2x mb-2 d-block"></i>
+                                <h6>Take Assessment</h6>
+                                <small>"Understand your well-being.”</small>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <a href="{{ url_for('venting_hall') }}" class="btn btn-outline-warning w-100 py-3">
+                                <i class="fas fa-users fa-2x mb-2 d-block"></i>
+                                <h6>Venting Hall</h6>
+                                <small>“Let it out — your safe space to share.”</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-history text-info"></i> Recent Assessments
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_assessments %}
+                        {% for assessment in recent_assessments %}
+                        <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light rounded">
+                            <div>
+                                <h6 class="mb-1">{{ assessment.assessment_type }}</h6>
+                                <small class="text-muted">{{ assessment.completed_at.strftime('%m/%d/%Y') }}</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge 
+                                    {% if assessment.severity_level in ['Minimal', 'Good'] %}bg-success
+                                    {% elif assessment.severity_level in ['Mild', 'Fair'] %}bg-warning
+                                    {% else %}bg-danger{% endif %}">
+                                    {{ assessment.severity_level }}
+                                </span>
+                                <div class="small text-muted">{{ assessment.score }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-clipboard text-muted fa-3x mb-3"></i>
+                            <p class="text-muted">No assessments taken yet, Start now — every step counts toward your well-being.</p>
+                            <a href="{{ url_for('assessments') }}" class="btn btn-primary btn-sm">Take First Assessment, We are here for you!</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Motivation -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white">
+                <div class="card-body text-center py-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-sun"></i> Daily Inspiration
+                    </h4>
+                    <p class="lead mb-3">
+                        "Every day is a new opportunity to prioritize your mental health. You're stronger than you think, and every step counts."
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('consultation') }}" class="btn btn-light">
+                            <i class="fas fa-user-md"></i> Get Professional Help
+                        </a>
+                        {% if crisis_sessions > 0 %}
+                        <a href="tel:988" class="btn btn-danger">
+                            <i class="fas fa-phone"></i> Crisis Support: 988
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

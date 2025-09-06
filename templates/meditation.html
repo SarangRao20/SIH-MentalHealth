@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+{% block title %}Meditation & Music - MindCare{% endblock %}
+
+{% block extra_head %}
+<style>
+.meditation-card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.meditation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.audio-player {
+    background: linear-gradient(135deg, #6a82edff 20%, #69468bff 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+.progress-ring { transform: rotate(-90deg); }
+.progress-ring-circle {
+    transition: stroke-dashoffset 0.35s;
+    transform-origin: 50% 50%;
+}
+.session-timer {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.breathing-guide { animation: breathe 4s ease-in-out infinite; }
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+.streak-indicator {
+    background: linear-gradient(45deg, #bc5c5cff, #ffa726);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    color: white;
+    font-weight: bold;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center py-4">
+                <h1 class="h2 text-primary">
+                    <i class="fas fa-leaf"></i> Meditation & Music
+                </h1>
+                <div class="streak-indicator">
+                    <i class="fas fa-fire"></i> {{ weekly_sessions }} sessions this week
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Session -->
+    <div id="active-session" class="audio-player d-none">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center">
+                <svg class="progress-ring" width="120" height="120">
+                    <circle stroke="rgba(255,255,255,0.3)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                    <circle stroke="white" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" id="progress-circle"
+                            style="stroke-dasharray: 326.7; stroke-dashoffset: 326.7"/>
+                </svg>
+                <div class="breathing-guide position-absolute" style="top:50%;left:50%;transform:translate(-50%,-50%);">
+                    <i class="fas fa-circle fa-2x text-white opacity-75"></i>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h3 id="session-title">Meditation Session</h3>
+                <div class="session-timer" id="session-timer">00:00</div>
+                <div class="d-flex gap-3 mt-3">
+                    <button class="btn btn-light" id="pause-btn">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button class="btn btn-outline-light" id="stop-btn">
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today's Progress -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-calendar-day text-success"></i> Today's Progress</h5>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="today-progress">
+                                {% if today_sessions %}
+                                    <p class="text-success mb-2">
+                                        <i class="fas fa-check-circle"></i>
+                                        Great job! You've completed {{ today_sessions|length }} session(s) today.
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-2" id="session-badges">
+                                        {% for session in today_sessions %}
+                                        <span class="badge bg-success">
+                                            {{ session.session_type|title }} - {{ session.duration }}min
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p class="text-muted">
+                                        <i class="fas fa-circle text-warning"></i>
+                                        No sessions completed today. Start your wellness journey now!
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="h4 text-primary" id="weekly-count">{{ weekly_sessions }}/7</div>
+                            <small class="text-muted">Weekly Goal</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meditation Sessions -->
+    <div class="row g-4 mb-5">
+        <div class="col-12">
+            <h3 class="text-primary mb-4"><i class="fas fa-brain"></i> Guided Meditation</h3>
+        </div>
+        {% for session in content.meditation %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card meditation-card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-leaf fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">{{ session.title }}</h5>
+                    <p class="card-text text-muted">{{ session.description }}</p>
+                    <span class="badge bg-primary mb-3">{{ session.duration }} minutes</span>
+                    <button class="btn btn-success w-100 start-session"
+                            data-type="meditation"
+                            data-title="{{ session.title }}"
+                            data-duration="{{ session.duration }}"
+                            data-audio="{{ session.audio_url }}">
+                        <i class="fas fa-play"></i> Start Session
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Relaxing Music -->
+    <div class="row g-4">
+        <div class="col-12">
+            <h3 class="text-info mb-4"><i class="fas fa-music"></i> Relaxing Music</h3>
+        </div>
+        {% for music in content.music %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card meditation-card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-music fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">{{ music.title }}</h5>
+                    <p class="card-text text-muted">{{ music.description }}</p>
+                    <span class="badge bg-info mb-3">{{ music.duration }} minutes</span>
+                    <button class="btn btn-info w-100 start-session"
+                            data-type="music"
+                            data-title="{{ music.title }}"
+                            data-duration="{{ music.duration }}"
+                            data-audio="{{ music.audio_url }}">
+                        <i class="fas fa-play"></i> Start Playing
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Session Complete Modal -->
+<div class="modal fade" id="sessionCompleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title"><i class="fas fa-check-circle"></i> Session Complete!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
+                <h4>Congratulations!</h4>
+                <p>You've completed your session. Keep up the great work!</p>
+                <div id="session-summary"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let sessionTimer;
+let sessionDuration = 0; // in seconds
+let currentTime = 0;
+let isPaused = false;
+let currentAudio = null;
+let currentType = "";
+
+// Start session
+function startSession(type, title, durationMinutes, audioUrl) {
+    currentType = type;
+    sessionDuration = durationMinutes * 60; // convert to seconds
+    currentTime = 0;
+    isPaused = false;
+
+    document.getElementById("active-session").classList.remove("d-none");
+    document.getElementById("session-title").textContent = title;
+    document.getElementById("pause-btn").innerHTML = '<i class="fas fa-pause"></i> Pause';
+
+    // Audio
+    if (audioUrl && audioUrl.trim() !== "") {
+        currentAudio = new Audio(audioUrl);
+        currentAudio.loop = true;
+        currentAudio.play().catch(() => console.log("Autoplay blocked"));
+    }
+
+    // Timer
+    clearInterval(sessionTimer);
+    sessionTimer = setInterval(updateTimer, 1000);
+}
+
+// Update timer every second
+function updateTimer() {
+    if (!isPaused) {
+        currentTime++;
+        const minutes = Math.floor(currentTime / 60);
+        const seconds = currentTime % 60;
+        document.getElementById("session-timer").textContent =
+            `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+        // Update progress circle
+        const circle = document.getElementById("progress-circle");
+        const circumference = 2 * Math.PI * 52;
+        circle.style.strokeDashoffset = circumference - (currentTime / sessionDuration) * circumference;
+
+        // Complete session
+        if (currentTime >= sessionDuration) completeSession();
+    }
+}
+
+// Pause / Resume
+function pauseSession() {
+    isPaused = !isPaused;
+    const btn = document.getElementById("pause-btn");
+    btn.innerHTML = isPaused ? '<i class="fas fa-play"></i> Resume' : '<i class="fas fa-pause"></i> Pause';
+    if (currentAudio) isPaused ? currentAudio.pause() : currentAudio.play();
+}
+
+// Stop
+function stopSession() {
+    clearInterval(sessionTimer);
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    document.getElementById("active-session").classList.add("d-none");
+    if (currentTime >= 60) saveSession(); // Save only if >1 min
+}
+
+// Complete
+function completeSession() {
+    clearInterval(sessionTimer);
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    document.getElementById("active-session").classList.add("d-none");
+
+    document.getElementById("session-summary").innerHTML =
+        `<p>Duration: ${Math.floor(currentTime / 60)} minutes</p>`;
+    new bootstrap.Modal(document.getElementById("sessionCompleteModal")).show();
+
+    saveSession();
+}
+
+// Save session to server
+function saveSession() {
+    const duration = Math.floor(currentTime / 60);
+    if (duration > 0) {
+        fetch('{{ url_for("start_meditation") }}', {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `session_type=${encodeURIComponent(currentType)}&duration=${duration}`
+        })
+        .then(res => res.json())
+        .then(data => { if (data.success) updateTodayProgress(data); })
+        .catch(err => console.error("Save failed:", err));
+    }
+}
+
+// Update today's progress UI
+function updateTodayProgress(data) {
+    const badgesContainer = document.getElementById("session-badges");
+    const badge = document.createElement("span");
+    badge.className = "badge bg-success";
+    badge.textContent = `${data.session.type} - ${data.session.duration}min`;
+    badgesContainer.appendChild(badge);
+
+    document.getElementById("weekly-count").textContent = `${data.weekly_sessions}/7`;
+}
+
+// Event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".start-session").forEach(btn => {
+        btn.addEventListener("click", () => startSession(
+            btn.dataset.type,
+            btn.dataset.title,
+            parseInt(btn.dataset.duration),
+            btn.dataset.audio
+        ));
+    });
+
+    document.getElementById("pause-btn").addEventListener("click", pauseSession);
+    document.getElementById("stop-btn").addEventListener("click", stopSession);
+});
+
+</script>
+{% endblock %}
