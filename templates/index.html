@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venting Wall - Let It Out ✨</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <!-- Floating particles background -->
+    <div class="particles-container" id="particles"></div>
+    
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <i class="fas fa-heart"></i>
+                Venting Wall
+                <span class="sparkle">✨</span>
+            </h1>
+            <p class="tagline">Your safe space to let it all out 💫</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Note Creation Form -->
+            <section class="create-note-section">
+                <div class="create-note-card glass-card">
+                    <h2>How are you feeling? 💭</h2>
+                    <form id="noteForm" class="note-form">
+                        <div class="form-group">
+                            <label for="mood" class="mood-label">Select your mood:</label>
+                            <div class="mood-selector">
+                                <button type="button" class="mood-btn" data-mood="happy">
+                                    <i class="fas fa-smile"></i>
+                                    Happy
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="sad">
+                                    <i class="fas fa-sad-tear"></i>
+                                    Sad
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="angry">
+                                    <i class="fas fa-angry"></i>
+                                    Angry
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="calm">
+                                    <i class="fas fa-leaf"></i>
+                                    Calm
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="anxious">
+                                    <i class="fas fa-heart-pulse"></i>
+                                    Anxious
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="excited">
+                                    <i class="fas fa-star"></i>
+                                    Excited
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea 
+                                id="noteText" 
+                                placeholder="Pour your heart out... (up to 500 characters)"
+                                maxlength="500"
+                                required
+                            ></textarea>
+                            <div class="char-counter">
+                                <span id="charCount">0</span>/500
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Post to Wall
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Notes Wall -->
+            <section class="notes-wall-section">
+                <div class="wall-header">
+                    <h2>The Wall 🧱</h2>
+                    <p>Every note tells a story. You're not alone. ❤️</p>
+                </div>
+                
+                <div class="loading" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Loading notes...</p>
+                </div>
+                
+                <div class="notes-grid" id="notesGrid">
+                    <!-- Notes will be populated here -->
+                </div>
+                
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-sticky-note"></i>
+                    </div>
+                    <h3>No notes yet</h3>
+                    <p>Be the first to share your thoughts!</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Burn Animation Overlay -->
+    <div class="burn-overlay" id="burnOverlay">
+        <div class="fire-container">
+            <div class="fire"></div>
+            <div class="fire"></div>
+            <div class="fire"></div>
+            <div class="fire"></div>
+            <div class="fire"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Note Modal -->
+<div id="noteModal" class="note-modal">
+  <div id="noteModalContent" class="note-modal-content">
+    <span class="close-btn" onclick="closeNoteModal()">&times;</span>
+    <p id="modalNoteText"></p>
+    <p id="modalNoteTimestamp" class="modal-timestamp"></p>
+    <button class="burn-btn" onclick="burnModalNote()">Burn</button>
+    <button class="share-btn">Share</button>
+  </div>
+</div>
+
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
