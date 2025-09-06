@@ -1,7 +1,12 @@
-Flask
 Flask-Login
 Flask-SQLAlchemy
-python-dotenv
-google-genai
-pyttsx3
 Werkzeug
+python-dotenv
+pandas
+matplotlib
+pyttsx3
+openai-whisper
+langchain
+langchain-community
+langchain-core
+google-genai
