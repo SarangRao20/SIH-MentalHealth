@@ -1,14 +1,14 @@
 /* MindCare Mental Health Platform - Custom Styles */
 
 :root {
-    --primary-color: #667eea;
-    --secondary-color: #764ba2;
-    --success-color: #28a745;
-    --info-color: #17a2b8;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --light-color: #f8f9fa;
-    --dark-color: #343a40;
+        --primary-color: #67b3d4;   /* Soft sky blue – calm + fresh */
+  --secondary-color: #a07cdb; /* Gentle lavender – soothing touch */
+  --success-color: #08ca66;   /* Fresh mint green – healing & growth */
+  --info-color: #6bb3b8;      /* Aqua teal – clarity & balance */
+  --warning-color: #e6b980;   /* Soft peachy amber – warm, not alarming */
+  --danger-color: #d73e3e;    /* Muted rose – caring red, not harsh */
+  --light-color: #fafafa;     /* Clean light – airy background */
+  --dark-color: #37474f;      /* Soft deep grey – stable & grounded */
     
     /* Mental health friendly colors */
     --calm-blue: #a8dadc;
