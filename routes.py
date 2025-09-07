@@ -472,6 +472,54 @@ def consultation():
     user_requests = ConsultationRequest.query.filter_by(user_id=current_user.id).order_by(ConsultationRequest.created_at.desc()).all()
     return render_template('consultation.html', requests=user_requests)
 
+
+# Routine Scheduler
+@app.route('/routine', methods=['GET', 'POST'])
+@login_required
+def routine():
+    from models import RoutineTask
+    if request.method == 'POST':
+        # Status update form
+        update_id = request.form.get('update_id')
+        new_status = request.form.get('new_status')
+        if update_id and new_status:
+            task = RoutineTask.query.filter_by(id=update_id, user_id=current_user.id).first()
+            if task:
+                task.status = new_status
+                db.session.commit()
+                flash(f'Task status updated to {new_status.capitalize()}', 'success')
+            else:
+                flash('Task not found or permission denied.', 'error')
+        else:
+            # Add new task form
+            title = request.form.get('title', '').strip()
+            start_time = request.form.get('start_time', '').strip()
+            end_time = request.form.get('end_time', '').strip()
+            notes = request.form.get('notes', '').strip()
+            if not title or not start_time or not end_time:
+                flash('Title, start time, and end time are required.', 'error')
+            else:
+                try:
+                    task = RoutineTask(
+                        user_id=current_user.id,
+                        title=title,
+                        start_time=start_time,
+                        end_time=end_time,
+                        notes=notes,
+                        status='pending',
+                        created_date=datetime.utcnow().date()
+                    )
+                    db.session.add(task)
+                    db.session.commit()
+                    flash('Routine task added!', 'success')
+                except Exception as e:
+                    db.session.rollback()
+                    flash('Error adding routine task.', 'error')
+    # Get today's tasks for current user
+    today = datetime.utcnow().date()
+    tasks = RoutineTask.query.filter_by(user_id=current_user.id, created_date=today).order_by(RoutineTask.start_time.asc()).all()
+    return render_template('routine.html', tasks=tasks)
+
 @app.route('/request_consultation', methods=['POST'])
 @login_required
 def request_consultation():

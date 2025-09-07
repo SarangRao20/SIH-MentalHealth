@@ -75,6 +75,12 @@
                 <span class="label">Consultation</span>
             </a>
         </li>
+        <li>
+            <a href="{{ url_for('routine') }}">
+                <i class="fas fa-calendar-alt icon"></i>
+                <span class="label">Routine</span>
+            </a>
+        </li>
         {% if current_user.role in ['teacher', 'admin'] %}
         <li>
             <a href="{{ url_for('mentor_dashboard') }}">
