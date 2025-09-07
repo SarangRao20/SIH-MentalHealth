@@ -39,7 +39,7 @@ def load_user(user_id):
 
 with app.app_context():
     import models  # noqa: F401
-    db.create_all()
+    db.create_all()  # Ensure all tables are created, including routine_tasks
     logging.info("Database tables created")
 
 def nl2br(value):

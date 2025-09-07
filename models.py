@@ -1,5 +1,43 @@
 from datetime import datetime, timedelta
 from app import db
+from datetime import datetime, timedelta
+
+class RoutineTask(db.Model):
+    __tablename__ = 'routine_tasks'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    start_time = db.Column(db.String(5), nullable=False)  # HH:MM
+    end_time = db.Column(db.String(5), nullable=False)    # HH:MM
+    notes = db.Column(db.String(500))
+    status = db.Column(db.String(20), default='pending')  # pending, completed, skipped
+    created_date = db.Column(db.Date, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = db.relationship('User', backref='routine_tasks')
+
+    def duration_minutes(self):
+        try:
+            start_h, start_m = map(int, self.start_time.split(':'))
+            end_h, end_m = map(int, self.end_time.split(':'))
+            return (end_h * 60 + end_m) - (start_h * 60 + start_m)
+        except Exception:
+            return 0
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'notes': self.notes,
+            'status': self.status,
+            'created_date': self.created_date,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import hashlib
@@ -120,3 +158,21 @@ class ConsultationRequest(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     user = db.relationship('User', backref='consultation_requests')
+
+class RoutineTask(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    start_time = db.Column(db.String(5), nullable=False) # HH:MM
+    end_time = db.Column(db.String(5), nullable=False)   # HH:MM
+    notes = db.Column(db.Text)
+    status = db.Column(db.String(20), default='pending') # pending, completed, skipped
+    created_date = db.Column(db.Date, default=datetime.utcnow().date)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = db.relationship('User', backref='routine_tasks')
+
+    def __repr__(self):
+        return f"<RoutineTask {self.id}: {self.title} ({self.start_time}-{self.end_time})>"
+
