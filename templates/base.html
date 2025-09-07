@@ -32,55 +32,59 @@
 
         <!-- Menu -->
         <ul class="list-unstyled sidebar-menu flex-grow-1 mt-3">
-            {% if current_user.is_authenticated %}
-                <li>
-                    <a href="{{ url_for('dashboard') }}">
-                        <i class="fas fa-tachometer-alt icon"></i>
-                        <span class="label">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('chatbot') }}">
-                        <i class="fas fa-comments icon"></i>
-                        <span class="label">Chat Support</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('assessments') }}">
-                        <i class="fas fa-clipboard-list icon"></i>
-                        <span class="label">Assessments</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('meditation') }}">
-                        <i class="fas fa-leaf icon"></i>
-                        <span class="label">Meditation</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('venting_room') }}" class="sidebar-nav-item">
-                        <i class="fas fa-fire"></i> <span class="sidebar-text">Private Venting Room</span>
-                    </a>
-                    <a href="{{ url_for('venting_hall') }}" class="sidebar-nav-item">
-                        <i class="fas fa-users"></i> <span class="sidebar-text">Community Support</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('consultation') }}">
-                        <i class="fas fa-user-md icon"></i>
-                        <span class="label">Consultation</span>
-                    </a>
-                </li>
-                {% if current_user.role in ['teacher', 'admin'] %}
-                <li>
-                    <a href="{{ url_for('mentor_dashboard') }}">
-                        <i class="fas fa-chart-bar icon"></i>
-                        <span class="label">Mentor Dashboard</span>
-                    </a>
-                </li>
-                {% endif %}
-            {% endif %}
-        </ul>
+    {% if current_user.is_authenticated %}
+        <li>
+            <a href="{{ url_for('dashboard') }}">
+                <i class="fas fa-tachometer-alt icon"></i>
+                <span class="label">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('chatbot') }}">
+                <i class="fas fa-comments icon"></i>
+                <span class="label">Chat Support</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('assessments') }}">
+                <i class="fas fa-clipboard-list icon"></i>
+                <span class="label">Assessments</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('meditation') }}">
+                <i class="fas fa-leaf icon"></i>
+                <span class="label">Meditation</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('venting_room') }}">
+                <i class="fas fa-fire icon"></i>
+                <span class="label">Private Venting Room</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('venting_hall') }}">
+                <i class="fas fa-users icon"></i>
+                <span class="label">Community Support</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('consultation') }}">
+                <i class="fas fa-user-md icon"></i>
+                <span class="label">Consultation</span>
+            </a>
+        </li>
+        {% if current_user.role in ['teacher', 'admin'] %}
+        <li>
+            <a href="{{ url_for('mentor_dashboard') }}">
+                <i class="fas fa-chart-bar icon"></i>
+                <span class="label">Mentor Dashboard</span>
+            </a>
+        </li>
+        {% endif %}
+    {% endif %}
+</ul>
 
         <!-- Footer -->
         <div class="sidebar-footer mt-auto">

@@ -684,10 +684,25 @@ footer {
     display: none;
 }
 
+/* Make toggle-btn look/behave like nav icons */
 .sidebar.collapsed .toggle-btn {
-    display: block;
+    position: relative;   /* no absolute positioning */
+    left: 0;
+    top: 0;
     margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
 }
+
+.sidebar.collapsed .toggle-btn:hover {
+    background: rgba(255,255,255,0.15);
+}
+
 
 /* Sidebar Navigation */
 .sidebar ul {
