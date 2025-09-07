@@ -4,6 +4,25 @@
 
 {% block extra_head %}
 <style>
+
+    #notes-container {
+    position: relative;
+    width: 100%;
+    min-height: 70vh;
+
+    /* 🪵 Corkboard texture */
+    background: url('https://www.transparenttextures.com/patterns/cork-board.png');
+    background-size: cover;
+
+    border: 6px solid #8d6e63;  /* wooden frame feel */
+    border-radius: 12px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.3),
+                0 4px 20px rgba(0,0,0,0.4);
+    margin-top: 30px;
+    padding: 20px;
+}
+
+
 .venting-room {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
@@ -77,7 +96,7 @@
 }
 
 .sticky-note.burning {
-    animation: burn 3s ease-in-out forwards;
+    animation: burn 4s ease-in-out forwards;
     pointer-events: none;
 }
 
@@ -175,11 +194,11 @@
 
 .burn-zone {
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 100px;
+    width: 220px;
+    height: 120px;
     background: radial-gradient(ellipse, rgba(255,107,53,0.3) 0%, rgba(255,149,0,0.2) 50%, transparent 70%);
     border-radius: 50%;
     border: 3px dashed #ff6b35;
@@ -190,7 +209,9 @@
     color: #ff6b35;
     transition: all 0.3s ease;
     cursor: pointer;
+    z-index: 1500; /* stays on top */
 }
+
 
 .burn-zone:hover {
     background: radial-gradient(ellipse, rgba(255,107,53,0.5) 0%, rgba(255,149,0,0.3) 50%, transparent 70%);
@@ -354,52 +375,68 @@ function createNewNote() {
     const note = document.createElement('div');
     note.className = 'sticky-note';
     note.id = noteId;
-    
-    // Create textarea separately to ensure proper event handling
+
+    // 🎨 Random sticky note color
+    const noteColors = [
+        ['#ffeb3b', '#fff176'], // yellow
+        ['#ffcc80', '#ffe0b2'], // orange
+        ['#c5e1a5', '#e6ee9c'], // green
+        ['#90caf9', '#bbdefb'], // blue
+        ['#f48fb1', '#f8bbd0']  // pink
+    ];
+    const [c1, c2] = noteColors[Math.floor(Math.random() * noteColors.length)];
+    note.style.background = `linear-gradient(45deg, ${c1} 0%, ${c2} 100%)`;
+
+    // 📐 Slightly random size
+    const size = 220 + Math.floor(Math.random() * 60); // 220–280px
+    note.style.width = size + 'px';
+    note.style.height = size + 'px';
+
+    // 📝 Textarea
     const textarea = document.createElement('textarea');
     textarea.className = 'note-textarea';
-    textarea.placeholder = "Write what's bothering you...\n\nLet it all out, then let it go.";
+    textarea.placeholder = "Write what's bothering you...\n\nThen let it go.";
     textarea.maxLength = 500;
-    
-    // Create fire effect container
+
+    // 🔥 Fire effect container
     const fireEffect = document.createElement('div');
     fireEffect.className = 'fire-effect';
-    
-    // Append elements
+
     note.appendChild(textarea);
     note.appendChild(fireEffect);
-    
-    // Position note randomly
+
+    // 📌 Position notes in semi-grid with randomness
     const container = document.getElementById('notes-container');
-    note.style.position = 'relative';
-    note.style.left = Math.random() * 100 - 50 + 'px';
-    note.style.top = Math.random() * 50 + 'px';
-    note.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-    
+    const cols = 4; // number of columns
+    const rows = 3; // rough rows
+    const colWidth = container.offsetWidth / cols;
+    const rowHeight = container.offsetHeight / rows;
+
+    const col = noteCounter % cols;
+    const row = Math.floor(noteCounter / cols) % rows;
+
+    note.style.position = 'absolute';
+    note.style.left = col * colWidth + (Math.random() * 40 - 20) + 'px';
+    note.style.top = row * rowHeight + (Math.random() * 40 - 20) + 'px';
+
+    // 🎭 Random tilt & z-index
+    note.style.transform = `rotate(${Math.random() * 15 - 7}deg)`;
+    note.style.zIndex = Math.floor(Math.random() * 50);
+
     container.appendChild(note);
-    
-    // Add drag functionality (only on the note, not the textarea)
+
+    // 🖱️ Dragging
     addDragFunctionality(note);
-    
-    // Make textarea not draggable
-    textarea.addEventListener('mousedown', function(e) {
-        e.stopPropagation(); // Prevent drag when clicking on textarea
-    });
-    
-    // Focus on textarea
-    setTimeout(() => {
-        textarea.focus();
-    }, 100);
-    
+
+    textarea.addEventListener('mousedown', e => e.stopPropagation());
+    textarea.addEventListener('click', e => e.stopPropagation());
+
+    setTimeout(() => textarea.focus(), 100);
+
     // Auto-resize textarea
     textarea.addEventListener('input', function() {
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 200) + 'px';
-    });
-    
-    // Make textarea clickable without triggering drag
-    textarea.addEventListener('click', function(e) {
-        e.stopPropagation();
     });
 }
 
@@ -476,10 +513,16 @@ function addDragFunctionality(note) {
             burnNote(note);
         } else {
             // Return to container
-            note.style.position = 'relative';
-            note.style.left = '';
-            note.style.top = '';
+            // Drop back randomly on the wall
+            const container = document.getElementById('notes-container');
+            const maxLeft = container.offsetWidth - 280;
+            const maxTop = container.offsetHeight - 280;
+
+            note.style.position = 'absolute';
+            note.style.left = Math.max(0, Math.random() * maxLeft) + 'px';
+            note.style.top = Math.max(0, Math.random() * maxTop) + 'px';
             note.style.zIndex = '';
+
         }
         
         burnZone.classList.remove('active');
@@ -494,23 +537,24 @@ function addDragFunctionality(note) {
 function burnNote(note) {
     // Add fire effect
     createFireEffect(note);
-    
+
     // Start burning animation
     note.classList.add('burning');
-    
-    // Create ash particles
+
+    // Keep note visible until burn finishes
+    note.style.zIndex = 2000; // bring to front
+
+    // Create ash particles mid-way
     setTimeout(() => {
         createAshEffect(note);
     }, 1500);
-    
-    // Remove note and show completion message
+
+    // Remove note after animation fully plays
     setTimeout(() => {
         note.remove();
         showCompletionMessage();
-        
-        // Save the venting session (optional - for analytics)
         saveVentingSession();
-    }, 3000);
+    }, 4000); // ⬅ extended from 3000 → 4000
 }
 
 function createFireEffect(note) {
