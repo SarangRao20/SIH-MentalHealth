@@ -336,55 +336,66 @@ def submit_assessment():
 @app.route('/meditation')
 @login_required
 def meditation():
-    content = get_meditation_content()
-    
-    # Get user's meditation stats
-    today = datetime.utcnow().date()
-    today_sessions = MeditationSession.query.filter_by(
-        user_id=current_user.id,
-        date=today
-    ).all()
-    
-    weekly_sessions = MeditationSession.query.filter_by(user_id=current_user.id).filter(
-        MeditationSession.date >= today - timedelta(days=7)
-    ).count()
-    
-    return render_template('meditation.html',
-                         content=content,
-                         today_sessions=today_sessions,
-                         weekly_sessions=weekly_sessions)
+    meditation_content = get_meditation_content()
 
-@app.route('/start_meditation', methods=['POST'])
+    # Calculate meditation stats for the current user
+    today = datetime.utcnow().date()
+    start_of_week = today - timedelta(days=today.weekday()) # Monday as start of week
+
+    weekly_sessions_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
+        MeditationSession.date >= start_of_week
+    ).count()
+
+    total_minutes_meditated = db.session.query(func.sum(MeditationSession.duration)).filter_by(
+        user_id=current_user.id
+    ).scalar() or 0 # Use .scalar() to get single result, default to 0 if None
+
+    return render_template('meditation.html',
+                           meditation_content=meditation_content,
+                           weekly_sessions_count=weekly_sessions_count,
+                           total_minutes_meditated=total_minutes_meditated)
+
+@app.route('/meditation_completed', methods=['POST'])
 @login_required
-def start_meditation():
-    session_type = request.form.get('session_type')
-    duration = int(request.form.get('duration', 0))
-    
+def meditation_completed():
+    data = request.get_json()
+    duration = data.get('duration', 0) # Duration in seconds
+    session_type = data.get('session_type', 'meditation')
+
     if duration <= 0:
-        return jsonify({"success": False, "error": "Invalid duration"}), 400
-    
+        return jsonify({"success": False, "message": "Invalid duration"}), 400
+
     meditation_session = MeditationSession(
         user_id=current_user.id,
         session_type=session_type,
-        duration=duration
+        duration=duration,
+        date=datetime.utcnow().date() # Record the date of completion
     )
-    
+
     db.session.add(meditation_session)
     db.session.commit()
-    
-    # Recalculate weekly sessions
+
     today = datetime.utcnow().date()
+    start_of_week = today - timedelta(days=today.weekday())
+
+    # Weekly count (from start of week)
     weekly_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
-        MeditationSession.date >= today - timedelta(days=7)
+        MeditationSession.date >= start_of_week
     ).count()
-    
+
+    # Today's sessions (for progress)
+    today_sessions = MeditationSession.query.filter_by(user_id=current_user.id, date=today).all()
+    today_sessions_count = len(today_sessions)
+
     return jsonify({
         "success": True,
+        "message": "Meditation session recorded",
         "session": {
-            "type": session_type.title(),
+            "type": session_type,
             "duration": duration
         },
-        "weekly_sessions": weekly_count
+        "weekly_sessions": weekly_count,
+        "today_sessions_count": today_sessions_count
     })
 
 @app.route('/venting_room')
