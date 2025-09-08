@@ -144,8 +144,8 @@ def get_meditation_content():
     return {
         "meditation": [
             {
-                "title": "1-Minute Breathing Exercise",
-                "duration": 1,
+                "title": "1/2-Minute Breathing Exercise",
+                "duration": 0.5,
                 "description": "Simple breathing technique to reduce stress and anxiety",
                 "audio_url": "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav"
             },

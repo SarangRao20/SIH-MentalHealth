@@ -344,9 +344,12 @@ def meditation():
         MeditationSession.date >= start_of_week
     ).count()
 
-    total_minutes_meditated = db.session.query(func.sum(MeditationSession.duration)).filter_by(
+    total_seconds = db.session.query(func.sum(MeditationSession.duration)).filter_by(
         user_id=current_user.id
-    ).scalar() or 0 # Use .scalar() to get single result, default to 0 if None
+    ).scalar() or 0
+
+    total_minutes_meditated = total_seconds // 60   # or round(total_seconds / 60, 1)
+
 
     return render_template('meditation.html',
                            meditation_content=meditation_content,
