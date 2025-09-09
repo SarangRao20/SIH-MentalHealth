@@ -215,6 +215,9 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+<!-- Load voice.js first (defines window.voiceInterface) -->
 <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+<!-- Then load chatbot.js (uses voiceInterface if available) -->
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
 {% endblock %}
+
