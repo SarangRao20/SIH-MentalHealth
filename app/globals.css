@@ -1,0 +1,262 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color hierarchy: #809bce, #95b8d1 as primary; #b8e0d2, #d6eadf as secondary */
+  --background: #ffffff; /* Pure white for clean, spacious feel */
+  --foreground: #374151; /* Dark gray for high readability */
+  --card: #f8fafc; /* Light neutral for card backgrounds */
+  --card-foreground: #374151; /* Dark gray for card text */
+  --popover: #ffffff; /* White for popover backgrounds */
+  --popover-foreground: #374151; /* Dark gray for popover text */
+  --primary: #809bce; /* Primary: Soft periwinkle blue */
+  --primary-foreground: #ffffff; /* White text for primary buttons */
+  --secondary: #95b8d1; /* Primary: Light blue for secondary elements */
+  --secondary-foreground: #374151; /* Dark text for secondary elements */
+  --muted: #d6eadf; /* Secondary: Light sage for muted backgrounds */
+  --muted-foreground: #6b7280; /* Medium gray for muted text */
+  --accent: #b8e0d2; /* Secondary: Mint green for accent elements */
+  --accent-foreground: #374151; /* Dark text for accent elements */
+  --destructive: #eac4d5; /* Contrast: Soft pink for warnings */
+  --destructive-foreground: #374151; /* Dark text for destructive buttons */
+  --border: #e5e7eb; /* Light neutral border */
+  --input: #f9fafb; /* Light neutral background for input fields */
+  --ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring */
+  --chart-1: #809bce; /* Primary periwinkle for charts */
+  --chart-2: #95b8d1; /* Primary light blue for charts */
+  --chart-3: #b8e0d2; /* Secondary mint green for charts */
+  --chart-4: #d6eadf; /* Secondary light sage for charts */
+  --chart-5: #eac4d5; /* Contrast soft pink for charts */
+  --radius: 0.75rem; /* Rounded corners for softer feel */
+  --sidebar: #f8fafc; /* Light neutral for sidebar background */
+  --sidebar-foreground: #374151; /* Dark gray for sidebar text */
+  --sidebar-primary: #809bce; /* Primary periwinkle for sidebar */
+  --sidebar-primary-foreground: #ffffff; /* White text for primary sidebar elements */
+  --sidebar-accent: #b8e0d2; /* Secondary mint green for sidebar accents */
+  --sidebar-accent-foreground: #374151; /* Dark text for sidebar accents */
+  --sidebar-border: #e5e7eb; /* Light neutral border for sidebar */
+  --sidebar-ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring for sidebar */
+  --font-source-sans: "Source Sans Pro", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+.dark {
+  /* Updated dark mode with proper primary/secondary color hierarchy */
+  --background: #0f172a; /* Deep slate background */
+  --foreground: #f8fafc; /* Light text */
+  --card: #1e293b; /* Darker card background */
+  --card-foreground: #f8fafc; /* Light card text */
+  --popover: #1e293b; /* Dark popover background */
+  --popover-foreground: #f8fafc; /* Light popover text */
+  --primary: #95b8d1; /* Primary: Lighter blue for dark mode visibility */
+  --primary-foreground: #0f172a; /* Dark text on primary */
+  --secondary: #809bce; /* Primary: Periwinkle for secondary in dark mode */
+  --secondary-foreground: #ffffff; /* Light text on secondary */
+  --muted: #1e293b; /* Muted dark background */
+  --muted-foreground: #94a3b8; /* Muted light text */
+  --accent: #b8e0d2; /* Secondary: Mint green accent */
+  --accent-foreground: #0f172a; /* Dark text on accent */
+  --destructive: #eac4d5; /* Contrast: Soft pink for dark mode */
+  --destructive-foreground: #0f172a; /* Dark text on destructive */
+  --border: #334155; /* Dark border */
+  --input: #1e293b; /* Dark input background */
+  --ring: rgba(149, 184, 209, 0.5); /* Primary light blue focus ring */
+  --chart-1: #95b8d1; /* Primary light blue for charts */
+  --chart-2: #809bce; /* Primary periwinkle for charts */
+  --chart-3: #b8e0d2; /* Secondary mint green for charts */
+  --chart-4: #d6eadf; /* Secondary light sage for charts */
+  --chart-5: #eac4d5; /* Contrast soft pink for charts */
+  --radius: 0.75rem; /* Rounded corners for therapeutic feel */
+  --sidebar: #1e293b; /* Dark sidebar */
+  --sidebar-foreground: #f8fafc; /* Light sidebar text */
+  --sidebar-primary: #95b8d1; /* Primary light blue sidebar primary */
+  --sidebar-primary-foreground: #0f172a; /* Dark text on sidebar primary */
+  --sidebar-accent: #b8e0d2; /* Secondary mint green sidebar accent */
+  --sidebar-accent-foreground: #0f172a; /* Dark text on sidebar accent */
+  --sidebar-border: #334155; /* Dark sidebar border */
+  --sidebar-ring: rgba(149, 184, 209, 0.5); /* Primary light blue focus ring for sidebar */
+  --font-source-sans: "Source Sans Pro", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+@theme inline {
+  /* Updated font variables to use new typography */
+  --font-sans: var(--font-source-sans);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Enhanced smooth transitions for modern feel */
+  button,
+  a,
+  input,
+  textarea,
+  .card {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Modern custom scrollbar with green theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+}
+
+/* Enhanced breathing animation with smoother easing */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.breathe-animation {
+  animation: breathe 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Added modern floating animation for cards */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Enhanced gentle pulse with better timing */
+@keyframes gentle-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+.gentle-pulse {
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Added modern gradient shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Added plant growth animation for PerrenAll feature */
+@keyframes plant-grow {
+  0% {
+    transform: scale(0.8) translateY(10px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.05) translateY(-2px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.plant-grow {
+  animation: plant-grow 2s ease-out;
+}
+
+/* Added leaf sway animation for plant interactions */
+@keyframes leaf-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.leaf-sway {
+  animation: leaf-sway 3s ease-in-out infinite;
+}
