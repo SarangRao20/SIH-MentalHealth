@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ status: 'completed', duration: Math.floor(actualDuration / 60) })
+            body: JSON.stringify({ status: 'completed', duration: actualDuration })
+
         })
         .then(response => response.json())
         .then(data => {
@@ -166,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent bubbling if needed
             const card = button.closest('.duration-card-item');
-            const durationMinutes = parseInt(card.dataset.duration);
+            const durationMinutes = parseFloat(card.dataset.duration);
             const audioUrl = card.dataset.audio;
 
             initialTime = durationMinutes * 60;

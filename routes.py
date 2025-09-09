@@ -14,9 +14,7 @@ from sqlalchemy import func, and_
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return render_template('index.html')
+    return redirect(url_for('dashboard'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -79,7 +77,7 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out successfully', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/dashboard')
 @login_required
@@ -346,9 +344,12 @@ def meditation():
         MeditationSession.date >= start_of_week
     ).count()
 
-    total_minutes_meditated = db.session.query(func.sum(MeditationSession.duration)).filter_by(
+    total_seconds = db.session.query(func.sum(MeditationSession.duration)).filter_by(
         user_id=current_user.id
-    ).scalar() or 0 # Use .scalar() to get single result, default to 0 if None
+    ).scalar() or 0
+
+    total_minutes_meditated = total_seconds // 60   # or round(total_seconds / 60, 1)
+
 
     return render_template('meditation.html',
                            meditation_content=meditation_content,
@@ -467,6 +468,40 @@ def like_post():
         db.session.commit()
     
     return redirect(url_for('venting_hall'))
+
+@app.route('/delete_post/<int:post_id>', methods=['DELETE'])
+@login_required
+def delete_post(post_id):
+    post = VentingPost.query.get(post_id)
+    if not post:
+        return jsonify({'success': False, 'error': 'Post not found'}), 404
+
+    # Only allow the author or an admin
+    if post.user_id != current_user.id and not getattr(current_user, 'is_admin', False):
+        return jsonify({'success': False, 'error': 'Unauthorized'}), 403
+
+    # Delete associated responses too
+    VentingResponse.query.filter_by(post_id=post.id).delete()
+    db.session.delete(post)
+    db.session.commit()
+
+    return jsonify({'success': True}), 200
+
+
+@app.route('/delete_response/<int:response_id>', methods=['DELETE'])
+@login_required
+def delete_response(response_id):
+    response = VentingResponse.query.get(response_id)
+    if not response:
+        return jsonify({'success': False, 'error': 'Response not found'}), 404
+
+    if response.user_id != current_user.id and not getattr(current_user, 'is_admin', False):
+        return jsonify({'success': False, 'error': 'Unauthorized'}), 403
+
+    db.session.delete(response)
+    db.session.commit()
+    return jsonify({'success': True}), 200
+
 
 @app.route('/consultation')
 @login_required
