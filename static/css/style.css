@@ -38,9 +38,7 @@
   --sidebar-ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring for sidebar */
   --font-source-sans: "Source Sans Pro", sans-serif;
   --font-playfair: "Playfair Display", serif;
-  background-color: var(--danger-color) !important;
-  color: #fff !important;
-  border-color: var(--danger-color) !important;
+  /* Remove global red background and border */
 }
 
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active {

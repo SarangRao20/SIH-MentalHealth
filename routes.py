@@ -102,7 +102,7 @@ def dashboard():
         MeditationSession.date >= start_of_week
     ).count()
 
-    # Total minutes meditated
+    # Total seconds meditated
     total_seconds = db.session.query(func.sum(MeditationSession.duration)).filter_by(
         user_id=current_user.id
     ).scalar() or 0
@@ -376,41 +376,31 @@ def meditation():
 @login_required
 def meditation_completed():
     data = request.get_json()
-    duration_seconds = data.get('duration', 0) # Duration in seconds
-    duration = int(duration_seconds // 60) # Store duration in minutes
+    duration_seconds = int(data.get('duration', 0)) # Duration in seconds
     session_type = data.get('session_type', 'meditation')
-
-    if duration <= 0:
+    if duration_seconds <= 0:
         return jsonify({"success": False, "message": "Invalid duration"}), 400
-
     meditation_session = MeditationSession(
         user_id=current_user.id,
         session_type=session_type,
-        duration=duration,
+        duration=duration_seconds, # Store duration in seconds
         date=datetime.utcnow().date() # Record the date of completion
     )
-
     db.session.add(meditation_session)
     db.session.commit()
-
     today = datetime.utcnow().date()
     start_of_week = today - timedelta(days=today.weekday())
-
-    # Weekly count (from start of week)
     weekly_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
         MeditationSession.date >= start_of_week
     ).count()
-
-    # Today's sessions (for progress)
     today_sessions = MeditationSession.query.filter_by(user_id=current_user.id, date=today).all()
     today_sessions_count = len(today_sessions)
-
     return jsonify({
         "success": True,
         "message": "Meditation session recorded",
         "session": {
             "type": session_type,
-            "duration": duration
+            "duration": duration_seconds
         },
         "weekly_sessions": weekly_count,
         "today_sessions_count": today_sessions_count

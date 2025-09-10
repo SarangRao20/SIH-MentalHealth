@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
+        if (initialTime <= 0) {
+            alert('Please select a valid meditation duration before starting.');
+            return;
+        }
         if (timerInterval) {
             clearInterval(timerInterval); // Prevent multiple intervals
         }
@@ -141,21 +145,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update today's progress UI
     function updateMeditationStats(data) {
-        // Update weekly sessions count
-        const weeklySessionsElem = document.querySelector('.meditation-stats-container .text-success');
-        if (weeklySessionsElem) {
+        // Update stats in the DOM instantly
+        const weeklySessionsElem = document.querySelector('.meditation-stats-container .display-4.text-success');
+        const totalMinutesElem = document.querySelector('.meditation-stats-container .display-4.text-info');
+        if (weeklySessionsElem && typeof data.weekly_sessions !== 'undefined') {
             weeklySessionsElem.textContent = data.weekly_sessions;
         }
-        // Update total minutes meditated
-        const totalMinutesElem = document.querySelector('.meditation-stats-container .text-info');
-        if (totalMinutesElem) {
-            totalMinutesElem.textContent = data.total_minutes_meditated;
+        if (totalMinutesElem && typeof data.session === 'object' && typeof data.session.duration === 'number') {
+            // Add the latest session duration (converted to minutes) to the displayed total
+            let currentMinutes = parseInt(totalMinutesElem.textContent) || 0;
+            let addedMinutes = Math.floor(data.session.duration / 60);
+            totalMinutesElem.textContent = currentMinutes + addedMinutes;
         }
     }
 
     function sendCompletionSignal() {
         // Calculate actual duration meditated
-        const actualDuration = initialTime - timeLeft;
+        let actualDuration = initialTime - timeLeft;
+        if (actualDuration <= 0) {
+            // If timer wasn't paused or stopped, use initialTime
+            actualDuration = initialTime;
+        }
         fetch('/meditation_completed', {
             method: 'POST',
             headers: {
@@ -174,6 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(function() {
                     window.location.href = '/dashboard';
                 }, 5000); // Wait for overlay to hide
+            } else {
+                console.error('Meditation completion failed:', data);
             }
         })
         .catch(error => {
@@ -182,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showNotification(message) {
+        console.log('Showing notification:', message);
         const notificationCard = meditationNotification.querySelector('.meditation-completion-card p');
         if (notificationCard) {
             notificationCard.textContent = message;
