@@ -1,33 +1,50 @@
 /* MindCare Mental Health Platform - Custom Styles */
 
-/* MindCare Mental Health Platform - Custom Styles */
-
 :root {
-  /* Refined color palette to match the image more closely */
-  --primary-color: #3d5a80;      /* Keeps the primary blue consistent for the sidebar */
-  --secondary-color: #f6f8fb;    /* A very light, slightly blue-tinted grey for the background */
-  --success-color: #28a745;      /* A classic, bright green for success */
-  --info-color: #17a2b8;         /* A professional, vibrant blue-teal for info */
-  --warning-color: #ffc107;      /* A more classic, bright yellow for warning */
-  --danger-color: #dc3545;       /* A standard, bright red for danger */
-  --light-color: #ffffff;       /* Pure white for content areas */
-  --dark-color: #212529;        /* A darker grey for text for better contrast */
-  --text-muted: #6c757d;        /* Standard muted text color */
-
-
-/* Other CSS rules remain the same as the previous response. */       /* Standard muted text color */
-
-  /* Gradients are removed for a flat, professional look */
-  --primary-gradient: none;
-  --calm-gradient: none;
+  /* Updated color hierarchy: #809bce, #95b8d1 as primary; #b8e0d2, #d6eadf as secondary */
+  --background: #ffffff; /* Pure white for clean, spacious feel */
+  --foreground: #374151; /* Dark gray for high readability */
+  --card: #f8fafc; /* Light neutral for card backgrounds */
+  --card-foreground: #374151; /* Dark gray for card text */
+  --popover: #ffffff; /* White for popover backgrounds */
+  --popover-foreground: #374151; /* Dark gray for popover text */
+  --primary: #809bce; /* Primary: Soft periwinkle blue */
+  --primary-foreground: #ffffff; /* White text for primary buttons */
+  --secondary: #95b8d1; /* Primary: Light blue for secondary elements */
+  --secondary-foreground: #374151; /* Dark text for secondary elements */
+  --muted: #d6eadf; /* Secondary: Light sage for muted backgrounds */
+  --muted-foreground: #6b7280; /* Medium gray for muted text */
+  --accent: #b8e0d2; /* Secondary: Mint green for accent elements */
+  --accent-foreground: #374151; /* Dark text for accent elements */
+  --destructive: #eac4d5; /* Contrast: Soft pink for warnings */
+  --destructive-foreground: #374151; /* Dark text for destructive buttons */
+  --border: #e5e7eb; /* Light neutral border */
+  --input: #f9fafb; /* Light neutral background for input fields */
+  --ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring */
+  --chart-1: #809bce; /* Primary periwinkle for charts */
+  --chart-2: #95b8d1; /* Primary light blue for charts */
+  --chart-3: #b8e0d2; /* Secondary mint green for charts */
+  --chart-4: #d6eadf; /* Secondary light sage for charts */
+  --chart-5: #eac4d5; /* Contrast soft pink for charts */
+  --radius: 0.75rem; /* Rounded corners for softer feel */
+  --sidebar: #f8fafc; /* Light neutral for sidebar background */
+  --sidebar-foreground: #374151; /* Dark gray for sidebar text */
+  --sidebar-primary: #809bce; /* Primary periwinkle for sidebar */
+  --sidebar-primary-foreground: #ffffff; /* White text for primary sidebar elements */
+  --sidebar-accent: #b8e0d2; /* Secondary mint green for sidebar accents */
+  --sidebar-accent-foreground: #374151; /* Dark text for sidebar accents */
+  --sidebar-border: #e5e7eb; /* Light neutral border for sidebar */
+  --sidebar-ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring for sidebar */
+  --font-source-sans: "Source Sans Pro", sans-serif;
+  --font-playfair: "Playfair Display", serif;
 }
 
 /* Global Styles */
 body {
-  font-family: 'Georgia', 'Times New Roman', serif; /* Use a classic, formal font */
+  font-family: 'Georgia', 'Times New Roman', serif;
   line-height: 1.6;
-  color: var(--dark-color);
-  background: var(--secondary-color);
+  color: var(--card-foreground);
+  background: var(--background);
   min-height: 100vh;
 }
 
@@ -35,49 +52,50 @@ body {
 
 /* Navigation Enhancements */
 .navbar {
-  background-color: var(--light-color);
+  background-color: var(--card);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
   font-weight: bold;
   font-size: 1.5rem;
-  color: var(--primary-color);
+  color: var(--primary);
 }
 
 .nav-link {
   transition: all 0.3s ease;
-  border-radius: 5px;
+  border-radius: var(--radius);
   margin: 0 2px;
-  color: var(--dark-color);
+  color: var(--foreground);
 }
 
 .nav-link:hover {
-  background: var(--secondary-color);
-  transform: none; /* No movement on hover */
+  background: var(--muted);
+  color: var(--muted-foreground);
+  transform: none;
 }
 
 /* --- */
 
 /* Card Enhancements */
-/* Card Enhancements */
 .card {
-  background-color: var(--light-color);
-  border: 1px solid #dee2e6; /* Defined, subtle border */
-  border-radius: 0.75rem; /* Slightly more rounded corners to match image */
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
+  color: var(--card-foreground);
 }
 
 .card:hover {
-  transform: none; /* No movement on hover */
+  transform: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  border-bottom: 1px solid #dee2e6;
-  background-color: var(--secondary-color);
-  color: var(--dark-color);
+  border-bottom: 1px solid var(--border);
+  background-color: var(--muted);
+  color: var(--card-foreground);
   padding: 1rem 1.5rem;
   font-weight: bold;
   font-size: 1.1rem;
@@ -87,92 +105,100 @@ body {
 
 /* Button Enhancements */
 .btn {
-  border-radius: 0.25rem; /* Standard, square corners */
+  border-radius: var(--radius);
   padding: 0.5rem 1rem;
   font-weight: 500;
   transition: background-color 0.3s ease, border-color 0.3s ease;
-  box-shadow: none; /* No shadow for a flat look */
+  box-shadow: none;
 }
 
 .btn:hover {
-  transform: none; /* No movement on hover */
+  transform: none;
   box-shadow: none;
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: var(--light-color); /* Ensure text is white on the dark primary button */
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .btn-primary:hover {
-  background-color: #004085; /* A slightly different shade for hover */
-  border-color: #004085;
+  background-color: var(--ring);
+  border-color: var(--ring);
 }
 
 .btn-outline-primary {
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+  border: 1px solid var(--primary);
+  color: var(--primary);
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--primary-color);
-  color: var(--light-color);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.btn-success, .btn-info, .btn-warning, .btn-danger {
+  color: var(--foreground);
 }
 
 /* --- */
 
 /* Dashboard and Quick Stats */
 .stats-card {
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: var(--radius);
   border: none;
 }
 
-.card.bg-success, .card.bg-info, .card.bg-warning, .card.bg-danger {
-  /* Use flat background colors instead of gradients */
+.card.bg-success {
   background-color: var(--success-color) !important;
-  color: var(--light-color); /* Ensure text is white for contrast */
+  color: var(--dark-color);
 }
 
 .card.bg-info {
   background-color: var(--info-color) !important;
+  color: var(--dark-color);
 }
 
 .card.bg-warning {
   background-color: var(--warning-color) !important;
+  color: var(--dark-color);
 }
 
 .card.bg-danger {
   background-color: var(--danger-color) !important;
+  color: var(--dark-color);
 }
 
 .metric-value {
   font-size: 2.5rem;
   font-weight: bold;
-  text-shadow: none; /* Remove shadows */
+  text-shadow: none;
 }
 
 /* --- */
 
 /* Chat Interface */
 .chat-container {
-  background: var(--light-color);
-  border: 1px solid #dee2e6;
-  border-radius: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--card-foreground);
 }
 
 .message.user .message-bubble {
-  background-color: var(--primary-color);
-  border-radius: 0.5rem;
-  color: var(--light-color); /* Ensure user message text is white */
+  background-color: var(--primary);
+  border-radius: var(--radius);
+  color: var(--primary-foreground);
 }
 
 .message.bot .message-bubble {
-  background-color: var(--secondary-color);
-  border: 1px solid #e9ecef;
-  border-radius: 0.5rem;
+  background-color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
 }
 
 /* --- */
@@ -186,12 +212,12 @@ body {
   display: flex;
   flex-direction: column;
   width: 250px;
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--sidebar);
+  color: var(--sidebar-foreground);
   transition: all 0.3s ease;
   z-index: 1000;
   overflow: hidden;
-  border-right: 1px solid #dee2e6;
+  border-right: 1px solid var(--sidebar-border);
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -205,7 +231,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--sidebar-border);
 }
 
 .sidebar-header .logo-section {
@@ -221,7 +247,7 @@ body {
 .sidebar-header .btn-toggle-sidebar {
   background: none;
   border: none;
-  color: white;
+  color: var(--sidebar-foreground);
 }
 
 /* Collapsed state: hide logo & show toggle */
@@ -247,12 +273,12 @@ body {
 }
 
 .sidebar ul li a {
-  color: white;
+  color: var(--sidebar-foreground);
   text-decoration: none;
   display: flex;
   align-items: center;
   font-weight: 500;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   padding: 0.6rem;
   transition: all 0.3s ease;
 }
@@ -271,8 +297,9 @@ body {
 
 /* Hover effect */
 .sidebar ul li a:hover {
-  background-color: #004085; /* Darker blue on hover */
-  transform: none; /* No movement */
+  background-color: var(--sidebar-primary);
+  color: var(--sidebar-primary-foreground);
+  transform: none;
 }
 
 /* Collapsed Navigation */
@@ -304,7 +331,7 @@ body {
 }
 
 .sidebar.collapsed .sidebar-footer .user-info {
-  justify-content: center; /* center just the icon */
+  justify-content: center;
 }
 
 /* Sidebar footer user info layout */
@@ -313,7 +340,7 @@ body {
   align-items: center;
   gap: 8px;
   position: relative;
-  color: #fff;
+  color: var(--sidebar-foreground);
 }
 
 /* Hide username when collapsed */
@@ -334,17 +361,17 @@ body {
 }
 
 .sidebar-footer .btn-danger {
-  background-color: var(--danger-color);
-  border-color: var(--danger-color);
+  background-color: var(--destructive);
+  border-color: var(--destructive);
 }
 
 /* --- */
 
 /* Footer Enhancements */
 footer {
-  background-color: var(--primary-color);
-  color: white;
-  border-top: 1px solid #dee2e6;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-top: 1px solid var(--border);
 }
 
 /* --- */
@@ -353,19 +380,19 @@ footer {
 .btn:focus,
 .form-control:focus,
 .form-select:focus {
-  outline: 2px solid var(--primary-color);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --primary-color: #0056b3;
-    --secondary-color: #495057;
+    --primary: #0056b3;
+    --card: #495057;
   }
 
   .card {
-    border: 2px solid var(--dark-color);
+    border: 2px solid var(--foreground);
   }
 
   .btn {
@@ -394,19 +421,19 @@ footer {
   }
 
   body {
-    background: white !important;
-    color: black !important;
+    background: var(--background) !important;
+    color: var(--foreground) !important;
   }
 
   .card {
-    border: 1px solid black !important;
+    border: 1px solid var(--border) !important;
     box-shadow: none !important;
   }
 }
 
 /* Loading animations */
 .spinner-border {
-  border-color: var(--primary-color);
+  border-color: var(--primary);
   border-right-color: transparent;
 }
 
@@ -429,7 +456,7 @@ footer {
 /* Custom scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) transparent;
+  scrollbar-color: var(--primary) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -442,10 +469,23 @@ footer {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
+  background: var(--primary);
   border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #768da4; /* A lighter shade of the main color */
+  background: #768da4;
+}
+
+/* Sidebar logo text and heart icon */
+.sidebar-header .logo-section .label,
+.sidebar-header .logo-section i.fas.fa-heart {
+    color: var(--sidebar-foreground); /* Dark gray to match sidebar text */
+    transition: color 0.3s ease;
+}
+
+/* Optional: accent on hover */
+.sidebar-header .logo-section:hover .label,
+.sidebar-header .logo-section:hover i.fas.fa-heart {
+    color: var(--primary); /* Soft periwinkle accent on hover */
 }
