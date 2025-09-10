@@ -5,6 +5,43 @@
 {% block extra_head %}
 <style>
     /* Custom styles for meditation page */
+    /* Enhanced Breathing Circle */
+    .breathing-circle {
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle at 60% 40%, #a8dadc 0%, #457b9d 100%);
+        border-radius: 50%;
+        margin: 2rem auto;
+        animation: breathe 8s infinite ease-in-out;
+        box-shadow: 0 0 40px 10px #a8dadc, 0 0 80px 20px #457b9d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .breathing-circle span {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.7rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textGlow 2s infinite alternate;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    @keyframes textGlow {
+        0% { text-shadow: 0 0 10px #fbc2eb, 0 0 20px #a6c1ee; }
+        100% { text-shadow: 0 0 20px #fbc2eb, 0 0 40px #a6c1ee; }
+    }
     .meditation-container {
         min-height: 70vh;
         display: flex;
@@ -279,7 +316,7 @@
         </div>
 
         <div id="timer-display-area">
-            <div class="breathing-circle" id="breathing-instruction">Breathe In</div>
+            {% include 'lottie_breathing.html' %}
             <div id="timer">00:00</div>
             <div class="control-buttons-group">
                 <button id="startBtn" class="btn btn-success"><i class="fas fa-play"></i> Play</button>

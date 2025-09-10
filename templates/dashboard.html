@@ -4,23 +4,29 @@
 
 {% block content %}
 <div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-dark mb-2"><i class="fas fa-star text-warning me-2"></i>Daily Inspiration</h5>
+                    <p class="card-text lead fst-italic">"Every small step forward is progress worth celebrating."</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <h1 class="h2">Welcome back, {{ current_user.full_name }}</h1>
             <p class="text-muted">How are you feeling today? Remember, every step counts.</p>
         </div>
     </div>
-    
     <div class="row g-4 mb-4">
         <div class="col-lg-4 col-md-6">
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title text-dark mb-3"><i class="fas fa-leaf text-warning me-2"></i>Meditation</h5>
-                    <h2 class="metric-value text-primary">{{ meditation_minutes }} min</h2>
-                    <p class="card-text text-muted mb-3">This week</p>
-                    <div class="progress" style="height: 5px;">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ meditation_progress }}%;" aria-valuenow="{{ meditation_progress }}" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                    <h2 class="metric-value text-primary">{{ total_minutes_meditated }} min</h2>
+                    <p class="card-text text-muted mb-3">Sessions this week: <strong>{{ weekly_sessions_count }}</strong></p>
                 </div>
             </div>
         </div>
@@ -51,15 +57,7 @@
     </div>
     
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-dark mb-2"><i class="fas fa-star text-warning me-2"></i>Daily Inspiration</h5>
-                    <p class="card-text lead fst-italic">"Every small step forward is progress worth celebrating."</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Daily Inspiration card moved to top -->
     
     <div class="row g-4">
         <div class="col-md-4">

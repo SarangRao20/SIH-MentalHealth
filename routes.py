@@ -82,19 +82,44 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    # Get today's tasks for current user
+    from models import RoutineTask
+    today = datetime.utcnow().date()
+    tasks_today = RoutineTask.query.filter_by(user_id=current_user.id, created_date=today).all()
+    total_tasks = len(tasks_today)
+    tasks_completed = sum(1 for t in tasks_today if t.status == 'completed')
+    tasks_progress = int((tasks_completed / total_tasks) * 100) if total_tasks > 0 else 0
     # Get user stats
     recent_assessments = Assessment.query.filter_by(user_id=current_user.id).order_by(Assessment.completed_at.desc()).limit(3).all()
     meditation_streak = MeditationSession.query.filter_by(user_id=current_user.id).filter(
         MeditationSession.date >= datetime.utcnow().date() - timedelta(days=7)
     ).count()
-    
+
+    # Weekly sessions count (from start of week)
+    today = datetime.utcnow().date()
+    start_of_week = today - timedelta(days=today.weekday())
+    weekly_sessions_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
+        MeditationSession.date >= start_of_week
+    ).count()
+
+    # Total minutes meditated
+    total_seconds = db.session.query(func.sum(MeditationSession.duration)).filter_by(
+        user_id=current_user.id
+    ).scalar() or 0
+    total_minutes_meditated = total_seconds // 60
+
     # Get chat sessions with crisis flags
     crisis_sessions = ChatSession.query.filter_by(user_id=current_user.id, crisis_flag=True).count()
-    
+
     return render_template('dashboard.html', 
                          recent_assessments=recent_assessments,
                          meditation_streak=meditation_streak,
-                         crisis_sessions=crisis_sessions)
+                         crisis_sessions=crisis_sessions,
+                         weekly_sessions_count=weekly_sessions_count,
+                         total_minutes_meditated=total_minutes_meditated,
+                         tasks_completed=tasks_completed,
+                         total_tasks=total_tasks,
+                         tasks_progress=tasks_progress)
 
 @app.route('/chatbot')
 @login_required
@@ -360,7 +385,8 @@ def meditation():
 @login_required
 def meditation_completed():
     data = request.get_json()
-    duration = data.get('duration', 0) # Duration in seconds
+    duration_seconds = data.get('duration', 0) # Duration in seconds
+    duration = int(duration_seconds // 60) # Store duration in minutes
     session_type = data.get('session_type', 'meditation')
 
     if duration <= 0:

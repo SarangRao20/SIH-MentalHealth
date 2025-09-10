@@ -17,6 +17,7 @@
   --accent: #b8e0d2; /* Secondary: Mint green for accent elements */
   --accent-foreground: #374151; /* Dark text for accent elements */
   --destructive: #eac4d5; /* Contrast: Soft pink for warnings */
+  --danger-color: #d90429; /* Strong red for SOS and logout */
   --destructive-foreground: #374151; /* Dark text for destructive buttons */
   --border: #e5e7eb; /* Light neutral border */
   --input: #f9fafb; /* Light neutral background for input fields */
@@ -37,6 +38,15 @@
   --sidebar-ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring for sidebar */
   --font-source-sans: "Source Sans Pro", sans-serif;
   --font-playfair: "Playfair Display", serif;
+  background-color: var(--danger-color) !important;
+  color: #fff !important;
+  border-color: var(--danger-color) !important;
+}
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active {
+  background-color: var(--danger-color) !important;
+  color: #fff !important;
+  border-color: var(--danger-color) !important;
 }
 
 /* Global Styles */
@@ -361,8 +371,8 @@ body {
 }
 
 .sidebar-footer .btn-danger {
-  background-color: var(--destructive);
-  border-color: var(--destructive);
+  background-color: var(--danger-color) !important;
+  border-color: var(--danger-color) !important;
 }
 
 /* --- */
