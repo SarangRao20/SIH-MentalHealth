@@ -215,3 +215,5 @@ if enable_voice:
 # --- Text Input ---
 if prompt := st.chat_input("How are you feeling today?"):
     process_and_respond(prompt)
+
+
