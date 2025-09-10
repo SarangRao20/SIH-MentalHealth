@@ -274,17 +274,18 @@ def assessment_form(assessment_type):
 @app.route('/assessment/results/<int:assessment_id>')
 @login_required
 def view_assessment_results(assessment_id):
-    # Get the assessment
     assessment = Assessment.query.get_or_404(assessment_id)
-    
-    # Verify the assessment belongs to the current user
     if assessment.user_id != current_user.id:
         flash('You do not have permission to view these results', 'error')
         return redirect(url_for('assessments'))
-    
-    # Generate analysis based on assessment type and score
-    analysis = generate_analysis(assessment.assessment_type, assessment.score)
-    
+    import json
+    if assessment.recommendations:
+        try:
+            analysis = json.loads(assessment.recommendations)
+        except Exception:
+            analysis = generate_analysis(assessment.assessment_type, assessment.score)
+    else:
+        analysis = generate_analysis(assessment.assessment_type, assessment.score)
     return render_template('assessment_results.html',
                          assessment=assessment,
                          analysis=analysis)
@@ -323,23 +324,15 @@ def generate_analysis(assessment_type, score):
 def submit_assessment():
     assessment_type = request.form['assessment_type']
     responses = {}
-    
-    # Collect responses
     for i in range(len(get_assessment_questions(assessment_type))):
         responses[f'q{i}'] = int(request.form[f'q{i}'])
-    
-    # Calculate score
     if assessment_type == "PHQ-9":
         score, severity = calculate_phq9_score(responses)
     elif assessment_type == "GAD-7":
         score, severity = calculate_gad7_score(responses)
     elif assessment_type == "GHQ":
         score, severity = calculate_ghq_score(responses)
-    
-    # Get AI analysis
     analysis = analyze_assessment_results(assessment_type, responses, score)
-    
-    # Save assessment
     assessment = Assessment(
         user_id=current_user.id,
         assessment_type=assessment_type,
@@ -348,10 +341,8 @@ def submit_assessment():
         severity_level=severity,
         recommendations=json.dumps(analysis)
     )
-    
     db.session.add(assessment)
     db.session.commit()
-    
     return render_template('assessment_results.html',
                          assessment=assessment,
                          analysis=analysis)
