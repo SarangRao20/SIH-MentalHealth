@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify, session
+from flask import render_template, request, redirect, url_for, flash, jsonify, session, send_file
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
 from models import User, ChatSession, ChatMessage, Assessment, MeditationSession, VentingPost, VentingResponse, ConsultationRequest
@@ -11,6 +11,12 @@ import json
 import logging
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.utils import ImageReader
+from PIL import Image
+import io
+import os
 
 @app.route('/')
 def index():
@@ -648,6 +654,105 @@ def mentor_dashboard():
     }
     
     return render_template('mentor_dashboard.html', stats=stats)
+
+@app.route('/inkblot')
+@login_required
+def inkblot_start():
+    return render_template('inkblot/start.html')
+
+@app.route('/inkblot/userinfo', methods=['GET', 'POST'])
+@login_required
+def inkblot_userinfo():
+    if request.method == 'POST':
+        session['inkblot_name'] = request.form.get('name', '')
+        session['inkblot_career'] = request.form.get('career', '')
+        session['inkblot_age'] = request.form.get('age', '')
+        session['inkblot_gender'] = request.form.get('gender', '')
+        return redirect(url_for('beforestart'))
+    return render_template('inkblot/userinfo.html')
+
+@app.route('/inkblot/beforestart')
+@login_required
+def beforestart():
+    return render_template('inkblot/beforestart.html')
+
+@app.route('/inkblot/about')
+@login_required
+def about():
+    return render_template('inkblot/about.html')
+
+@app.route('/inkblot/test', methods=['GET', 'POST'])
+@login_required
+def inkblot_test():
+    if 'inkblot_answers' not in session:
+        session['inkblot_answers'] = {}
+    answers = session['inkblot_answers']
+    if request.method == 'POST':
+        blot_num = int(request.form.get('blot_num', 1))
+        response = request.form.get('response', '')
+        answers[str(blot_num)] = response
+        session['inkblot_answers'] = answers
+        next_blot = blot_num + 1
+        if next_blot > 10:
+            return redirect(url_for('inkblot_results'))
+        return render_template('inkblot/inkblot.html', blot_num=next_blot)
+    else:
+        return render_template('inkblot/inkblot.html', blot_num=1)
+
+@app.route('/inkblot/results')
+@login_required
+def inkblot_results():
+    answers = session.get('inkblot_answers', {})
+    return render_template('inkblot/results.html', answers=answers)
+
+@app.route('/inkblot/download_pdf')
+@login_required
+def download_pdf():
+    answers = session.get('inkblot_answers', {})
+    name = session.get('inkblot_name', '')
+    career = session.get('inkblot_career', '')
+    age = session.get('inkblot_age', '')
+    gender = session.get('inkblot_gender', '')
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=letter)
+    # First page: user info
+    p.setFont("Helvetica-Bold", 20)
+    p.drawCentredString(300, 750, "Inkblot Test Results")
+    p.setFont("Helvetica", 16)
+    y = 700
+    if name:
+        p.drawCentredString(300, y, f"Name: {name}")
+        y -= 40
+    if career:
+        p.drawCentredString(300, y, f"Career: {career}")
+        y -= 40
+    if age:
+        p.drawCentredString(300, y, f"Age: {age}")
+        y -= 40
+    if gender:
+        p.drawCentredString(300, y, f"Gender: {gender}")
+        y -= 40
+    p.showPage()
+    # Each blot: one page, image centered, answer centered below
+    static_img_path = os.path.join(os.path.dirname(__file__), 'static', 'img')
+    for i in range(1, 11):
+        p.setFont("Helvetica-Bold", 18)
+        p.drawCentredString(300, 700, f"Blot {i}")
+        img_file = os.path.abspath(os.path.join(static_img_path, f'blot{i}.jpg'))
+        if os.path.exists(img_file):
+            try:
+                img = Image.open(img_file)
+                p.drawInlineImage(img, 150, 350, width=300, height=300)
+            except Exception as e:
+                p.setFont("Helvetica", 12)
+                p.drawCentredString(300, 320, f"[Image error: {e}]")
+        p.setFont("Helvetica", 16)
+        answer = answers.get(str(i), "No response")
+        p.drawCentredString(300, 280, f"Your answer: {answer}")
+        p.showPage()
+    p.save()
+    buffer.seek(0)
+    return send_file(buffer, as_attachment=True, download_name="inkblot_results.pdf", mimetype="application/pdf")
 
 @app.context_processor
 def inject_user():

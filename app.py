@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy.orm import DeclarativeBase
+from inkblot.routes import inkblot_bp
+from database import db
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -23,7 +25,6 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
 }
 
-db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
 login_manager = LoginManager()
@@ -50,3 +51,4 @@ def nl2br(value):
     return Markup(value.replace('\n', '<br>'))
 
 app.jinja_env.filters['nl2br'] = nl2br
+app.register_blueprint(inkblot_bp)
