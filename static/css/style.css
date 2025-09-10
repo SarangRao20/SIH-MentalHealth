@@ -1,19 +1,25 @@
 /* MindCare Mental Health Platform - Custom Styles */
 
+/* MindCare Mental Health Platform - Custom Styles */
+
 :root {
-  /* Professional Government Palette */
-  --primary-color: #3d5a80;   /* Deep government blue */
-  --secondary-color: #edf2fb; /* Light grey for backgrounds */
-  --success-color: #28a745;   /* Standard success green */
-  --info-color: #17a2b8;      /* Professional info blue/teal */
-  --warning-color: #ffc107;   /* Classic warning yellow */
-  --danger-color: #ac101f;    /* Standard danger red */
-  --light-color: #ffffff;     /* White for content areas */
-  --dark-color: #012a4a;      /* Dark grey for text */
+  /* Refined color palette to match the image more closely */
+  --primary-color: #3d5a80;      /* Keeps the primary blue consistent for the sidebar */
+  --secondary-color: #f6f8fb;    /* A very light, slightly blue-tinted grey for the background */
+  --success-color: #28a745;      /* A classic, bright green for success */
+  --info-color: #17a2b8;         /* A professional, vibrant blue-teal for info */
+  --warning-color: #ffc107;      /* A more classic, bright yellow for warning */
+  --danger-color: #dc3545;       /* A standard, bright red for danger */
+  --light-color: #ffffff;       /* Pure white for content areas */
+  --dark-color: #212529;        /* A darker grey for text for better contrast */
+  --text-muted: #6c757d;        /* Standard muted text color */
+
+
+/* Other CSS rules remain the same as the previous response. */       /* Standard muted text color */
 
   /* Gradients are removed for a flat, professional look */
-  --primary-gradient: linear-gradient(135deg, var(--primary-color), #004085);
-  --calm-gradient: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  --primary-gradient: none;
+  --calm-gradient: none;
 }
 
 /* Global Styles */
@@ -54,10 +60,11 @@ body {
 /* --- */
 
 /* Card Enhancements */
+/* Card Enhancements */
 .card {
   background-color: var(--light-color);
   border: 1px solid #dee2e6; /* Defined, subtle border */
-  border-radius: 0.5rem; /* Less rounded corners */
+  border-radius: 0.75rem; /* Slightly more rounded corners to match image */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
 }
@@ -95,6 +102,7 @@ body {
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+  color: var(--light-color); /* Ensure text is white on the dark primary button */
 }
 
 .btn-primary:hover {
@@ -103,16 +111,13 @@ body {
 }
 
 .btn-outline-primary {
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-}
-.btn-outline-primary:hover {
-    background-color: var(--primary-color);
-    color: var(--light-color);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
-.btn-success, .btn-info, .btn-warning, .btn-danger {
-    color: white; /* Ensure text is visible on these colors */
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  color: var(--light-color);
 }
 
 /* --- */
@@ -128,6 +133,7 @@ body {
 .card.bg-success, .card.bg-info, .card.bg-warning, .card.bg-danger {
   /* Use flat background colors instead of gradients */
   background-color: var(--success-color) !important;
+  color: var(--light-color); /* Ensure text is white for contrast */
 }
 
 .card.bg-info {
@@ -160,6 +166,7 @@ body {
 .message.user .message-bubble {
   background-color: var(--primary-color);
   border-radius: 0.5rem;
+  color: var(--light-color); /* Ensure user message text is white */
 }
 
 .message.bot .message-bubble {
@@ -198,23 +205,23 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .sidebar-header .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sidebar-header .logo-section .label {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .sidebar-header .btn-toggle-sidebar {
-    background: none;
-    border: none;
-    color: white;
+  background: none;
+  border: none;
+  color: white;
 }
 
 /* Collapsed state: hide logo & show toggle */
@@ -325,7 +332,6 @@ body {
 .sidebar.collapsed .sidebar-footer .user-info .badge {
   font-size: 0.6rem;
 }
-
 
 .sidebar-footer .btn-danger {
   background-color: var(--danger-color);
