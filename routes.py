@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify, session
+from flask import render_template, request, redirect, url_for, flash, jsonify, session, send_file
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
 from models import User, ChatSession, ChatMessage, Assessment, MeditationSession, VentingPost, VentingResponse, ConsultationRequest
@@ -11,6 +11,12 @@ import json
 import logging
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.utils import ImageReader
+from PIL import Image
+import io
+import os
 
 @app.route('/')
 def index():
@@ -82,19 +88,44 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    # Get today's tasks for current user
+    from models import RoutineTask
+    today = datetime.utcnow().date()
+    tasks_today = RoutineTask.query.filter_by(user_id=current_user.id, created_date=today).all()
+    total_tasks = len(tasks_today)
+    tasks_completed = sum(1 for t in tasks_today if t.status == 'completed')
+    tasks_progress = int((tasks_completed / total_tasks) * 100) if total_tasks > 0 else 0
     # Get user stats
     recent_assessments = Assessment.query.filter_by(user_id=current_user.id).order_by(Assessment.completed_at.desc()).limit(3).all()
     meditation_streak = MeditationSession.query.filter_by(user_id=current_user.id).filter(
         MeditationSession.date >= datetime.utcnow().date() - timedelta(days=7)
     ).count()
-    
+
+    # Weekly sessions count (from start of week)
+    today = datetime.utcnow().date()
+    start_of_week = today - timedelta(days=today.weekday())
+    weekly_sessions_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
+        MeditationSession.date >= start_of_week
+    ).count()
+
+    # Total seconds meditated
+    total_seconds = db.session.query(func.sum(MeditationSession.duration)).filter_by(
+        user_id=current_user.id
+    ).scalar() or 0
+    total_minutes_meditated = total_seconds // 60
+
     # Get chat sessions with crisis flags
     crisis_sessions = ChatSession.query.filter_by(user_id=current_user.id, crisis_flag=True).count()
-    
+
     return render_template('dashboard.html', 
                          recent_assessments=recent_assessments,
                          meditation_streak=meditation_streak,
-                         crisis_sessions=crisis_sessions)
+                         crisis_sessions=crisis_sessions,
+                         weekly_sessions_count=weekly_sessions_count,
+                         total_minutes_meditated=total_minutes_meditated,
+                         tasks_completed=tasks_completed,
+                         total_tasks=total_tasks,
+                         tasks_progress=tasks_progress)
 
 @app.route('/chatbot')
 @login_required
@@ -249,17 +280,18 @@ def assessment_form(assessment_type):
 @app.route('/assessment/results/<int:assessment_id>')
 @login_required
 def view_assessment_results(assessment_id):
-    # Get the assessment
     assessment = Assessment.query.get_or_404(assessment_id)
-    
-    # Verify the assessment belongs to the current user
     if assessment.user_id != current_user.id:
         flash('You do not have permission to view these results', 'error')
         return redirect(url_for('assessments'))
-    
-    # Generate analysis based on assessment type and score
-    analysis = generate_analysis(assessment.assessment_type, assessment.score)
-    
+    import json
+    if assessment.recommendations:
+        try:
+            analysis = json.loads(assessment.recommendations)
+        except Exception:
+            analysis = generate_analysis(assessment.assessment_type, assessment.score)
+    else:
+        analysis = generate_analysis(assessment.assessment_type, assessment.score)
     return render_template('assessment_results.html',
                          assessment=assessment,
                          analysis=analysis)
@@ -298,23 +330,15 @@ def generate_analysis(assessment_type, score):
 def submit_assessment():
     assessment_type = request.form['assessment_type']
     responses = {}
-    
-    # Collect responses
     for i in range(len(get_assessment_questions(assessment_type))):
         responses[f'q{i}'] = int(request.form[f'q{i}'])
-    
-    # Calculate score
     if assessment_type == "PHQ-9":
         score, severity = calculate_phq9_score(responses)
     elif assessment_type == "GAD-7":
         score, severity = calculate_gad7_score(responses)
     elif assessment_type == "GHQ":
         score, severity = calculate_ghq_score(responses)
-    
-    # Get AI analysis
     analysis = analyze_assessment_results(assessment_type, responses, score)
-    
-    # Save assessment
     assessment = Assessment(
         user_id=current_user.id,
         assessment_type=assessment_type,
@@ -323,10 +347,8 @@ def submit_assessment():
         severity_level=severity,
         recommendations=json.dumps(analysis)
     )
-    
     db.session.add(assessment)
     db.session.commit()
-    
     return render_template('assessment_results.html',
                          assessment=assessment,
                          analysis=analysis)
@@ -360,40 +382,31 @@ def meditation():
 @login_required
 def meditation_completed():
     data = request.get_json()
-    duration = data.get('duration', 0) # Duration in seconds
+    duration_seconds = int(data.get('duration', 0)) # Duration in seconds
     session_type = data.get('session_type', 'meditation')
-
-    if duration <= 0:
+    if duration_seconds <= 0:
         return jsonify({"success": False, "message": "Invalid duration"}), 400
-
     meditation_session = MeditationSession(
         user_id=current_user.id,
         session_type=session_type,
-        duration=duration,
+        duration=duration_seconds, # Store duration in seconds
         date=datetime.utcnow().date() # Record the date of completion
     )
-
     db.session.add(meditation_session)
     db.session.commit()
-
     today = datetime.utcnow().date()
     start_of_week = today - timedelta(days=today.weekday())
-
-    # Weekly count (from start of week)
     weekly_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
         MeditationSession.date >= start_of_week
     ).count()
-
-    # Today's sessions (for progress)
     today_sessions = MeditationSession.query.filter_by(user_id=current_user.id, date=today).all()
     today_sessions_count = len(today_sessions)
-
     return jsonify({
         "success": True,
         "message": "Meditation session recorded",
         "session": {
             "type": session_type,
-            "duration": duration
+            "duration": duration_seconds
         },
         "weekly_sessions": weekly_count,
         "today_sessions_count": today_sessions_count
@@ -641,6 +654,105 @@ def mentor_dashboard():
     }
     
     return render_template('mentor_dashboard.html', stats=stats)
+
+@app.route('/inkblot')
+@login_required
+def inkblot_start():
+    return render_template('inkblot/start.html')
+
+@app.route('/inkblot/userinfo', methods=['GET', 'POST'])
+@login_required
+def inkblot_userinfo():
+    if request.method == 'POST':
+        session['inkblot_name'] = request.form.get('name', '')
+        session['inkblot_career'] = request.form.get('career', '')
+        session['inkblot_age'] = request.form.get('age', '')
+        session['inkblot_gender'] = request.form.get('gender', '')
+        return redirect(url_for('beforestart'))
+    return render_template('inkblot/userinfo.html')
+
+@app.route('/inkblot/beforestart')
+@login_required
+def beforestart():
+    return render_template('inkblot/beforestart.html')
+
+@app.route('/inkblot/about')
+@login_required
+def about():
+    return render_template('inkblot/about.html')
+
+@app.route('/inkblot/test', methods=['GET', 'POST'])
+@login_required
+def inkblot_test():
+    if 'inkblot_answers' not in session:
+        session['inkblot_answers'] = {}
+    answers = session['inkblot_answers']
+    if request.method == 'POST':
+        blot_num = int(request.form.get('blot_num', 1))
+        response = request.form.get('response', '')
+        answers[str(blot_num)] = response
+        session['inkblot_answers'] = answers
+        next_blot = blot_num + 1
+        if next_blot > 10:
+            return redirect(url_for('inkblot_results'))
+        return render_template('inkblot/inkblot.html', blot_num=next_blot)
+    else:
+        return render_template('inkblot/inkblot.html', blot_num=1)
+
+@app.route('/inkblot/results')
+@login_required
+def inkblot_results():
+    answers = session.get('inkblot_answers', {})
+    return render_template('inkblot/results.html', answers=answers)
+
+@app.route('/inkblot/download_pdf')
+@login_required
+def download_pdf():
+    answers = session.get('inkblot_answers', {})
+    name = session.get('inkblot_name', '')
+    career = session.get('inkblot_career', '')
+    age = session.get('inkblot_age', '')
+    gender = session.get('inkblot_gender', '')
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=letter)
+    # First page: user info
+    p.setFont("Helvetica-Bold", 20)
+    p.drawCentredString(300, 750, "Inkblot Test Results")
+    p.setFont("Helvetica", 16)
+    y = 700
+    if name:
+        p.drawCentredString(300, y, f"Name: {name}")
+        y -= 40
+    if career:
+        p.drawCentredString(300, y, f"Career: {career}")
+        y -= 40
+    if age:
+        p.drawCentredString(300, y, f"Age: {age}")
+        y -= 40
+    if gender:
+        p.drawCentredString(300, y, f"Gender: {gender}")
+        y -= 40
+    p.showPage()
+    # Each blot: one page, image centered, answer centered below
+    static_img_path = os.path.join(os.path.dirname(__file__), 'static', 'img')
+    for i in range(1, 11):
+        p.setFont("Helvetica-Bold", 18)
+        p.drawCentredString(300, 700, f"Blot {i}")
+        img_file = os.path.abspath(os.path.join(static_img_path, f'blot{i}.jpg'))
+        if os.path.exists(img_file):
+            try:
+                img = Image.open(img_file)
+                p.drawInlineImage(img, 150, 350, width=300, height=300)
+            except Exception as e:
+                p.setFont("Helvetica", 12)
+                p.drawCentredString(300, 320, f"[Image error: {e}]")
+        p.setFont("Helvetica", 16)
+        answer = answers.get(str(i), "No response")
+        p.drawCentredString(300, 280, f"Your answer: {answer}")
+        p.showPage()
+    p.save()
+    buffer.seek(0)
+    return send_file(buffer, as_attachment=True, download_name="inkblot_results.pdf", mimetype="application/pdf")
 
 @app.context_processor
 def inject_user():

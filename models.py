@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
-from app import db
-from datetime import datetime, timedelta
+from database import db
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+import hashlib
+import json
 
 class RoutineTask(db.Model):
     __tablename__ = 'routine_tasks'
@@ -37,11 +40,6 @@ class RoutineTask(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
-from app import db
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-import hashlib
-import json
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,0 +1,5 @@
+# Ignore integrate folder
+integrate/
+# Ignore Python cache and bytecode
+__pycache__/
+*.pyc

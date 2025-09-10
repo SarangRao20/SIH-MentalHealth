@@ -10,3 +10,4 @@ langchain
 langchain-community
 langchain-core
 google-genai
+streamlit-audiorecorder

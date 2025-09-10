@@ -1,0 +1,29 @@
+<!-- Lottie Animation Container -->
+<div style="position: relative; width: 220px; height: 220px; margin: 2rem auto;">
+  <div id="lottie-breathing" style="width: 220px; height: 220px; background: #eaf6fb; border-radius: 50%; box-shadow: 0 0 30px #a8dadc;"></div>
+  <span id="breathing-instruction-text" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 1.7rem; font-weight: bold; letter-spacing: 1px; background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; text-align: center; pointer-events: none;">Breathe In</span>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.lottie) {
+      lottie.loadAnimation({
+        container: document.getElementById('lottie-breathing'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'https://assets2.lottiefiles.com/packages/lf20_8z2g6gkt.json'
+      });
+      // Animated breathing instructions
+      const instructions = ["Breathe In", "Hold", "Breathe Out", "Hold"];
+      let idx = 0;
+      setInterval(function() {
+        document.getElementById('breathing-instruction-text').textContent = instructions[idx];
+        idx = (idx + 1) % instructions.length;
+      }, 2000);
+    } else {
+      document.getElementById('lottie-breathing').innerHTML = '<div style="color:#333;text-align:center;padding-top:90px;">Animation failed to load</div>';
+    }
+  });
+</script>
+

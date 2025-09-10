@@ -21,7 +21,7 @@
     <nav id="sidebar" class="sidebar d-flex flex-column">
         <!-- Sidebar Header -->
         <div class="sidebar-header d-flex align-items-center justify-content-between px-3 py-2">
-            <a class="navbar-brand text-white d-flex align-items-center logo-section" href="{{ url_for('index') }}">
+            <a class="navbar-brand d-flex align-items-center logo-section" href="{{ url_for('index') }}">
                 <i class="fas fa-heart me-2"></i>
                 <span class="label">MindCare</span>
             </a>
@@ -103,8 +103,8 @@
                     {% endif %}
                 </div>
                 <a class="btn btn-sm btn-danger w-100 mt-2" href="{{ url_for('logout') }}">
-                    <i class="fas fa-sign-out-alt icon"></i>
-                    <span class="label">Logout</span>
+                    <i class="fas fa-sign-out-alt icon" style="color: white;"></i>
+                    <span class="label" style="color: white; font-weight: bold;">Logout</span>
                 </a>
             {% else %}
                 <a class="btn btn-sm btn-primary w-100 mb-2" href="{{ url_for('login') }}">

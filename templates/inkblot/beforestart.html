@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin:5em 10em 0 0;">
+	<h2>Inkblot Test Instructions</h2>
+	<ul>
+		<li>Read each blot in sequence and note your answers.</li>
+		<li>There is no correct answer; write what comes to mind first.</li>
+		<li>This test is for self-understanding, not diagnosis.</li>
+	</ul>
+	<a href="{{ url_for('inkblot.inkblot_test') }}">
+		<button style="border-radius:0;font-size:12px;font-style:italic;text-transform:none;">Begin Test &#8594;</button>
+	</a>
+</div>
+{% endblock %}
