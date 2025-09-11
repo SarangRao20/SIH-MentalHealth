@@ -1,4 +1,3 @@
-
 from flask import render_template, request, redirect, url_for, flash, jsonify, session, send_file
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
@@ -24,14 +23,20 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 
-def send_email(subject: str, body: str, to_email: str) -> bool:
-    """Send email using environment SMTP settings; fallback to logging."""
+def send_email(subject: str, body: str, to_email: str, sender_type: str = 'user') -> bool:
+    """Send email using environment SMTP settings; fallback to logging. Sender type can be 'user', 'mentor', or 'counsellor'."""
     try:
         smtp_host = os.environ.get('SMTP_HOST')
         smtp_port = int(os.environ.get('SMTP_PORT', '587'))
         smtp_user = os.environ.get('SMTP_USER')
         smtp_pass = os.environ.get('SMTP_PASS')
-        from_email = os.environ.get('SMTP_FROM', smtp_user or 'no-reply@example.com')
+        # Set sender email based on type
+        if sender_type == 'mentor':
+            from_email = os.environ.get('MENTOR_EMAIL', smtp_user)
+        elif sender_type == 'counsellor':
+            from_email = os.environ.get('COUNSELLOR_EMAIL', smtp_user)
+        else:
+            from_email = os.environ.get('SMTP_FROM', smtp_user)
         if not (smtp_host and smtp_user and smtp_pass and to_email):
             app.logger.info(f"EMAIL (stub) to {to_email}: {subject} | {body}")
             return False
@@ -128,6 +133,9 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    # Redirect counsellors to their dedicated dashboard
+    if getattr(current_user, 'role', None) == 'counsellor':
+        return redirect(url_for('counsellor_dashboard'))
     # Get today's tasks for current user
     from models import RoutineTask
     today = datetime.utcnow().date()
@@ -1066,11 +1074,17 @@ def view_user_assessment(user_id):
     recent_assessments = Assessment.query.filter_by(user_id=user.id).filter(Assessment.completed_at >= recent_30).all()
     by_type = {}
     for a in recent_assessments:
-        by_type.setdefault(a.assessment_type, {'count': 0, 'severities': []})
+        if a.assessment_type not in by_type:
+            by_type[a.assessment_type] = {'count': 0, 'moderate': 0, 'severe': 0}
         by_type[a.assessment_type]['count'] += 1
-        by_type[a.assessment_type]['severities'].append(a.severity_level)
+        if a.severity_level in ['Moderate', 'Moderately severe', 'Severe']:
+            by_type[a.assessment_type]['severe'] += 1
+        elif a.severity_level in ['Mild', 'Fair']:
+            by_type[a.assessment_type]['moderate'] += 1
+    # Last 3 assessments for quick view
     last_three = assessments[:3]
-    login_streak = user.login_streak or 0
+    # Login streak
+    login_streak = current_user.login_streak or 0
     # Meditation time series (last 14 days)
     days = [today - timedelta(days=i) for i in range(13, -1, -1)]
     sessions_14 = MeditationSession.query.filter_by(user_id=user.id).filter(MeditationSession.date >= days[0]).all()
