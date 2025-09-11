@@ -1,488 +1,480 @@
 /* MindCare Mental Health Platform - Custom Styles */
 
 :root {
-  /* Updated color hierarchy: #809bce, #95b8d1 as primary; #b8e0d2, #d6eadf as secondary */
-  --background: #ffffff; /* Pure white for clean, spacious feel */
-  --foreground: #374151; /* Dark gray for high readability */
-  --card: #f8fafc; /* Light neutral for card backgrounds */
-  --card-foreground: #374151; /* Dark gray for card text */
-  --popover: #ffffff; /* White for popover backgrounds */
-  --popover-foreground: #374151; /* Dark gray for popover text */
-  --primary: #809bce; /* Primary: Soft periwinkle blue */
-  --primary-foreground: #ffffff; /* White text for primary buttons */
-  --secondary: #95b8d1; /* Primary: Light blue for secondary elements */
-  --secondary-foreground: #374151; /* Dark text for secondary elements */
-  --muted: #d6eadf; /* Secondary: Light sage for muted backgrounds */
-  --muted-foreground: #6b7280; /* Medium gray for muted text */
-  --accent: #b8e0d2; /* Secondary: Mint green for accent elements */
-  --accent-foreground: #374151; /* Dark text for accent elements */
-  --destructive: #eac4d5; /* Contrast: Soft pink for warnings */
-  --danger-color: #d90429; /* Strong red for SOS and logout */
-  --destructive-foreground: #374151; /* Dark text for destructive buttons */
-  --border: #e5e7eb; /* Light neutral border */
-  --input: #f9fafb; /* Light neutral background for input fields */
-  --ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring */
-  --chart-1: #809bce; /* Primary periwinkle for charts */
-  --chart-2: #95b8d1; /* Primary light blue for charts */
-  --chart-3: #b8e0d2; /* Secondary mint green for charts */
-  --chart-4: #d6eadf; /* Secondary light sage for charts */
-  --chart-5: #eac4d5; /* Contrast soft pink for charts */
-  --radius: 0.75rem; /* Rounded corners for softer feel */
-  --sidebar: #f8fafc; /* Light neutral for sidebar background */
-  --sidebar-foreground: #374151; /* Dark gray for sidebar text */
-  --sidebar-primary: #809bce; /* Primary periwinkle for sidebar */
-  --sidebar-primary-foreground: #ffffff; /* White text for primary sidebar elements */
-  --sidebar-accent: #b8e0d2; /* Secondary mint green for sidebar accents */
-  --sidebar-accent-foreground: #374151; /* Dark text for sidebar accents */
-  --sidebar-border: #e5e7eb; /* Light neutral border for sidebar */
-  --sidebar-ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring for sidebar */
-  --font-source-sans: "Source Sans Pro", sans-serif;
-  --font-playfair: "Playfair Display", serif;
-  /* Remove global red background and border */
-}
-
-.btn-danger:hover, .btn-danger:focus, .btn-danger:active {
-  background-color: var(--danger-color) !important;
-  color: #fff !important;
-  border-color: var(--danger-color) !important;
+    /* Updated color hierarchy: #809bce, #95b8d1 as primary; #b8e0d2, #d6eadf as secondary */
+    --background: #ffffff; /* Pure white for clean, spacious feel */
+    --foreground: #374151; /* Dark gray for high readability */
+    --card: #f8fafc; /* Light neutral for card backgrounds */
+    --card-foreground: #374151; /* Dark gray for card text */
+    --popover: #ffffff; /* White for popover backgrounds */
+    --popover-foreground: #374151; /* Dark gray for popover text */
+    --primary: #809bce; /* Primary: Soft periwinkle blue */
+    --primary-foreground: #ffffff; /* White text for primary buttons */
+    --secondary: #95b8d1; /* Primary: Light blue for secondary elements */
+    --secondary-foreground: #374151; /* Dark text for secondary elements */
+    --muted: #d6eadf; /* Secondary: Light sage for muted backgrounds */
+    --muted-foreground: #6b7280; /* Medium gray for muted text */
+    --accent: #b8e0d2; /* Secondary: Mint green for accent elements */
+    --accent-foreground: #374151; /* Dark text for accent elements */
+    --destructive: #eac4d5; /* Contrast: Soft pink for warnings */
+    --danger-color: #d90429; /* Strong red for SOS and logout */
+    --destructive-foreground: #374151; /* Dark text for destructive buttons */
+    --border: #e5e7eb; /* Light neutral border */
+    --input: #f9fafb; /* Light neutral background for input fields */
+    --ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring */
+    --chart-1: #809bce; /* Primary periwinkle for charts */
+    --chart-2: #95b8d1; /* Primary light blue for charts */
+    --chart-3: #b8e0d2; /* Secondary mint green for charts */
+    --chart-4: #d6eadf; /* Secondary light sage for charts */
+    --chart-5: #eac4d5; /* Contrast soft pink for charts */
+    --radius: 0.75rem; /* Rounded corners for softer feel */
+    --sidebar: #f8fafc; /* Light neutral for sidebar background */
+    --sidebar-foreground: #374151; /* Dark gray for sidebar text */
+    --sidebar-primary: #809bce; /* Primary periwinkle for sidebar */
+    --sidebar-primary-foreground: #ffffff; /* White text for primary sidebar elements */
+    --sidebar-accent: #b8e0d2; /* Secondary mint green for sidebar accents */
+    --sidebar-accent-foreground: #374151; /* Dark text for sidebar accents */
+    --sidebar-border: #e5e7eb; /* Light neutral border for sidebar */
+    --sidebar-ring: rgba(128, 155, 206, 0.5); /* Primary periwinkle focus ring for sidebar */
+    --font-source-sans: "Source Sans Pro", sans-serif;
+    --font-playfair: "Playfair Display", serif;
+    /* Remove global red background and border */
 }
 
 /* Global Styles */
 body {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  line-height: 1.6;
-  color: var(--card-foreground);
-  background: var(--background);
-  min-height: 100vh;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--card-foreground);
+    background: var(--background);
+    min-height: 100vh;
 }
-
-/* --- */
 
 /* Navigation Enhancements */
 .navbar {
-  background-color: var(--card);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: var(--card);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: var(--primary);
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--primary);
 }
 
 .nav-link {
-  transition: all 0.3s ease;
-  border-radius: var(--radius);
-  margin: 0 2px;
-  color: var(--foreground);
+    transition: all 0.3s ease;
+    border-radius: var(--radius);
+    margin: 0 2px;
+    color: var(--foreground);
 }
 
 .nav-link:hover {
-  background: var(--muted);
-  color: var(--muted-foreground);
-  transform: none;
+    background: var(--muted);
+    color: var(--muted-foreground);
+    transform: none;
 }
-
-/* --- */
 
 /* Card Enhancements */
 .card {
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease;
-  color: var(--card-foreground);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+    color: var(--card-foreground);
 }
 
 .card:hover {
-  transform: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  border-bottom: 1px solid var(--border);
-  background-color: var(--muted);
-  color: var(--card-foreground);
-  padding: 1rem 1.5rem;
-  font-weight: bold;
-  font-size: 1.1rem;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--muted);
+    color: var(--card-foreground);
+    padding: 1rem 1.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
-
-/* --- */
 
 /* Button Enhancements */
 .btn {
-  border-radius: var(--radius);
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  box-shadow: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: none;
 }
 
 .btn:hover {
-  transform: none;
-  box-shadow: none;
+    transform: none;
+    box-shadow: none;
 }
 
 .btn-primary {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  color: var(--primary-foreground);
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
 }
 
 .btn-primary:hover {
-  background-color: var(--ring);
-  border-color: var(--ring);
+    background-color: #6a88b5; /* A slightly darker shade of the primary color */
+    border-color: #6a88b5;
 }
 
 .btn-outline-primary {
-  border: 1px solid var(--primary);
-  color: var(--primary);
+    border: 1px solid var(--primary);
+    color: var(--primary);
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
 }
 
 .btn-success, .btn-info, .btn-warning, .btn-danger {
-  color: var(--foreground);
+    color: var(--foreground);
 }
 
-/* --- */
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active {
+    background-color: var(--danger-color) !important;
+    color: #fff !important;
+    border-color: var(--danger-color) !important;
+}
 
 /* Dashboard and Quick Stats */
 .stats-card {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  border-radius: var(--radius);
-  border: none;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: var(--radius);
+    border: none;
 }
 
 .card.bg-success {
-  background-color: var(--success-color) !important;
-  color: var(--dark-color);
+    background-color: var(--success-color) !important;
+    color: var(--dark-color);
 }
 
 .card.bg-info {
-  background-color: var(--info-color) !important;
-  color: var(--dark-color);
+    background-color: var(--info-color) !important;
+    color: var(--dark-color);
 }
 
 .card.bg-warning {
-  background-color: var(--warning-color) !important;
-  color: var(--dark-color);
+    background-color: var(--warning-color) !important;
+    color: var(--dark-color);
 }
 
 .card.bg-danger {
-  background-color: var(--danger-color) !important;
-  color: var(--dark-color);
+    background-color: var(--danger-color) !important;
+    color: var(--dark-color);
 }
 
 .metric-value {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-shadow: none;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: none;
 }
-
-/* --- */
 
 /* Chat Interface */
 .chat-container {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--card-foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--card-foreground);
 }
 
 .message.user .message-bubble {
-  background-color: var(--primary);
-  border-radius: var(--radius);
-  color: var(--primary-foreground);
+    background-color: var(--primary);
+    border-radius: var(--radius);
+    color: var(--primary-foreground);
 }
 
 .message.bot .message-bubble {
-  background-color: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--muted-foreground);
+    background-color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--muted-foreground);
 }
-
-/* --- */
 
 /* Sidebar Navigation */
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  background-color: var(--sidebar);
-  color: var(--sidebar-foreground);
-  transition: all 0.3s ease;
-  z-index: 1000;
-  overflow: hidden;
-  border-right: 1px solid var(--sidebar-border);
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: var(--sidebar);
+    color: var(--sidebar-foreground);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;
+    border-right: 1px solid var(--sidebar-border);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar.collapsed {
-  width: 70px;
+    width: 70px;
 }
 
 /* Sidebar Header */
 .sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid var(--sidebar-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--sidebar-border);
 }
 
 .sidebar-header .logo-section {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .sidebar-header .logo-section .label {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 .sidebar-header .btn-toggle-sidebar {
-  background: none;
-  border: none;
-  color: var(--sidebar-foreground);
+    background: none;
+    border: none;
+    color: var(--sidebar-foreground);
 }
 
-/* Collapsed state: hide logo & show toggle */
-.sidebar.collapsed .logo-section .label {
-  display: none;
+/* Collapsed state: hide logo, heart icon, and show only the toggle button */
+.sidebar.collapsed .logo-section .label,
+.sidebar.collapsed .logo-section .fas.fa-heart {
+    display: none;
 }
 
 .sidebar.collapsed .btn-toggle-sidebar {
-  display: block;
-  margin: 0 auto;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Sidebar Navigation */
 .sidebar ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  flex-grow: 1;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex-grow: 1;
 }
 
 .sidebar ul li {
-  padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
 }
 
 .sidebar ul li a {
-  color: var(--sidebar-foreground);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  border-radius: var(--radius);
-  padding: 0.6rem;
-  transition: all 0.3s ease;
+    color: var(--sidebar-foreground);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    border-radius: var(--radius);
+    padding: 0.6rem;
+    transition: all 0.3s ease;
 }
 
 .sidebar ul li a .icon {
-  font-size: 1.3rem;
-  margin-right: 12px;
-  min-width: 25px;
-  text-align: center;
+    font-size: 1.3rem;
+    margin-right: 12px;
+    min-width: 25px;
+    text-align: center;
 }
 
 .sidebar ul li a .label {
-  white-space: nowrap;
-  transition: opacity 0.3s ease;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
 }
 
-/* Hover effect */
-.sidebar ul li a:hover {
-  background-color: var(--sidebar-primary);
-  color: var(--sidebar-primary-foreground);
-  transform: none;
+/* Sidebar Navigation - Active State */
+.sidebar ul li a.active {
+    background-color: var(--sidebar-primary);
+    color: var(--sidebar-primary-foreground);
+    pointer-events: none;
+}
+
+/* Ensure the hover effect for non-active links is still distinct */
+.sidebar ul li a:not(.active):hover {
+    background-color: var(--sidebar-accent);
+    color: var(--sidebar-accent-foreground);
+    transform: none;
 }
 
 /* Collapsed Navigation */
 .sidebar.collapsed ul li a {
-  justify-content: center;
+    justify-content: center;
 }
 
 .sidebar.collapsed ul li a .label {
-  display: none;
+    display: none;
 }
 
 .sidebar.collapsed ul li a .icon {
-  margin-right: 0;
+    margin-right: 0;
 }
 
 /* Page Content */
 #content {
-  margin-left: 250px;
-  transition: all 0.3s ease;
+    margin-left: 250px;
+    transition: all 0.3s ease;
 }
 
 .sidebar.collapsed ~ #content {
-  margin-left: 70px;
+    margin-left: 70px;
 }
 
 /* Hide username (label) in footer when sidebar collapsed */
 .sidebar.collapsed .sidebar-footer .user-info .label {
-  display: none;
+    display: none;
 }
 
 .sidebar.collapsed .sidebar-footer .user-info {
-  justify-content: center;
+    justify-content: center;
 }
 
 /* Sidebar footer user info layout */
 .sidebar-footer .user-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  color: var(--sidebar-foreground);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    color: var(--sidebar-foreground);
 }
 
 /* Hide username when collapsed */
 .sidebar.collapsed .sidebar-footer .user-info .label {
-  display: none;
+    display: none;
 }
 
 /* Collapsed layout → stack icon + badge vertically */
 .sidebar.collapsed .sidebar-footer .user-info {
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
 }
 
 /* Make badge a little smaller under the icon */
 .sidebar.collapsed .sidebar-footer .user-info .badge {
-  font-size: 0.6rem;
+    font-size: 0.6rem;
 }
 
 .sidebar-footer .btn-danger {
-  background-color: var(--danger-color) !important;
-  border-color: var(--danger-color) !important;
+    background-color: var(--danger-color) !important;
+    border-color: var(--danger-color) !important;
 }
-
-/* --- */
 
 /* Footer Enhancements */
 footer {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  border-top: 1px solid var(--border);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border-top: 1px solid var(--border);
 }
-
-/* --- */
 
 /* Accessibility Enhancements */
 .btn:focus,
 .form-control:focus,
 .form-select:focus {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  :root {
-    --primary: #0056b3;
-    --card: #495057;
-  }
+    :root {
+        --primary: #0056b3;
+        --card: #495057;
+    }
 
-  .card {
-    border: 2px solid var(--foreground);
-  }
+    .card {
+        border: 2px solid var(--foreground);
+    }
 
-  .btn {
-    border: 2px solid currentColor;
-  }
+    .btn {
+        border: 2px solid currentColor;
+    }
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* Print styles */
 @media print {
-  .navbar,
-  .btn,
-  .modal,
-  .floating-action {
-    display: none !important;
-  }
+    .navbar,
+    .btn,
+    .modal,
+    .floating-action {
+        display: none !important;
+    }
 
-  body {
-    background: var(--background) !important;
-    color: var(--foreground) !important;
-  }
+    body {
+        background: var(--background) !important;
+        color: var(--foreground) !important;
+    }
 
-  .card {
-    border: 1px solid var(--border) !important;
-    box-shadow: none !important;
-  }
+    .card {
+        border: 1px solid var(--border) !important;
+        box-shadow: none !important;
+    }
 }
 
 /* Loading animations */
 .spinner-border {
-  border-color: var(--primary);
-  border-right-color: transparent;
+    border-color: var(--primary);
+    border-right-color: transparent;
 }
 
 .loading-dots {
-  display: inline-block;
+    display: inline-block;
 }
 
 .loading-dots::after {
-  content: '';
-  animation: dots 1.5s steps(5, end) infinite;
+    content: '';
+    animation: dots 1.5s steps(5, end) infinite;
 }
 
 @keyframes dots {
-  0%, 20% { content: ''; }
-  40% { content: '.'; }
-  60% { content: '..'; }
-  80%, 100% { content: '...'; }
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
 }
 
 /* Custom scrollbar */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 4px;
+    background: var(--primary);
+    border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #768da4;
+    background: #768da4;
 }
 
 /* Sidebar logo text and heart icon */
