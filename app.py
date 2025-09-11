@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy.orm import DeclarativeBase
-from inkblot.routes import inkblot_bp
+## Removed inkblot import; will define inkblot routes in routes.py
 from database import db
 
 logging.basicConfig(level=logging.DEBUG)
@@ -51,4 +51,4 @@ def nl2br(value):
     return Markup(value.replace('\n', '<br>'))
 
 app.jinja_env.filters['nl2br'] = nl2br
-app.register_blueprint(inkblot_bp)
+## Removed inkblot_bp blueprint registration; now using direct route in routes.py
