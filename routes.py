@@ -133,6 +133,9 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    # Redirect counsellors to their dedicated dashboard
+    if getattr(current_user, 'role', None) == 'counsellor':
+        return redirect(url_for('counsellor_dashboard'))
     # Get today's tasks for current user
     from models import RoutineTask
     today = datetime.utcnow().date()
