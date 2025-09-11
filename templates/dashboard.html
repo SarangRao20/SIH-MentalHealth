@@ -4,22 +4,13 @@
 
 {% block content %}
 <div class="container-fluid py-4">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-dark mb-2"><i class="fas fa-star text-warning me-2"></i>Daily Inspiration</h5>
-                    <p class="card-text lead fst-italic">"Every small step forward is progress worth celebrating."</p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <h1 class="h2">Welcome back, {{ current_user.full_name }}</h1>
             <p class="text-muted">How are you feeling today? Remember, every step counts.</p>
         </div>
     </div>
+    
     <div class="row g-4 mb-4">
         <div class="col-lg-4 col-md-6">
             <div class="card h-100">
@@ -45,9 +36,9 @@
         <div class="col-lg-4 col-md-6">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title text-dark mb-3"><i class="fas fa-heart text-success me-2"></i>Wellness</h5>
-                    <h2 class="metric-value text-info">{{ overall_mood }}</h2>
-                    <p class="card-text text-muted mb-3">Overall mood</p>
+                    <h5 class="card-title text-dark mb-3"><i class="fas fa-calendar-alt text-success me-2"></i>Login Streak</h5>
+                    <h2 class="metric-value text-info">{{ login_streak }} day{{ 's' if login_streak != 1 }}</h2>
+                    <p class="card-text text-muted mb-3">Keep it up to reach your goals!</p>
                     <div class="progress" style="height: 5px;">
                         <div class="progress-bar bg-info" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
@@ -57,7 +48,15 @@
     </div>
     
     <div class="row mb-4">
-    <!-- Daily Inspiration card moved to top -->
+        <div class="col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-dark mb-2"><i class="fas fa-star text-warning me-2"></i>Daily Inspiration</h5>
+                    <p class="card-text lead fst-italic">"Every small step forward is progress worth celebrating."</p>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="row g-4">
         <div class="col-md-4">
@@ -84,8 +83,34 @@
                 </a>
             </div>
         </div>
-        <!-- Assessment History Section -->
-        <div class="col-12 mt-4">
+        <div class="col-md-4">
+            <div class="card h-100 action-card">
+                <a href="{{ url_for('venting_hall') }}" class="d-block text-decoration-none text-dark p-4">
+                    <h5 class="mb-2"><i class="fas fa-cloud-sun text-info me-2"></i>Venting Hall</h5>
+                    <small class="text-muted">Share your thoughts with the community</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 action-card">
+                <a href="{{ url_for('consultation') }}" class="d-block text-decoration-none text-dark p-4">
+                    <h5 class="mb-2"><i class="fas fa-user-friends text-success me-2"></i>Get Support</h5>
+                    <small class="text-muted">Connect with professional counselors</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 action-card">
+                <a href="{{ url_for('chatbot') }}" class="d-block text-decoration-none text-dark p-4">
+                    <h5 class="mb-2"><i class="fas fa-comments text-primary me-2"></i>Chat Support</h5>
+                    <small class="text-muted">Immediate support when you need it</small>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0"><i class="fas fa-history me-2"></i>Assessment History</h5>
@@ -119,33 +144,9 @@
                         </table>
                     </div>
                     {% else %}
-                        <div class="p-3 text-muted">No assessments found.</div>
+                    <div class="p-3 text-muted">No assessments found.</div>
                     {% endif %}
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100 action-card">
-                <a href="{{ url_for('venting_hall') }}" class="d-block text-decoration-none text-dark p-4">
-                    <h5 class="mb-2"><i class="fas fa-cloud-sun text-info me-2"></i>Venting Hall</h5>
-                    <small class="text-muted">Share your thoughts with the community</small>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100 action-card">
-                <a href="{{ url_for('consultation') }}" class="d-block text-decoration-none text-dark p-4">
-                    <h5 class="mb-2"><i class="fas fa-user-friends text-success me-2"></i>Get Support</h5>
-                    <small class="text-muted">Connect with professional counselors</small>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100 action-card">
-                <a href="{{ url_for('chatbot') }}" class="d-block text-decoration-none text-dark p-4">
-                    <h5 class="mb-2"><i class="fas fa-comments text-primary me-2"></i>Chat Support</h5>
-                    <small class="text-muted">Immediate support when you need it</small>
-                </a>
             </div>
         </div>
     </div>
