@@ -1,7 +1,8 @@
+
 from flask import render_template, request, redirect, url_for, flash, jsonify, session, send_file
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
-from models import User, ChatSession, ChatMessage, Assessment, MeditationSession, VentingPost, VentingResponse, ConsultationRequest
+from models import User, ChatSession, ChatMessage, Assessment, MeditationSession, VentingPost, VentingResponse, ConsultationRequest, AvailabilitySlot
 from gemini_service import chat_with_ai, analyze_assessment_results, suggest_assessment
 from voice_service import voice_service
 from utils import (hash_student_id, calculate_phq9_score, calculate_gad7_score, 
@@ -10,13 +11,45 @@ from utils import (hash_student_id, calculate_phq9_score, calculate_gad7_score,
 import json
 import logging
 from datetime import datetime, timedelta
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, case
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
 from PIL import Image
 import io
 import os
+
+# Email helper
+import smtplib
+import ssl
+from email.message import EmailMessage
+
+def send_email(subject: str, body: str, to_email: str) -> bool:
+    """Send email using environment SMTP settings; fallback to logging."""
+    try:
+        smtp_host = os.environ.get('SMTP_HOST')
+        smtp_port = int(os.environ.get('SMTP_PORT', '587'))
+        smtp_user = os.environ.get('SMTP_USER')
+        smtp_pass = os.environ.get('SMTP_PASS')
+        from_email = os.environ.get('SMTP_FROM', smtp_user or 'no-reply@example.com')
+        if not (smtp_host and smtp_user and smtp_pass and to_email):
+            app.logger.info(f"EMAIL (stub) to {to_email}: {subject} | {body}")
+            return False
+        msg = EmailMessage()
+        msg['Subject'] = subject
+        msg['From'] = from_email
+        msg['To'] = to_email
+        msg.set_content(body)
+        context = ssl.create_default_context()
+        with smtplib.SMTP(smtp_host, smtp_port) as server:
+            server.starttls(context=context)
+            server.login(smtp_user, smtp_pass)
+            server.send_message(msg)
+        return True
+    except Exception as e:
+        app.logger.warning(f"EMAIL send failed to {to_email}: {e}. Falling back to log. Subject: {subject}")
+        app.logger.info(f"EMAIL (stub) to {to_email}: {subject} | {body}")
+        return False
 
 @app.route('/')
 def index():
@@ -72,6 +105,13 @@ def login():
             login_user(user)
             user.update_login_streak()
             flash(f'Welcome back! Your login streak: {user.login_streak} days', 'success')
+            # Role-based landing
+            if user.role == 'counsellor':
+                return redirect(url_for('counsellor_dashboard'))
+            if user.role == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            if user.role in ['teacher']:
+                return redirect(url_for('mentor_dashboard'))
             return redirect(url_for('dashboard'))
         else:
             flash('Invalid username or password', 'error')
@@ -125,7 +165,8 @@ def dashboard():
                          total_minutes_meditated=total_minutes_meditated,
                          tasks_completed=tasks_completed,
                          total_tasks=total_tasks,
-                         tasks_progress=tasks_progress)
+                         tasks_progress=tasks_progress,
+                         login_streak=current_user.login_streak or 0)
 
 @app.route('/chatbot')
 @login_required
@@ -277,14 +318,15 @@ def assessment_form(assessment_type):
                          questions=questions,
                          options=options)
 
-@app.route('/assessment/results/<int:assessment_id>')
+@app.route('/assessment_results/<int:assessment_id>')
 @login_required
-def view_assessment_results(assessment_id):
+def assessment_results(assessment_id):
     assessment = Assessment.query.get_or_404(assessment_id)
-    if assessment.user_id != current_user.id:
+    counsellors = User.query.filter_by(role='counsellor').all()
+    # Permission check (example: only owner or counsellor can view)
+    if assessment.user_id != current_user.id and current_user.role != 'counsellor':
         flash('You do not have permission to view these results', 'error')
-        return redirect(url_for('assessments'))
-    import json
+        return redirect(url_for('assessments'))  
     if assessment.recommendations:
         try:
             analysis = json.loads(assessment.recommendations)
@@ -294,7 +336,8 @@ def view_assessment_results(assessment_id):
         analysis = generate_analysis(assessment.assessment_type, assessment.score)
     return render_template('assessment_results.html',
                          assessment=assessment,
-                         analysis=analysis)
+                         analysis=analysis,
+                         counsellors=counsellors)
 
 def generate_analysis(assessment_type, score):
     if assessment_type == 'PHQ-9':
@@ -349,9 +392,11 @@ def submit_assessment():
     )
     db.session.add(assessment)
     db.session.commit()
+    counsellors = User.query.filter_by(role='counsellor').all()
     return render_template('assessment_results.html',
                          assessment=assessment,
-                         analysis=analysis)
+                         analysis=analysis,
+                         counsellors=counsellors)
 
 @app.route('/meditation')
 @login_required
@@ -394,6 +439,15 @@ def meditation_completed():
     )
     db.session.add(meditation_session)
     db.session.commit()
+    # Notify user about successful meditation (optional encouragement)
+    try:
+        send_email(
+            subject='Meditation completed',
+            body=f'Great job! You completed a {duration_seconds//60} minute {session_type} session today. Keep your streak going!',
+            to_email=current_user.email
+        )
+    except Exception:
+        pass
     today = datetime.utcnow().date()
     start_of_week = today - timedelta(days=today.weekday())
     weekly_count = MeditationSession.query.filter_by(user_id=current_user.id).filter(
@@ -520,7 +574,48 @@ def delete_response(response_id):
 @login_required
 def consultation():
     user_requests = ConsultationRequest.query.filter_by(user_id=current_user.id).order_by(ConsultationRequest.created_at.desc()).all()
-    return render_template('consultation.html', requests=user_requests)
+    counsellors = User.query.filter_by(role='counsellor').all()
+    from datetime import datetime, timedelta
+    for req in user_requests:
+        if req.status == 'booked':
+            flash(f'Your consultation with counsellor {req.counsellor.full_name} is booked!', 'success')
+            if req.session_datetime:
+                now = datetime.utcnow()
+                if req.session_datetime > now and req.session_datetime < now + timedelta(days=2):
+                    flash(f'Reminder: Your session is scheduled for {req.session_datetime.strftime("%d %b %Y, %I:%M %p")}', 'info')
+        elif req.status == 'rejected':
+            flash(f'Your consultation request was rejected by counsellor {req.counsellor.full_name}.', 'warning')
+    # Available slots (open, future)
+    open_slots = AvailabilitySlot.query.filter(
+        AvailabilitySlot.is_booked == False,
+        AvailabilitySlot.start_time >= datetime.utcnow()
+    ).order_by(AvailabilitySlot.start_time.asc()).all()
+    # Pass current time to template for comparisons
+    return render_template('consultation.html', requests=user_requests, counsellors=counsellors, open_slots=open_slots, now=datetime.utcnow())
+
+@app.route('/api/open_slots')
+@login_required
+def api_open_slots():
+    counsellor_id = request.args.get('counsellor_id', type=int)
+    q = AvailabilitySlot.query.filter(
+        AvailabilitySlot.is_booked == False,
+        AvailabilitySlot.start_time >= datetime.utcnow()
+    )
+    if counsellor_id:
+        q = q.filter(AvailabilitySlot.counsellor_id == counsellor_id)
+    slots = q.order_by(AvailabilitySlot.start_time.asc()).all()
+    return jsonify([
+        {
+            'id': s.id,
+            'counsellor': {
+                'id': s.counsellor.id,
+                'full_name': s.counsellor.full_name,
+                'username': s.counsellor.username
+            },
+            'start': s.start_time.isoformat(),
+            'end': s.end_time.isoformat()
+        } for s in slots
+    ])
 
 
 # Routine Scheduler
@@ -574,22 +669,108 @@ def routine():
 @login_required
 def request_consultation():
     urgency = request.form['urgency']
-    preferred_time = request.form['preferred_time']
+    time_slot = request.form.get('preferred_time', '')
     contact_preference = request.form['contact_preference']
     notes = request.form.get('notes', '')
-    
+    counsellor_id_raw = request.form.get('counsellor_id')
+    try:
+        counsellor_id = int(counsellor_id_raw)
+    except (TypeError, ValueError):
+        flash('Please select a valid counsellor.', 'error')
+        return redirect(url_for('consultation'))
+    counsellor = User.query.filter_by(id=counsellor_id, role='counsellor').first()
+    if not counsellor:
+        flash('Selected counsellor not found.', 'error')
+        return redirect(url_for('consultation'))
+
     consultation = ConsultationRequest(
         user_id=current_user.id,
         urgency_level=urgency,
-        preferred_time=preferred_time,
+        time_slot=time_slot,
         contact_preference=contact_preference,
-        additional_notes=notes
+        additional_notes=notes,
+        counsellor_id=counsellor_id
     )
-    
+
     db.session.add(consultation)
     db.session.commit()
-    
-    flash('Your consultation request has been submitted. A mental health professional will contact you soon.', 'success')
+
+    # Notify counsellor
+    send_email(
+        subject='New consultation request',
+        body=f'New consultation request from {current_user.full_name} ({current_user.username}). Urgency: {urgency}.',
+        to_email=counsellor.email
+    )
+    # Notify user (confirmation)
+    send_email(
+        subject='Consultation request submitted',
+        body=f'Your consultation request to {counsellor.full_name} has been submitted. Urgency: {urgency}. We will notify you once the counsellor responds.',
+        to_email=current_user.email
+    )
+
+    flash(f'Your consultation request has been submitted to {counsellor.full_name}. You will be notified once they respond.', 'success')
+    return redirect(url_for('consultation'))
+
+@app.route('/counsellor/availability', methods=['GET', 'POST'])
+@login_required
+def counsellor_availability():
+    if current_user.role != 'counsellor':
+        flash('Access denied.', 'error')
+        return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        start = request.form.get('start_time')
+        end = request.form.get('end_time')
+        try:
+            from datetime import datetime
+            start_dt = datetime.strptime(start, '%Y-%m-%dT%H:%M')
+            end_dt = datetime.strptime(end, '%Y-%m-%dT%H:%M')
+            if end_dt <= start_dt:
+                raise ValueError('End must be after start')
+            slot = AvailabilitySlot(counsellor_id=current_user.id, start_time=start_dt, end_time=end_dt)
+            db.session.add(slot)
+            db.session.commit()
+            flash('Availability slot added.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash('Invalid date/time.', 'error')
+        return redirect(url_for('counsellor_availability'))
+    slots = AvailabilitySlot.query.filter_by(counsellor_id=current_user.id).order_by(AvailabilitySlot.start_time.asc()).all()
+    return render_template('counsellor_availability.html', slots=slots)
+
+@app.route('/book_slot/<int:slot_id>', methods=['POST'])
+@login_required
+def book_slot(slot_id):
+    slot = AvailabilitySlot.query.get_or_404(slot_id)
+    if slot.is_booked:
+        flash('Slot already booked.', 'warning')
+        return redirect(url_for('consultation'))
+    counsellor = User.query.get(slot.counsellor_id)
+    # Create consultation request tied to this slot
+    consultation = ConsultationRequest(
+        user_id=current_user.id,
+        counsellor_id=slot.counsellor_id,
+        urgency_level='low',
+        time_slot=f"{slot.start_time.strftime('%d %b %Y %I:%M %p')} - {slot.end_time.strftime('%I:%M %p')}",
+        contact_preference='video',
+        additional_notes='Booked via availability slot',
+        status='pending'
+    )
+    slot.is_booked = True
+    db.session.add(consultation)
+    db.session.commit()
+    # Notify counsellor
+    send_email(
+        subject='Slot booked',
+        body=f'Slot booked by {current_user.full_name} ({current_user.username}) for {slot.start_time}.',
+        to_email=counsellor.email
+    )
+    # Notify user (confirmation)
+    send_email(
+        subject='Slot booking submitted',
+        body=f'You requested to book {slot.start_time.strftime('%d %b %Y, %I:%M %p')} with {counsellor.full_name}. You will receive a confirmation when the counsellor accepts.',
+        to_email=current_user.email
+    )
+    flash(f'Booked slot with {counsellor.full_name}. Awaiting confirmation.', 'success')
     return redirect(url_for('consultation'))
 
 @app.route('/mentor_dashboard')
@@ -766,3 +947,378 @@ def not_found(error):
 def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
+
+@app.route('/counsellor_dashboard')
+@login_required
+def counsellor_dashboard():
+    if current_user.role != 'counsellor':
+        flash('Access denied. This page is for counsellors only.', 'error')
+        return redirect(url_for('dashboard'))
+    # Show all requests (pending, booked, rejected) for this counsellor
+    # Order: pending first, then booked, then others by date desc
+    status_order = case(
+        (ConsultationRequest.status == 'pending', 0),
+        (ConsultationRequest.status == 'booked', 1),
+        else_=2
+    )
+    requests = ConsultationRequest.query.filter_by(counsellor_id=current_user.id).order_by(
+        status_order, ConsultationRequest.created_at.desc()
+    ).all()
+    from datetime import datetime
+    return render_template('counsellor_dashboard.html', requests=requests, now=datetime.utcnow())
+
+@app.route('/_debug/consults')
+@login_required
+def debug_consults():
+    # Admin sees all; counsellor sees own; others see own user requests
+    if current_user.role == 'admin':
+        q = ConsultationRequest.query.order_by(ConsultationRequest.created_at.desc()).all()
+    elif current_user.role == 'counsellor':
+        q = ConsultationRequest.query.filter_by(counsellor_id=current_user.id).order_by(ConsultationRequest.created_at.desc()).all()
+    else:
+        q = ConsultationRequest.query.filter_by(user_id=current_user.id).order_by(ConsultationRequest.created_at.desc()).all()
+    data = []
+    for r in q:
+        data.append({
+            'id': r.id,
+            'user_id': r.user_id,
+            'user_username': getattr(r.user, 'username', None),
+            'counsellor_id': r.counsellor_id,
+            'counsellor_username': getattr(r.counsellor, 'username', None) if r.counsellor else None,
+            'urgency': r.urgency_level,
+            'status': r.status,
+            'time_slot': r.time_slot,
+            'session_datetime': r.session_datetime.isoformat() if r.session_datetime else None,
+            'created_at': r.created_at.isoformat() if r.created_at else None
+        })
+    return jsonify({'role': current_user.role, 'current_user': current_user.username, 'records': data})
+
+@app.route('/accept_consultation/<int:request_id>', methods=['POST'])
+@login_required
+def accept_consultation(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id:
+        flash('Unauthorized action.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    req.status = 'booked'
+    db.session.commit()
+    # Notify user
+    send_email(
+        subject='Consultation accepted',
+        body=f'Your consultation was accepted by {current_user.full_name}. You will receive scheduling details soon.',
+        to_email=req.user.email
+    )
+    flash('Consultation accepted and booked. The user will be notified.', 'success')
+    return redirect(url_for('counsellor_dashboard'))
+
+@app.route('/reject_consultation/<int:request_id>', methods=['POST'])
+@login_required
+def reject_consultation(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id:
+        flash('Unauthorized action.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    req.status = 'rejected'
+    db.session.commit()
+    send_email(
+        subject='Consultation update',
+        body=f'Your consultation request was rejected by {current_user.full_name}. You can request another counsellor from the portal.',
+        to_email=req.user.email
+    )
+    flash('Consultation rejected. The user will be notified.', 'info')
+    return redirect(url_for('counsellor_dashboard'))
+
+@app.route('/view_user_assessment/<int:user_id>')
+@login_required
+def view_user_assessment(user_id):
+    if current_user.role != 'counsellor':
+        flash('Access denied.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    from models import Assessment, User, MeditationSession, RoutineTask, ConsultationRequest
+    user = User.query.get_or_404(user_id)
+    # Only allow viewing if this counsellor has a booked consultation with the user
+    has_relationship = ConsultationRequest.query.filter_by(
+        user_id=user.id,
+        counsellor_id=current_user.id,
+        status='booked'
+    ).first() is not None
+    if not has_relationship:
+        flash('You can only view analytics for users with booked consultations.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    assessments = Assessment.query.filter_by(user_id=user_id).order_by(Assessment.completed_at.desc()).all()
+    if not assessments:
+        flash('No assessments found for this user.', 'warning')
+        return redirect(url_for('counsellor_dashboard'))
+    # Compute user stats for counsellor overview
+    from datetime import datetime, timedelta
+    today = datetime.utcnow().date()
+    start_of_week = today - timedelta(days=today.weekday())
+    weekly_sessions_count = MeditationSession.query.filter_by(user_id=user.id).filter(
+        MeditationSession.date >= start_of_week
+    ).count()
+    total_seconds = db.session.query(func.sum(MeditationSession.duration)).filter_by(
+        user_id=user.id
+    ).scalar() or 0
+    total_minutes_meditated = total_seconds // 60
+    todays_tasks = RoutineTask.query.filter_by(user_id=user.id, created_date=today).all()
+    # Additional analytics
+    recent_30 = datetime.utcnow() - timedelta(days=30)
+    recent_assessments = Assessment.query.filter_by(user_id=user.id).filter(Assessment.completed_at >= recent_30).all()
+    by_type = {}
+    for a in recent_assessments:
+        by_type.setdefault(a.assessment_type, {'count': 0, 'severities': []})
+        by_type[a.assessment_type]['count'] += 1
+        by_type[a.assessment_type]['severities'].append(a.severity_level)
+    last_three = assessments[:3]
+    login_streak = user.login_streak or 0
+    # Meditation time series (last 14 days)
+    days = [today - timedelta(days=i) for i in range(13, -1, -1)]
+    sessions_14 = MeditationSession.query.filter_by(user_id=user.id).filter(MeditationSession.date >= days[0]).all()
+    minutes_by_day = {d: 0 for d in days}
+    for s in sessions_14:
+        if s.date in minutes_by_day:
+            minutes_by_day[s.date] += (s.duration or 0) // 60
+    meditation_series = {
+        'labels': [d.strftime('%d %b') for d in days],
+        'values': [minutes_by_day[d] for d in days]
+    }
+    # Assessment severity trend (last 10)
+    last_ten = assessments[:10]
+    severity_map = {
+        'Minimal': 1, 'Good': 1,
+        'Mild': 2, 'Fair': 2,
+        'Moderate': 3,
+        'Moderately severe': 4,
+        'Severe': 5
+    }
+    severity_series = {
+        'labels': [a.completed_at.strftime('%d %b') for a in reversed(last_ten)],
+        'values': [severity_map.get(a.severity_level, 0) for a in reversed(last_ten)],
+        'types': [a.assessment_type for a in reversed(last_ten)]
+    }
+    return render_template(
+        'counsellor_user_assessments.html',
+        user=user,
+        assessments=assessments,
+        weekly_sessions_count=weekly_sessions_count,
+        total_minutes_meditated=total_minutes_meditated,
+        todays_tasks=todays_tasks,
+        recent_by_type=by_type,
+        last_three=last_three,
+        login_streak=login_streak,
+        meditation_series=meditation_series,
+        severity_series=severity_series
+    )
+@app.route('/admin_dashboard')
+@login_required
+def admin_dashboard():
+    if current_user.role != 'admin':
+        flash('Access denied. This page is for admins only.', 'error')
+        return redirect(url_for('dashboard'))
+    from sqlalchemy.sql import func
+    total_users = User.query.count()
+    total_counsellors = User.query.filter_by(role='counsellor').count()
+    total_bookings = ConsultationRequest.query.count()
+    recent_feedback = ConsultationRequest.query.filter(ConsultationRequest.feedback_rating != None).order_by(ConsultationRequest.created_at.desc()).limit(5).all()
+    # Top counsellors by bookings and avg rating
+    counsellors = User.query.filter_by(role='counsellor').all()
+    top_counsellors = []
+    for c in counsellors:
+        bookings = ConsultationRequest.query.filter_by(counsellor_id=c.id).count()
+        ratings = [req.feedback_rating for req in ConsultationRequest.query.filter_by(counsellor_id=c.id).filter(ConsultationRequest.feedback_rating != None).all()]
+        avg_rating = sum(ratings)/len(ratings) if ratings else 0
+        top_counsellors.append({'full_name': c.full_name, 'username': c.username, 'bookings': bookings, 'avg_rating': avg_rating})
+    top_counsellors = sorted(top_counsellors, key=lambda x: (x['bookings'], x['avg_rating']), reverse=True)[:5]
+    return render_template('admin_dashboard.html', total_users=total_users, total_counsellors=total_counsellors, total_bookings=total_bookings, recent_feedback=recent_feedback, top_counsellors=top_counsellors)
+@app.route('/schedule_follow_up/<int:request_id>', methods=['POST'])
+@login_required
+def schedule_follow_up(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id or req.status != 'booked':
+        flash('Unauthorized or invalid request.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    follow_up_datetime_str = request.form.get('follow_up_datetime')
+    try:
+        from datetime import datetime
+        req.follow_up_datetime = datetime.strptime(follow_up_datetime_str, '%Y-%m-%dT%H:%M')
+        db.session.commit()
+        send_email(
+            subject='Follow-up scheduled',
+            body=f'Your follow-up is scheduled on {req.follow_up_datetime} with {current_user.full_name}.',
+            to_email=req.user.email
+        )
+        flash('Follow-up session scheduled!', 'success')
+    except Exception:
+        flash('Invalid date/time format.', 'error')
+    return redirect(url_for('counsellor_dashboard'))
+@app.route('/set_chat_video_link/<int:request_id>', methods=['POST'])
+@login_required
+def set_chat_video_link(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id or req.status != 'booked':
+        flash('Unauthorized or invalid request.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    req.chat_video_link = request.form.get('chat_video_link')
+    db.session.commit()
+    send_email(
+        subject='Session link available',
+        body=f'Your session link is set: {req.chat_video_link}',
+        to_email=req.user.email
+    )
+    flash('Chat/Video link set!', 'success')
+    return redirect(url_for('counsellor_dashboard'))
+@app.route('/submit_feedback/<int:request_id>', methods=['POST'])
+@login_required
+def submit_feedback(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.user_id != current_user.id or req.status != 'booked':
+        flash('Unauthorized or invalid request.', 'error')
+        return redirect(url_for('consultation'))
+    req.feedback_rating = int(request.form.get('feedback_rating'))
+    req.feedback_text = request.form.get('feedback_text')
+    db.session.commit()
+    flash('Thank you for your feedback!', 'success')
+    return redirect(url_for('consultation'))
+@app.route('/add_session_notes/<int:request_id>', methods=['POST'])
+@login_required
+def add_session_notes(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id or req.status != 'booked':
+        flash('Unauthorized or invalid request.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    req.session_notes = request.form.get('session_notes')
+    db.session.commit()
+    flash('Session notes saved!', 'success')
+    return redirect(url_for('counsellor_dashboard'))
+@app.route('/schedule_session/<int:request_id>', methods=['POST'])
+@login_required
+def schedule_session(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id or req.status != 'booked':
+        flash('Unauthorized or invalid request.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    session_datetime_str = request.form.get('session_datetime')
+    try:
+        from datetime import datetime
+        req.session_datetime = datetime.strptime(session_datetime_str, '%Y-%m-%dT%H:%M')
+        db.session.commit()
+        send_email(
+            subject='Session scheduled',
+            body=f'Your session is scheduled for {req.session_datetime} with {current_user.full_name}.',
+            to_email=req.user.email
+        )
+        flash('Session scheduled successfully!', 'success')
+    except Exception:
+        flash('Invalid date/time format.', 'error')
+    return redirect(url_for('counsellor_dashboard'))
+
+@app.route('/cancel_booking/<int:request_id>', methods=['POST'])
+@login_required
+def cancel_booking(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id:
+        flash('Unauthorized action.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    prev_status = req.status
+    req.status = 'cancelled'
+    db.session.commit()
+    if prev_status == 'booked' or prev_status == 'pending':
+        send_email(
+            subject='Consultation cancelled',
+            body=f'Your consultation with {current_user.full_name} has been cancelled. Please book a new slot or request another counsellor.',
+            to_email=req.user.email
+        )
+    flash('Booking cancelled.', 'info')
+    return redirect(url_for('counsellor_dashboard'))
+
+@app.route('/download_session_notes/<int:request_id>')
+@login_required
+def download_session_notes(request_id):
+    req = ConsultationRequest.query.get_or_404(request_id)
+    if req.counsellor_id != current_user.id:
+        flash('Unauthorized action.', 'error')
+        return redirect(url_for('counsellor_dashboard'))
+    # Build a simple PDF for session notes
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=letter)
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(50, 760, "Session Notes")
+    p.setFont("Helvetica", 12)
+    y = 740
+    def writeln(text):
+        nonlocal y
+        if y < 60:
+            p.showPage()
+            p.setFont("Helvetica", 12)
+            y = 780
+        p.drawString(50, y, text)
+        y -= 18
+    writeln(f"Counsellor: {current_user.full_name} ({current_user.username})")
+    writeln(f"Student: {req.user.full_name} ({req.user.username})")
+    if req.session_datetime:
+        writeln(f"Session: {req.session_datetime.strftime('%d %b %Y, %I:%M %p')}")
+    writeln(f"Status: {req.status}")
+    writeln("")
+    p.setFont("Helvetica-Bold", 12)
+    writeln("Notes:")
+    p.setFont("Helvetica", 12)
+    notes = req.session_notes or "(No notes)"
+    # Wrap notes
+    import textwrap
+    for line in notes.splitlines() or [notes]:
+        for wrapped in textwrap.wrap(line, width=90):
+            writeln(wrapped)
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+    return send_file(buffer, as_attachment=True, download_name=f"session_notes_{request_id}.pdf", mimetype="application/pdf")
+@app.route('/send_result_to_counsellor/<int:assessment_id>', methods=['POST'])
+@login_required
+def send_result_to_counsellor(assessment_id):
+    counsellor_id_raw = request.form.get('counsellor_id')
+    try:
+        counsellor_id = int(counsellor_id_raw)
+    except (TypeError, ValueError):
+        flash('Please select a valid counsellor.', 'error')
+        return redirect(url_for('assessment_results', assessment_id=assessment_id))
+    counsellor = User.query.filter_by(id=counsellor_id, role='counsellor').first()
+    if not counsellor:
+        flash('Selected counsellor not found.', 'error')
+        return redirect(url_for('assessment_results', assessment_id=assessment_id))
+    assessment = Assessment.query.get_or_404(assessment_id)
+    # Create a new consultation request for the selected counsellor, referencing the assessment
+    from models import ConsultationRequest
+    new_request = ConsultationRequest(
+        user_id=current_user.id,
+        counsellor_id=counsellor_id,
+        urgency_level='medium',
+        time_slot='Assessment follow-up',
+        contact_preference='email',
+        additional_notes=f'Assessment ({assessment.assessment_type}) sent to counsellor. Score: {assessment.score}, Severity: {assessment.severity_level}',
+        status='pending'
+    )
+    db.session.add(new_request)
+    db.session.commit()
+    # Notify counsellor and user
+    try:
+        counsellor = User.query.get(int(counsellor_id))
+    except Exception:
+        counsellor = None
+    if counsellor:
+        send_email(
+            subject='Assessment shared with you',
+            body=f'{current_user.full_name} sent {assessment.assessment_type} results (score {assessment.score}, {assessment.severity_level}).',
+            to_email=counsellor.email
+        )
+    send_email(
+        subject='Assessment shared',
+        body=f'Your {assessment.assessment_type} results were shared with the counsellor.',
+        to_email=current_user.email
+    )
+    # Prepare analysis for template
+    try:
+        analysis = json.loads(assessment.recommendations) if assessment.recommendations else generate_analysis(assessment.assessment_type, assessment.score)
+    except Exception:
+        analysis = generate_analysis(assessment.assessment_type, assessment.score)
+    flash('Your assessment result has been sent to the selected counsellor and a follow-up request has been created.', 'success')
+    return render_template('assessment_results.html', assessment=assessment, analysis=analysis, counsellors=User.query.filter_by(role='counsellor').all(), sent_to_counsellor=True)
