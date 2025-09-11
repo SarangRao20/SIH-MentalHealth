@@ -27,7 +27,6 @@ body{background:var(--bg); color:var(--fg);}
     --primary-foreground: #ffffff; /* White text for primary buttons */
     --secondary: #95b8d1; /* Primary: Light blue for secondary elements */
     --secondary-foreground: #374151; /* Dark text for secondary elements */
-    --muted: #d6eadf; /* Secondary: Light sage for muted backgrounds */
     --muted-foreground: #6b7280; /* Medium gray for muted text */
     --accent: #b8e0d2; /* Secondary: Mint green for accent elements */
     --accent-foreground: #374151; /* Dark text for accent elements */
