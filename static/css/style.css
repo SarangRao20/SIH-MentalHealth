@@ -109,6 +109,25 @@ body {
   font-size: 1.1rem;
 }
 
+/* Custom background colors for assessment cards based on new color variables */
+.card-header.bg-destructive, .btn.btn-destructive {
+  background-color: var(--destructive) !important;
+  color: var(--destructive-foreground) !important;
+  border-color: var(--destructive) !important;
+}
+
+.card-header.bg-accent, .btn.btn-accent {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+  border-color: var(--accent) !important;
+}
+
+.card-header.bg-secondary, .btn.btn-secondary {
+  background-color: var(--secondary) !important;
+  color: var(--secondary-foreground) !important;
+  border-color: var(--secondary) !important;
+}
+
 /* --- */
 
 /* Button Enhancements */
@@ -496,4 +515,23 @@ footer {
 .sidebar-header .logo-section:hover .label,
 .sidebar-header .logo-section:hover i.fas.fa-heart {
     color: var(--primary); /* Soft periwinkle accent on hover */
+}
+
+/* Default icon style */
+.chatbot-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('../images/bot.png'); /* The default image */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+    vertical-align: middle;
+    transition: background-image 0.3s ease-in-out;
+}
+
+/* Hover effect to change the image */
+.chatbot-link:hover .chatbot-icon {
+    background-image: url('../images/bot2.png'); /* The new image on hover */
 }

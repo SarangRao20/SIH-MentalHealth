@@ -17,11 +17,10 @@
         </div>
     </div>
     
-    <!-- Available Assessments -->
     <div class="row g-4 mb-5">
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-warning">
-                <div class="card-header bg-warning text-white">
+            <div class="card h-100 border-destructive">
+                <div class="card-header bg-destructive text-white">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-paint-brush"></i> Inkblot Test
                     </h5>
@@ -32,13 +31,13 @@
                         The Inkblot Test is a projective psychological test to analyze personality and emotional functioning.
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-warning"></i> Takes 5-10 minutes</li>
-                        <li><i class="fas fa-paint-brush text-warning"></i> 10 inkblots</li>
-                        <li><i class="fas fa-share text-warning"></i> Share results with mentor/counsellor</li>
+                        <li><i class="fas fa-clock text-destructive"></i> Takes 5-10 minutes</li>
+                        <li><i class="fas fa-paint-brush text-destructive"></i> 10 inkblots</li>
+                        <li><i class="fas fa-share text-destructive"></i> Share results with mentor/counsellor</li>
                     </ul>
                 </div>
                 <div class="card-footer">
-                        <a href="/inkblot" class="btn btn-warning w-100">
+                        <a href="/inkblot" class="btn btn-destructive w-100">
                         <i class="fas fa-play"></i> Start Inkblot Test
                     </a>
                 </div>
@@ -71,8 +70,8 @@
         </div>
         
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-success">
-                <div class="card-header bg-success text-white">
+            <div class="card h-100 border-accent">
+                <div class="card-header bg-accent text-white">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-heart-rate"></i> GAD-7
                     </h5>
@@ -83,13 +82,13 @@
                         The GAD-7 is a validated tool for screening and measuring the severity of generalized anxiety disorder.
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-success"></i> Takes 2-3 minutes</li>
-                        <li><i class="fas fa-question text-success"></i> 7 questions</li>
-                        <li><i class="fas fa-chart-line text-success"></i> Anxiety levels</li>
+                        <li><i class="fas fa-clock text-accent"></i> Takes 2-3 minutes</li>
+                        <li><i class="fas fa-question text-accent"></i> 7 questions</li>
+                        <li><i class="fas fa-chart-line text-accent"></i> Anxiety levels</li>
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ url_for('assessment_form', assessment_type='GAD-7') }}" class="btn btn-success w-100">
+                    <a href="{{ url_for('assessment_form', assessment_type='GAD-7') }}" class="btn btn-accent w-100">
                         <i class="fas fa-play"></i> Start GAD-7
                     </a>
                 </div>
@@ -97,8 +96,8 @@
         </div>
         
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-info">
-                <div class="card-header bg-info text-white">
+            <div class="card h-100 border-secondary">
+                <div class="card-header bg-secondary text-white">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-user-check"></i> GHQ
                     </h5>
@@ -109,13 +108,13 @@
                         The GHQ is designed to detect psychiatric disorders in community settings and general medical practice.
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-info"></i> Takes 3-4 minutes</li>
-                        <li><i class="fas fa-question text-info"></i> 12 questions</li>
-                        <li><i class="fas fa-chart-line text-info"></i> Overall wellbeing</li>
+                        <li><i class="fas fa-clock text-secondary"></i> Takes 3-4 minutes</li>
+                        <li><i class="fas fa-question text-secondary"></i> 12 questions</li>
+                        <li><i class="fas fa-chart-line text-secondary"></i> Overall wellbeing</li>
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ url_for('assessment_form', assessment_type='GHQ') }}" class="btn btn-info w-100">
+                    <a href="{{ url_for('assessment_form', assessment_type='GHQ') }}" class="btn btn-secondary w-100">
                         <i class="fas fa-play"></i> Start GHQ
                     </a>
                 </div>
@@ -123,7 +122,6 @@
         </div>
     </div>
     
-    <!-- Assessment History -->
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -194,46 +192,45 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Assessment Information Modal -->
-<div class="modal fade" id="assessmentInfoModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fas fa-info-circle text-primary"></i>
-                    About Mental Health Assessments
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12">
-                        <h6 class="text-primary">Why Take These Assessments?</h6>
-                        <p>
-                            These standardized tools help identify symptoms and track your mental health over time. 
-                            They are used by healthcare professionals worldwide and provide valuable insights into your wellbeing.
-                        </p>
-                        
-                        <h6 class="text-primary mt-4">Important Notes:</h6>
-                        <ul>
-                            <li>These assessments are <strong>not</strong> a substitute for professional diagnosis</li>
-                            <li>Results are confidential and encrypted for your privacy</li>
-                            <li>Regular monitoring can help track progress and identify concerning patterns</li>
-                            <li>Consider sharing results with a mental health professional</li>
-                        </ul>
-                        
-                        <div class="alert alert-warning mt-4">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>Remember:</strong> If you're experiencing thoughts of self-harm or suicide, 
-                            please seek immediate help by calling 988 or visiting your nearest emergency room.
+    
+    <div class="modal fade" id="assessmentInfoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle text-primary"></i>
+                        About Mental Health Assessments
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="text-primary">Why Take These Assessments?</h6>
+                            <p>
+                                These standardized tools help identify symptoms and track your mental health over time. 
+                                They are used by healthcare professionals worldwide and provide valuable insights into your wellbeing.
+                            </p>
+                            
+                            <h6 class="text-primary mt-4">Important Notes:</h6>
+                            <ul>
+                                <li>These assessments are <strong>not</strong> a substitute for professional diagnosis</li>
+                                <li>Results are confidential and encrypted for your privacy</li>
+                                <li>Regular monitoring can help track progress and identify concerning patterns</li>
+                                <li>Consider sharing results with a mental health professional</li>
+                            </ul>
+                            
+                            <div class="alert alert-warning mt-4">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Remember:</strong> If you're experiencing thoughts of self-harm or suicide, 
+                                please seek immediate help by calling 988 or visiting your nearest emergency room.
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
