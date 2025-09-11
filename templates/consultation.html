@@ -42,7 +42,7 @@
 .status-completed { color: #28a745; }
 /* Status badge helpers */
 .badge-status { font-weight: 600; letter-spacing: .2px; }
-.badge-pending { background: #faf0ca; color: #faf0ca; }
+.badge-pending { background: #faf0ca; color: #293241; }
 .badge-booked { background: #d4edda; color: #155724; }
 .badge-rejected { background: #f8d7da; color: #721c24; }
 
@@ -110,6 +110,16 @@
     50% { transform: scale(1.02); }
     100% { transform: scale(1); }
 }
+
+.badge-pending { 
+  background: #faf0ca;  /* soft yellow background */
+  color: #293241;       /* dark readable text */
+}
+
+.card-body {
+    min-height: 100px; /* Adjust this value as needed for your content */
+}
+
 </style>
 {% endblock %}
 
@@ -242,7 +252,7 @@
                                             {% endif %}
                                             <span class="badge 
                                                 {% if request.urgency_level == 'high' %}bg-danger
-                                                {% elif request.urgency_level == 'medium' %}bg-warning
+                                                {% elif request.urgency_level == 'medium' %}bg-urgency-medium
                                                 {% else %}bg-success{% endif %}">
                                                 {{ request.urgency_level|title }}
                                             </span>
@@ -305,127 +315,82 @@
         </div>
     </div>
 
-    <div class="row mt-5 align-items-stretch" >
-        <div class="col-md-6 d-flex">
-            <div class="card professional-card h-100 w-100 d-flex flex-column">
-                <div class="card-body d-flex flex-column justify-content-between">
-                    <h3 class="card-title">
-                        <i class="fas fa-shield-alt"></i> What to Expect
-                    </h3>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <i class="fas fa-clock"></i>
-                            Response within 24-48 hours for standard requests
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-tachometer-alt"></i>
-                            Immediate response for high-urgency requests
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-lock"></i>
-                            Complete confidentiality and privacy protection
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-user-graduate"></i>
-                            Specialized in student mental health issues
-                        </li>
-                    </ul>
-                </div>
+<div class="row mt-5 g-4">
+    <div class="col-md-6">
+        <div class="card w-100">
+            <div class="card-header">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-shield-alt text-primary"></i> What to Expect
+                </h6>
             </div>
-        </div>
-
-        <div class="col-md-6 d-flex">
-            <div class="card h-100 w-100">
-                <div class="card-header">
-                    <h6 class="card-title mb-0">
-                        <i class="fas fa-question-circle text-info"></i> Frequently Asked Questions
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                    Is this service free for students?
-                                </button>
-                            </h2>
-                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Yes, all consultation services are provided free of charge to registered students as part of our mental health support program.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    Will my information be kept confidential?
-                                </button>
-                            </h2>
-                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Absolutely. All consultations are strictly confidential and protected by professional ethics and privacy laws. Information is only shared in emergency situations or with your explicit consent.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    How quickly can I get an appointment?
-                                </button>
-                            </h2>
-                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    For high-urgency requests, we aim to connect you within a few hours. Standard requests are typically scheduled within 24-48 hours, depending on availability and your preferences.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-clock text-info me-2"></i>
+                        <span class="text-black">Response within 24-48 hours for standard requests</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-tachometer-alt text-info me-2"></i>
+                        <span class="text-black">Immediate response for high-urgency requests</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-lock text-info me-2"></i>
+                        <span class="text-black">Complete confidentiality and privacy protection</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-user-graduate text-info me-2"></i>
+                        <span class="text-black">Specialized in student mental health issues</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title mb-0">
-                        <i class="fas fa-calendar text-primary"></i> Available Slots
-                    </h6>
-                </div>
-                <div class="card-body">
-                    {% if open_slots %}
-                    <div class="table-responsive">
-                        <table class="table table-sm align-middle table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Counsellor</th>
-                                    <th>Start</th>
-                                    <th>End</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for s in open_slots %}
-                                <tr>
-                                    <td>{{ s.counsellor.full_name }} ({{ s.counsellor.username }})</td>
-                                    <td>{{ s.start_time.strftime('%d %b %Y, %I:%M %p') }}</td>
-                                    <td>{{ s.end_time.strftime('%I:%M %p') }}</td>
-                                    <td>
-                                        <form method="POST" action="{{ url_for('book_slot', slot_id=s.id) }}">
-                                            <button type="submit" class="btn btn-primary btn-sm">Book this slot</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+    
+    <div class="col-md-6">
+        <div class="card w-100">
+            <div class="card-header">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-question-circle text-info"></i> Frequently Asked Questions
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Is this service free for students?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, all consultation services are provided free of charge to registered students as part of our mental health support program.
+                            </div>
+                        </div>
                     </div>
-                    {% else %}
-                    <div class="text-muted">No open slots right now.</div>
-                    {% endif %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Will my information be kept confidential?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Absolutely. All consultations are strictly confidential and protected by professional ethics and privacy laws. Information is only shared in emergency situations or with your explicit consent.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How quickly can I get an appointment?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                For high-urgency requests, we aim to connect you within a few hours. Standard requests are typically scheduled within 24-48 hours, depending on availability and your preferences.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -452,7 +417,7 @@
                             <select name="counsellor_id" id="counsellor_id" class="form-select" required>
                                 <option value="">Choose counsellor...</option>
                                 {% for counsellor in counsellors %}
-                                    <option value="{{ counsellor.id }}">{{ counsellor.full_name }} ({{ counsellor.username }})</option>
+                                <option value="{{ counsellor.id }}">{{ counsellor.full_name }} ({{ counsellor.username }})</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -471,7 +436,6 @@
                                 High urgency requests receive immediate attention
                             </div>
                         </div>
-
                         <div class="col-md-6 mb-3">
                             <label for="contact_preference" class="form-label">
                                 <i class="fas fa-phone text-primary"></i>
@@ -485,7 +449,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <label for="preferred_time" class="form-label">
                             <i class="fas fa-clock text-success"></i>
@@ -497,7 +460,6 @@
                             Help us schedule at a convenient time for you
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <label class="form-label">
                             <i class="fas fa-calendar text-primary"></i>
@@ -514,7 +476,6 @@
                         </div>
                         <div id="slotList" class="mt-2 small text-muted">Loading slots...</div>
                     </div>
-
                     <div class="mb-3">
                         <label for="notes" class="form-label">
                             <i class="fas fa-sticky-note text-info"></i>
@@ -526,7 +487,6 @@
                             This information helps us match you with the most appropriate professional
                         </div>
                     </div>
-
                     <div class="alert alert-info">
                         <h6 class="alert-heading">
                             <i class="fas fa-info-circle"></i> Before Your Session
@@ -538,7 +498,6 @@
                             <li>Have a notebook ready if you'd like to take notes</li>
                         </ul>
                     </div>
-
                     <div class="alert alert-warning">
                         <h6 class="alert-heading">
                             <i class="fas fa-exclamation-triangle"></i> Crisis Situations
@@ -570,7 +529,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body" id="detailsContent">
-                </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
