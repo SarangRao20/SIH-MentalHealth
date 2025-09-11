@@ -233,10 +233,14 @@ h2 {
                             <input type="datetime-local" name="session_datetime" id="session_datetime_{{ req.id }}" class="form-control mb-2" required>
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-custom-primary btn-sm">Set Session</button>
-                                <!-- Cancel booking stays original Bootstrap -->
-                                <form method="POST" action="{{ url_for('cancel_booking', request_id=req.id) }}">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">Cancel Booking</button>
-                                </form>
+                                <!-- Use formaction to avoid nested forms and bypass required field validation -->
+                                <button type="submit"
+                                        class="btn btn-outline-danger btn-sm"
+                                        formmethod="POST"
+                                        formaction="{{ url_for('cancel_booking', request_id=req.id) }}"
+                                        formnovalidate>
+                                    Cancel Booking
+                                </button>
                             </div>
                         </form>
                         {% if req.session_datetime %}
