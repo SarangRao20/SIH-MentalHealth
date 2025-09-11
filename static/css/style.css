@@ -526,3 +526,15 @@ footer {
 .chatbot-link:hover .chatbot-icon {
     background-image: url('../images/bot2.png'); /* The new image on hover */
 }
+
+.text-periwinkle {
+    color: #809bce !important;
+}
+
+.bg-periwinkle {
+    background-color: #809bce !important;
+}
+
+.border-periwinkle-top {
+    border-top: 2px solid #809bce !important;
+}
