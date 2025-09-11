@@ -41,13 +41,57 @@
 .status-scheduled { color: #007bff; }
 .status-completed { color: #28a745; }
 
+/* RE-DESIGNED CRISIS BANNER STYLES */
 .crisis-banner {
-    background: linear-gradient(135deg, #b00000 0%, #920101 100%);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    animation: sosPulse 1.5s infinite;
-    border: 3px solid #fc0707;
+    background: #f9e9f3; /* A light, soft background */
+    border: 1px solid #f2e1e7; /* Subtle border matching the soft tone */
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(225, 215, 220, 0.5);
+    transition: all 0.3s ease;
+}
+
+.crisis-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(225, 215, 220, 0.7);
+}
+
+.crisis-banner .crisis-title {
+    color: #e62a2a; /* Soft pink for the main icon and text */
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.crisis-banner .crisis-title i {
+    margin-right: 0.5rem;
+}
+
+.crisis-banner .crisis-text {
+    color: #6b7280; /* Muted gray for body text */
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.crisis-banner .btn {
+    border-radius: 2rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.crisis-banner .btn-outline {
+    border: 1px solid #d6eadf;
+    color: #6b7280;
+}
+
+.crisis-banner .btn-outline:hover {
+    background-color: #d6eadf;
+    color: #374151;
 }
 
 @keyframes sosPulse {
@@ -82,35 +126,22 @@
         </div>
     </div>
 
-    <!-- Crisis Support Banner -->
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card crisis-banner">
-                <div class="card-body text-center">
-                    <h4 class="card-title">
-                        <i class="fas fa-exclamation-triangle"></i> In Crisis? Get Immediate Help
-                    </h4>
-                    <p class="card-text">
-                        If you're having thoughts of suicide or self-harm, please don't wait for a consultation. 
-                        Help is available right now.
-                    </p>
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="tel:988" class="btn btn-light btn-lg">
-                            <i class="fas fa-phone"></i> Call 988
-                        </a>
-                        <a href="sms:741741" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-comment"></i> Text HOME to 741741
-                        </a>
-                        <a href="{{ url_for('chatbot') }}" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-comments"></i> Chat Now
-                        </a>
-                    </div>
+            <div class="crisis-banner">
+                <div class="crisis-title">
+                    <i class="fas fa-bell"></i> Need Immediate Support?
+                </div>
+                <p class="crisis-text">Crisis support is available 24/7</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="tel:988" class="btn btn-outline">Call 988</a>
+                    <a href="sms:741741" class="btn btn-outline">Text HOME to 741741</a>
+                    <a href="{{ url_for('chatbot') }}" class="btn btn-outline">Chat Support</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Service Information -->
     <div class="row g-4 mb-5">
         <div class="col-md-6 col-lg-4">
             <div class="card consultation-card h-100">
@@ -170,7 +201,6 @@
         </div>
     </div>
 
-    <!-- Your Consultation Requests -->
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -253,7 +283,6 @@
         </div>
     </div>
 
-    <!-- Information Section -->
     <div class="row mt-5 align-items-stretch" >
         <div class="col-md-6 d-flex">
             <div class="card professional-card h-100 w-100 d-flex flex-column">
@@ -337,7 +366,6 @@
     </div>
 </div>
 
-<!-- Request Consultation Modal -->
 <div class="modal fade" id="requestModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -386,7 +414,7 @@
                             Preferred Time (Optional)
                         </label>
                         <input type="text" name="preferred_time" id="preferred_time" class="form-control" 
-                               placeholder="e.g., Weekday mornings, Any time, Evenings only">
+                                placeholder="e.g., Weekday mornings, Any time, Evenings only">
                         <div class="form-text">
                             Help us schedule at a convenient time for you
                         </div>
@@ -398,7 +426,7 @@
                             Additional Notes (Optional)
                         </label>
                         <textarea name="notes" id="notes" class="form-control" rows="4" 
-                                  placeholder="Share any specific concerns, topics you'd like to discuss, or other relevant information..."></textarea>
+                                    placeholder="Share any specific concerns, topics you'd like to discuss, or other relevant information..."></textarea>
                         <div class="form-text">
                             This information helps us match you with the most appropriate professional
                         </div>
@@ -437,7 +465,6 @@
     </div>
 </div>
 
-<!-- Details Modal -->
 <div class="modal fade" id="detailsModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -448,8 +475,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body" id="detailsContent">
-                <!-- Dynamic content -->
-            </div>
+                </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>

@@ -2,4 +2,4 @@
 integrate/
 # Ignore Python cache and bytecode
 __pycache__/
-*.pyc
+*.pycinstance/mental_health.db
