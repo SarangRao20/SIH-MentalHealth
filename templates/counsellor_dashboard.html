@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Counsellor Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Your Consultation Requests</h2>
+        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('counsellor_availability') }}">Manage Availability</a>
+    </div>
+    {% if requests %}
+    <div class="mb-3">
+        <span class="badge bg-warning text-dark me-2">Pending</span>
+        <span class="badge bg-success me-2">Booked</span>
+        <span class="badge bg-danger">Rejected</span>
+    </div>
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-success">
+            <tr>
+                <th>User</th>
+                <th>Urgency</th>
+                <th>Time Slot</th>
+                <th>Contact</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Actions & Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in requests %}
+            <tr class="{% if req.status=='pending' %}table-warning{% elif req.status=='rejected' %}table-danger-subtle{% endif %}">
+                <td>{{ req.user.full_name }} ({{ req.user.username }})<br>Email: {{ req.user.email }}</td>
+                <td>{{ req.urgency_level }}</td>
+                <td>{{ req.time_slot }}</td>
+                <td>{{ req.contact_preference|title }}</td>
+                <td>
+                    {% if req.status == 'pending' %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% elif req.status == 'booked' %}
+                        <span class="badge bg-success">Booked</span>
+                    {% elif req.status == 'rejected' %}
+                        <span class="badge bg-danger">Rejected</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ req.status|title }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ req.additional_notes }}</td>
+                <td>
+                    {% if req.additional_notes and 'Assessment (' in req.additional_notes %}
+                        <form method="GET" action="{{ url_for('view_user_assessment', user_id=req.user.id) }}" class="mb-2">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">View Assessment</button>
+                        </form>
+                    {% endif %}
+                    {% if req.status == 'pending' %}
+                        <form method="POST" action="{{ url_for('accept_consultation', request_id=req.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('reject_consultation', request_id=req.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    {% endif %}
+                    {% if req.status == 'booked' %}
+                        <form method="POST" action="{{ url_for('schedule_follow_up', request_id=req.id) }}" class="mb-2">
+                            <label for="follow_up_datetime_{{ req.id }}" class="form-label">Schedule Follow-up:</label>
+                            <input type="datetime-local" name="follow_up_datetime" id="follow_up_datetime_{{ req.id }}" class="form-control mb-2" value="{{ req.follow_up_datetime|default('', true) }}">
+                            <button type="submit" class="btn btn-secondary btn-sm">Set Follow-up</button>
+                        </form>
+                        {% if req.follow_up_datetime %}
+                            <span class="badge bg-warning">Follow-up: {{ req.follow_up_datetime.strftime('%d %b %Y, %I:%M %p') }}</span>
+                        {% endif %}
+                    {% endif %}
+                    {% if req.status == 'booked' %}
+                        <form method="POST" action="{{ url_for('set_chat_video_link', request_id=req.id) }}" class="mb-2">
+                            <label for="chat_video_link_{{ req.id }}" class="form-label">Chat/Video Link:</label>
+                            <input type="url" name="chat_video_link" id="chat_video_link_{{ req.id }}" class="form-control mb-2" value="{{ req.chat_video_link or '' }}" placeholder="Paste secure link here">
+                            <button type="submit" class="btn btn-warning btn-sm">Set Link</button>
+                        </form>
+                        {% if req.chat_video_link %}
+                            <a href="{{ req.chat_video_link }}" target="_blank" class="btn btn-outline-info btn-sm">Join Session</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if req.status == 'booked' and req.session_datetime and req.session_datetime < now %}
+                        <form method="POST" action="{{ url_for('add_session_notes', request_id=req.id) }}" class="mt-2">
+                            <label for="session_notes_{{ req.id }}" class="form-label">Session Notes:</label>
+                            <textarea name="session_notes" id="session_notes_{{ req.id }}" class="form-control mb-2" rows="2" required>{{ req.session_notes or '' }}</textarea>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-info btn-sm">Save Notes</button>
+                                <a href="{{ url_for('download_session_notes', request_id=req.id) }}" class="btn btn-outline-secondary btn-sm">Download PDF</a>
+                            </div>
+                        </form>
+                    {% elif req.session_notes %}
+                        <div class="mt-2"><strong>Session Notes:</strong> {{ req.session_notes }}</div>
+                        <a href="{{ url_for('download_session_notes', request_id=req.id) }}" class="btn btn-outline-secondary btn-sm mt-1">Download PDF</a>
+                    {% endif %}
+                    {% if req.status == 'booked' %}
+                        <form method="POST" action="{{ url_for('schedule_session', request_id=req.id) }}" class="mb-2">
+                            <label for="session_datetime_{{ req.id }}" class="form-label">Schedule Session:</label>
+                            <input type="datetime-local" name="session_datetime" id="session_datetime_{{ req.id }}" class="form-control mb-2" required>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary btn-sm">Set Session</button>
+                                <form method="POST" action="{{ url_for('cancel_booking', request_id=req.id) }}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Cancel Booking</button>
+                                </form>
+                            </div>
+                        </form>
+                        {% if req.session_datetime %}
+                            <span class="badge bg-info">Scheduled: {{ req.session_datetime.strftime('%d %b %Y, %I:%M %p') }}</span>
+                        {% endif %}
+                    {% endif %}
+                    <hr>
+                    <div>
+                        <strong>Recent Assessments:</strong>
+                        {% if req.user.assessments %}
+                            <ul>
+                            {% for assessment in req.user.assessments[:3] %}
+                                <li>{{ assessment.assessment_type }}: {{ assessment.score }} ({{ assessment.severity_level }})</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <span class="text-muted">No test results</span>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info">No consultation requests yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

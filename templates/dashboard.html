@@ -136,7 +136,7 @@
                                     <td>{{ assessment.score }}</td>
                                     <td>{{ assessment.severity_level }}</td>
                                     <td>
-                                        <a href="{{ url_for('view_assessment_results', assessment_id=assessment.id) }}" class="btn btn-sm btn-outline-primary">View Results</a>
+                                        <a href="{{ url_for('assessment_results', assessment_id=assessment.id) }}" class="btn btn-sm btn-outline-primary">View Results</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

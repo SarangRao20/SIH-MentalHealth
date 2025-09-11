@@ -1,3 +1,18 @@
+:root{
+  --brand-primary:#4f46e5; /* indigo */
+  --brand-accent:#22c55e;  /* green */
+  --brand-warning:#f59e0b; /* amber */
+  --brand-danger:#ef4444;  /* red */
+  --bg:#ffffff; --fg:#111827; --muted:#6b7280;
+}
+html.dark{
+  --bg:#0b1220; --fg:#e5e7eb; --muted:#9ca3af;
+}
+body{background:var(--bg); color:var(--fg);} 
+.text-muted{color:var(--muted)!important}
+
+/* simple toggle */
+.theme-toggle{position:fixed; right:14px; bottom:14px; z-index:1200}
 /* MindCare Mental Health Platform - Custom Styles */
 
 :root {

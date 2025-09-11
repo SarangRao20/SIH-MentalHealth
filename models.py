@@ -148,14 +148,32 @@ class VentingResponse(db.Model):
 class ConsultationRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    counsellor_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # Link to counsellor
     urgency_level = db.Column(db.String(10), nullable=False)  # low, medium, high
-    preferred_time = db.Column(db.String(50))
+    time_slot = db.Column(db.String(50))  # Selected time slot
     contact_preference = db.Column(db.String(20))  # phone, email, video
     additional_notes = db.Column(db.Text)
-    status = db.Column(db.String(20), default='pending')  # pending, scheduled, completed
+    status = db.Column(db.String(20), default='pending')  # pending, accepted, rejected, booked, completed
+    session_datetime = db.Column(db.DateTime)  # Scheduled session date/time
+    session_notes = db.Column(db.Text)  # Notes by counsellor after session
+    feedback_rating = db.Column(db.Integer)  # User rating (1-5)
+    feedback_text = db.Column(db.Text)  # User feedback
+    chat_video_link = db.Column(db.String(256))  # Secure chat/video link
+    follow_up_datetime = db.Column(db.DateTime)  # Next follow-up session
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    user = db.relationship('User', backref='consultation_requests')
+
+    user = db.relationship('User', foreign_keys=[user_id], backref='consultation_requests')
+    counsellor = db.relationship('User', foreign_keys=[counsellor_id], backref='counsellor_consultations')
+
+class AvailabilitySlot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    counsellor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+    is_booked = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    counsellor = db.relationship('User', foreign_keys=[counsellor_id], backref='availability_slots')
 
 class RoutineTask(db.Model):
     id = db.Column(db.Integer, primary_key=True)

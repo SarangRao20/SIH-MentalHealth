@@ -198,6 +198,12 @@
                         <button class="btn btn-outline-success" onclick="shareResults()">
                             <i class="fas fa-share"></i> Share
                         </button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#shareModal">
+                            <i class="fas fa-paper-plane"></i> Send to Counsellor
+                        </button>
+                        {% if sent_to_counsellor %}
+                        <div class="alert alert-success mt-3 mb-0 py-1 px-2">Your results have been sent to the counsellor!</div>
+                        {% endif %}
                     </div>
                     
                     <p class="text-muted mt-3 mb-0">
@@ -225,17 +231,25 @@
             </div>
             <div class="modal-body">
                 <p>You can share these results with:</p>
-                <div class="list-group">
+                <div class="list-group mb-3">
                     <a href="mailto:?subject=Mental Health Assessment Results&body=I recently completed a {{ assessment.assessment_type }} assessment. Please find my results summary attached." 
                        class="list-group-item list-group-item-action">
                         <i class="fas fa-envelope text-primary"></i>
                         Email to Healthcare Provider
                     </a>
-                    <a href="{{ url_for('consultation') }}" class="list-group-item list-group-item-action">
-                        <i class="fas fa-user-md text-success"></i>
-                        Share with MindCare Consultation
-                    </a>
                 </div>
+                <form method="POST" action="{{ url_for('send_result_to_counsellor', assessment_id=assessment.id) }}">
+                    <div class="mb-3">
+                        <label for="counsellor_id" class="form-label">Select Counsellor</label>
+                        <select name="counsellor_id" id="counsellor_id" class="form-select" required>
+                            <option value="">Choose counsellor...</option>
+                            {% for counsellor in counsellors %}
+                                <option value="{{ counsellor.id }}">{{ counsellor.full_name }} ({{ counsellor.username }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Send Result to Counsellor</button>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -34,7 +34,7 @@
         <ul class="list-unstyled sidebar-menu flex-grow-1 mt-3">
     {% if current_user.is_authenticated %}
         <li>
-            <a href="{{ url_for('dashboard') }}">
+            <a href="{{ url_for('counsellor_dashboard') if current_user.is_authenticated and current_user.role == 'counsellor' else url_for('dashboard') }}">
                 <i class="fas fa-tachometer-alt icon"></i>
                 <span class="label">Dashboard</span>
             </a>
@@ -121,14 +121,19 @@
 
     <!-- Page Content -->
     <div id="content" class="content">
+        <button class="btn btn-sm btn-outline-secondary theme-toggle" id="themeToggle" title="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="container mt-3">
+                <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
                     {% for category, message in messages %}
-                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <div class="toast align-items-center text-bg-{{ 'danger' if category == 'error' else category }} border-0 show mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">{{ message }}</div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -168,6 +173,16 @@
             sidebar.classList.toggle("collapsed");
             content.classList.toggle("expanded");
 
+        });
+
+        // Theme toggle
+        const toggleThemeBtn = document.getElementById('themeToggle');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        if(savedTheme==='dark'){ root.classList.add('dark'); }
+        toggleThemeBtn.addEventListener('click', ()=>{
+            root.classList.toggle('dark');
+            localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
         });
     </script>
 
