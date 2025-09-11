@@ -149,7 +149,7 @@ h2 {
         <span class="badge badge-booked me-2">Booked</span>
         <span class="badge badge-rejected">Rejected</span>
     </div>
-    <table class="table table-bordered  align-middle">
+    <table class="table table-bordered align-middle">
         <thead>
             <tr>
                 <th>User</th>
@@ -163,7 +163,7 @@ h2 {
         </thead>
         <tbody>
             {% for req in requests %}
-            <tr class="{% if req.status=='pending' %}table-warning{% elif req.status=='rejected' %}table-danger-subtle{% endif %}">
+            <tr>
                 <td>{{ req.user.full_name }} ({{ req.user.username }})<br>Email: {{ req.user.email }}</td>
                 <td>{{ req.urgency_level }}</td>
                 <td>{{ req.time_slot }}</td>
