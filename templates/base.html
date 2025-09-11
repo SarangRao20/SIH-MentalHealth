@@ -121,9 +121,7 @@
 
     <!-- Page Content -->
     <div id="content" class="content">
-        <button class="btn btn-sm btn-outline-secondary theme-toggle" id="themeToggle" title="Toggle theme">
-            <i class="fas fa-moon"></i>
-        </button>
+
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -175,15 +173,7 @@
 
         });
 
-        // Theme toggle
-        const toggleThemeBtn = document.getElementById('themeToggle');
-        const root = document.documentElement;
-        const savedTheme = localStorage.getItem('theme');
-        if(savedTheme==='dark'){ root.classList.add('dark'); }
-        toggleThemeBtn.addEventListener('click', ()=>{
-            root.classList.toggle('dark');
-            localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
-        });
+
     </script>
 
     {% block extra_scripts %}{% endblock %}
