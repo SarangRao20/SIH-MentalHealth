@@ -1,7 +1,66 @@
 {% extends "base.html" %}
 
 {% block title %}Assessment Results - MindCare{% endblock %}
+{% block extra_head %}
+<style>
+.btn-outline-venting {
+    color: #95B8D1 !important;
+    border-color: #95B8D1 !important;
+}
 
+.btn-outline-venting:hover {
+    background-color: #95B8D1 !important;
+    color: #fff !important;
+}
+
+/* Share button */
+.btn-outline-share {
+    color: #7bbfa7 !important;
+    border-color: #7bbfa7 !important;
+}
+
+.btn-outline-share:hover {
+    background-color: #7bbfa7 !important;
+    color: #fff !important;
+}
+
+.btn-send{
+    background-color: #7bbfa7;
+}
+
+.btn-send:hover{
+    background-color: #7bbfa7;
+}
+
+/* Call 988 button */
+.btn-call {
+    background-color: #ad2831 !important;
+    border-color: #ad2831 !important;
+    color: #fff !important;
+}
+
+.btn-call:hover {
+    background-color: #8f2028 !important; /* a slightly darker shade for hover */
+    border-color: #8f2028 !important;
+    color: #fff !important;
+}
+
+
+/* Chat Now button to match Call 988 hover */
+.btn-chat-now {
+    color: #ad2831 !important;
+    border-color: #ad2831 !important;
+}
+
+.btn-chat-now:hover {
+    background-color: #ad2831  !important; /* same as Call 988 hover */
+    border-color: #ad2831  !important;
+    color: #fff !important;
+}
+
+
+</style>
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row justify-content-center">
@@ -134,10 +193,10 @@
                                 </p>
                             </div>
                             <div class="col-md-4 text-md-end">
-                                <a href="tel:988" class="btn btn-danger me-2">
+                                <a href="tel:988" class="btn btn btn-call me-2">
                                     <i class="fas fa-phone"></i> Call 988
                                 </a>
-                                <a href="{{ url_for('chatbot') }}" class="btn btn-outline-danger">
+                                <a href="{{ url_for('chatbot') }}" class="btn btn btn-chat-now">
                                     <i class="fas fa-comments"></i> Chat Now
                                 </a>
                             </div>
@@ -163,14 +222,14 @@
                                 </div>
                                 
                                 <div class="col-md-6 col-lg-3">
-                                    <a href="{{ url_for('meditation') }}" class="btn btn-outline-success w-100">
+                                    <a href="{{ url_for('meditation') }}" class="btn btn-outline-share w-100">
                                         <i class="fas fa-leaf d-block mb-2"></i>
                                         Meditation
                                     </a>
                                 </div>
                                 
-                                <div class="col-md-6 col-lg-3">
-                                    <a href="{{ url_for('venting_hall') }}" class="btn btn-outline-info w-100">
+                                <div class="col-md-6 col-lg-3" style="color:#95B8D1">
+                                    <a href="{{ url_for('venting_hall') }}" class="btn btn-outline-venting w-100">
                                         <i class="fas fa-users d-block mb-2"></i>
                                         Venting Hall
                                     </a>
@@ -195,10 +254,10 @@
                         <button class="btn btn-outline-primary" onclick="window.print()">
                             <i class="fas fa-print"></i> Print Results
                         </button>
-                        <button class="btn btn-outline-success" onclick="shareResults()">
+                        <button class="btn btn-outline-share" onclick="shareResults()">
                             <i class="fas fa-share"></i> Share
                         </button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#shareModal">
+                        <button class="btn btn-send" data-bs-toggle="modal" data-bs-target="#shareModal">
                             <i class="fas fa-paper-plane"></i> Send to Counsellor
                         </button>
                         {% if sent_to_counsellor %}

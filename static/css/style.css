@@ -405,8 +405,15 @@ body {
 /* Footer Enhancements */
 footer {
     background-color: var(--primary);
-    color: var(--primary-foreground);
+    color: #000000 !important;
     border-top: 1px solid var(--border);
+}
+
+footer p,
+footer p.text-muted,
+footer p.small.text-muted,
+footer i {
+    color: #fff !important;
 }
 
 /* Accessibility Enhancements */
@@ -551,4 +558,10 @@ footer {
 
 .border-periwinkle-top {
     border-top: 2px solid #809bce !important;
+}
+
+.card-header {
+    background-color: #809bce !important;
+    color: #fff !important;
+    border-bottom: none; /* optional for cleaner look */
 }

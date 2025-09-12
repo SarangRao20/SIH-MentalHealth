@@ -5,6 +5,14 @@
 {% block extra_head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+
+.card-header {
+    background-color: #809bce !important;
+    color: #fff !important;
+    border-bottom: none; /* optional for cleaner look */
+}
+
+
 .stats-card {
     transition: all 0.3s ease;
     border: none;
@@ -47,12 +55,48 @@
 }
 
 .comparison-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: #f8f9fa;
+    color:#6b7280 ;
 }
 
 .insight-card {
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #809bce;
+}
+
+.btn-workshop-outline {
+    border-color: #28a745; /* Your original success color */
+    color: #28a745;
+    background-color: transparent;
+}
+
+.btn-workshop-outline:hover {
+    background-color: #B8E0D2; /* The new hover background color */
+    color: #374151; /* A dark text color for readability */
+    border-color: #B8E0D2;
+}
+
+.btn-report-outline {
+    border-color: #95b8d1; /* Your original success color */
+    color: #95b8d1;
+    background-color: transparent;
+}
+
+.btn-report-outline:hover {
+    background-color: #95B8D1; /* The new hover background color */
+    color: #374151; /* A dark text color for readability */
+    border-color: #95B8D1;
+}
+
+.btn-outline-flag{
+    border-color: #f6d656; /* Your original success color */
+    color: #f7d44a;
+    background-color: transparent;
+}
+
+.btn-outline-flag:hover {
+    background-color: #faf0ca; /* The new hover background color */
+    color: #374151; /* A dark text color for readability */
+    border-color: #faf0ca;
 }
 </style>
 {% endblock %}
@@ -63,7 +107,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center py-4">
                 <div>
-                    <h1 class="h2 text-primary">
+                    <h1 class="h2 text-periwinkle">
                         <i class="fas fa-chart-bar"></i> Mentor Dashboard
                     </h1>
                     <p class="text-muted">Monitor student mental health and wellness trends</p>
@@ -83,7 +127,7 @@
     <!-- Key Metrics -->
     <div class="row g-4 mb-4">
         <div class="col-lg-3 col-md-6">
-            <div class="card stats-card bg-primary text-white h-100">
+            <div class="card stats-card bg-periwinkle text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
@@ -92,7 +136,7 @@
                             <small>Registered users</small>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-users fa-2x opacity-75"></i>
+                            <i class="fas fa-users fa-2x opacity-100"></i>
                         </div>
                     </div>
                 </div>
@@ -249,7 +293,7 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <h6 class="text-primary">Engagement Patterns</h6>
+                        <h6 class="text-periwinkle ">Engagement Patterns</h6>
                         <ul class="list-unstyled small">
                             <li class="mb-2">
                                 <i class="fas fa-arrow-up text-success"></i>
@@ -263,7 +307,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <h6 class="text-primary">Risk Factors</h6>
+                        <h6 class="text-periwinkle">Risk Factors</h6>
                         <ul class="list-unstyled small">
                             {% if stats.crisis_sessions > 0 %}
                             <li class="mb-2">
@@ -272,14 +316,14 @@
                             </li>
                             {% endif %}
                             <li class="mb-2">
-                                <i class="fas fa-chart-line text-primary"></i>
+                                <i class="fas fa-chart-line text-periwinkle"></i>
                                 Assessment completion trending up
                             </li>
                         </ul>
                     </div>
 
                     <div class="mb-3">
-                        <h6 class="text-primary">Recommendations</h6>
+                        <h6 class="text-periwinkle">Recommendations</h6>
                         <ul class="list-unstyled small">
                             {% if stats.hostel_avg_stress > stats.local_avg_stress + 1 %}
                             <li class="mb-2">
@@ -312,13 +356,13 @@
                         <button class="btn btn-outline-primary btn-sm" onclick="sendWellnessReminder()">
                             <i class="fas fa-bell"></i> Send Wellness Reminder
                         </button>
-                        <button class="btn btn-outline-success btn-sm" onclick="scheduleWorkshop()">
+                        <button class="btn btn-workshop-outline btn-sm" onclick="scheduleWorkshop()">
                             <i class="fas fa-calendar-plus"></i> Schedule Workshop
                         </button>
-                        <button class="btn btn-outline-info btn-sm" onclick="viewDetailedReports()">
+                        <button class="btn btn-report-outline btn-sm" onclick="viewDetailedReports()">
                             <i class="fas fa-chart-bar"></i> Detailed Reports
                         </button>
-                        <button class="btn btn-outline-warning btn-sm" onclick="reviewCrisisFlags()">
+                        <button class="btn btn-outline-flag btn-sm" onclick="reviewCrisisFlags()">
                             <i class="fas fa-flag"></i> Review Crisis Flags
                         </button>
                     </div>

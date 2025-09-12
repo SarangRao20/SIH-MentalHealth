@@ -54,7 +54,7 @@
 }
 
 .new-post-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #809bce;
     color: white;
     border: none;
     border-radius: 15px;
@@ -149,6 +149,64 @@
     gap: 1rem;
     flex-wrap: wrap;
 }
+
+/* ===== Modal sizing / box model reset ===== */
+.modal,
+.modal-dialog,
+.modal-content,
+.modal-header,
+.modal-body,
+.modal-footer {
+  box-sizing: border-box;
+}
+
+/* keep dialog width predictable */
+.modal-dialog {
+  max-width: 760px;        /* adjust as you like */
+  margin: 1.75rem auto !important;
+  width: 100%;
+}
+
+/* content should exactly match dialog */
+.modal-content {
+  width: 100%;
+  overflow: visible;       /* avoid hiding shadows, but not overflow layout */
+  border-radius: 15px;
+  overflow:hidden;
+}
+
+/* ensure form controls never exceed container */
+.modal .form-control,
+.modal textarea.form-control,
+.modal .input-group,
+.modal .form-select {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  display: block;
+}
+
+/* If you use flex rows inside modals, allow wrapping so inputs don't push out */
+.modal .row,
+.modal .d-flex {
+  flex-wrap: wrap !important;
+}
+
+/* Textarea fine tuning */
+.modal textarea.form-control {
+  min-height: 120px;
+  max-height: 350px;   /* keep textarea usable but not huge */
+  resize: vertical;
+  overflow-y: auto;
+}
+
+/* header/footer padding consistency */
+.modal-header, .modal-body, .modal-footer {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
 </style>
 {% endblock %}
 
