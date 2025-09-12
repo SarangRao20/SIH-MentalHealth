@@ -38,7 +38,7 @@
                         </div>
                         
                         <div class="col-md-8">
-                            <h5 class="text-primary">Score Interpretation</h5>
+                            <h5 class="text-periwinkle">Score Interpretation</h5>
                             <div class="alert 
                                 {% if assessment.severity_level in ['Minimal', 'Good'] %}alert-success
                                 {% elif assessment.severity_level in ['Mild', 'Fair'] %}alert-warning
@@ -149,7 +149,7 @@
                     <div class="card mt-4">
                         <div class="card-header">
                             <h6 class="card-title mb-0">
-                                <i class="fas fa-arrow-right text-primary"></i>
+                                <i class="fas fa-arrow-right text-periwinkle"></i>
                                 Next Steps
                             </h6>
                         </div>
@@ -224,7 +224,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="fas fa-share text-primary"></i>
+                    <i class="fas fa-share text-periwinkle"></i>
                     Share Results
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -234,7 +234,7 @@
                 <div class="list-group mb-3">
                     <a href="mailto:?subject=Mental Health Assessment Results&body=I recently completed a {{ assessment.assessment_type }} assessment. Please find my results summary attached." 
                        class="list-group-item list-group-item-action">
-                        <i class="fas fa-envelope text-primary"></i>
+                        <i class="fas fa-envelope text-periwinkle"></i>
                         Email to Healthcare Provider
                     </a>
                 </div>
