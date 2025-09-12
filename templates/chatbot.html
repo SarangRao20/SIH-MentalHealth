@@ -104,6 +104,19 @@
     animation: pulse 1s infinite;
     background: linear-gradient(135deg, #dc3545, #b02a37);
 }
+
+.btn-voice {
+    background-color: #fff !important;
+    border-color: #95B8D1 !important;
+    color: #95B8D1 !important;
+}
+
+.btn-voice:hover {
+    background-color: #7fa4bd !important; /* slightly darker for hover */
+    border-color: #7fa4bd !important;
+    color: #fff !important;
+}
+
 </style>
 {% endblock %}
 
@@ -119,7 +132,7 @@
                     <button class="btn btn-outline-primary" onclick="clearChat()">
                         <i class="fas fa-trash"></i> Clear Chat
                     </button>
-                    <button class="btn btn-outline-info" onclick="toggleVoice()">
+                    <button class="btn btn-voice" onclick="toggleVoice()">
                         <i class="fas fa-microphone"></i> Voice Mode
                     </button>
                 </div>
