@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Mental Health Resources - MindCare{% endblock %}
+
+{% block extra_head %}
+<style>
+    .resource-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+    
+    .resource-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .category-badge {
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .crisis-alert {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+    }
+    
+    .technique-steps {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .filter-buttons {
+        margin-bottom: 2rem;
+    }
+    
+    .filter-btn {
+        border-radius: 20px;
+        margin: 0.2rem;
+        border: 2px solid #e9ecef;
+        background: white;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-btn.active,
+    .filter-btn:hover {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Crisis Support Alert -->
+    <div class="crisis-alert text-center">
+        <h4><i class="fas fa-exclamation-triangle"></i> Need Immediate Help?</h4>
+        <p class="mb-3">If you're having thoughts of self-harm or suicide, please reach out now:</p>
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-2">
+                <a href="tel:988" class="btn btn-light btn-lg">
+                    <i class="fas fa-phone"></i> Call 988
+                </a>
+            </div>
+            <div class="col-md-4 mb-2">
+                <a href="sms:741741&body=HOME" class="btn btn-light btn-lg">
+                    <i class="fas fa-sms"></i> Text HOME to 741741
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary">Mental Health Resources</h1>
+        <p class="lead">Comprehensive tools and information for your mental wellness journey</p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons text-center">
+        <button class="btn filter-btn active" data-filter="all">All Resources</button>
+        <button class="btn filter-btn" data-filter="anxiety">Anxiety</button>
+        <button class="btn filter-btn" data-filter="stress">Stress</button>
+        <button class="btn filter-btn" data-filter="depression">Depression</button>
+        <button class="btn filter-btn" data-filter="wellness">Wellness</button>
+        <button class="btn filter-btn" data-filter="techniques">Coping Techniques</button>
+    </div>
+
+    <!-- Self-Help Articles Section -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-book-open text-primary"></i> Self-Help Articles</h2>
+        </div>
+    </div>
+    
+    <div class="row" id="articles-container">
+        <!-- Articles will be loaded dynamically -->
+    </div>
+
+    <!-- Coping Techniques Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-tools text-success"></i> Coping Techniques</h2>
+        </div>
+    </div>
+    
+    <div class="row" id="techniques-container">
+        <!-- Techniques will be loaded dynamically -->
+    </div>
+
+    <!-- Wellness Activities Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-heart text-danger"></i> Daily Wellness Activities</h2>
+        </div>
+    </div>
+    
+    <div class="row" id="wellness-container">
+        <!-- Activities will be loaded dynamically -->
+    </div>
+
+    <!-- Professional Help Guide -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card resource-card">
+                <div class="card-body">
+                    <h3 class="card-title text-info"><i class="fas fa-user-md"></i> When to Seek Professional Help</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Consider professional help if you experience:</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Symptoms persist for more than 2 weeks</li>
+                                <li class="list-group-item">Difficulty with daily activities</li>
+                                <li class="list-group-item">Thoughts of self-harm</li>
+                                <li class="list-group-item">Using substances to cope</li>
+                                <li class="list-group-item">Relationship or academic problems</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Types of Mental Health Professionals:</h5>
+                            <div class="mb-3">
+                                <strong>Counselor:</strong> Licensed for talk therapy<br>
+                                <small class="text-muted">Good for: Anxiety, depression, stress, relationships</small>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Psychologist:</strong> PhD-level, therapy and testing<br>
+                                <small class="text-muted">Good for: Complex issues, specialized therapy</small>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Psychiatrist:</strong> Medical doctor, can prescribe medication<br>
+                                <small class="text-muted">Good for: Medication management, severe conditions</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('consultation') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-calendar-plus"></i> Request Consultation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technique Modal -->
+<div class="modal fade" id="techniqueModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="techniqueModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="techniqueModalBody">
+                <!-- Technique details will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Load resources from JSON file
+    fetch('/static/resources/mental_health_resources.json')
+        .then(response => response.json())
+        .then(data => {
+            loadArticles(data.self_help_articles);
+            loadTechniques(data.coping_strategies);
+            loadWellnessActivities(data.wellness_activities);
+        })
+        .catch(error => console.error('Error loading resources:', error));
+    
+    // Filter functionality
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            filterResources(filter);
+        });
+    });
+});
+
+function loadArticles(articles) {
+    const container = document.getElementById('articles-container');
+    articles.forEach(article => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4 resource-item';
+        col.dataset.categories = article.tags.join(' ');
+        
+        col.innerHTML = `
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="category-badge bg-primary text-white">${article.category}</span>
+                        <small class="text-muted">${article.duration}</small>
+                    </div>
+                    <h5 class="card-title">${article.title}</h5>
+                    <p class="card-text">${article.content.substring(0, 100)}...</p>
+                    <div class="mb-2">
+                        <small class="text-success"><strong>Helpful for:</strong> ${article.helpful_for.join(', ')}</small>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" onclick="readArticle('${article.title}', '${article.content}')">
+                        <i class="fas fa-book-open"></i> Read More
+                    </button>
+                </div>
+            </div>
+        `;
+        container.appendChild(col);
+    });
+}
+
+function loadTechniques(techniques) {
+    const container = document.getElementById('techniques-container');
+    techniques.forEach(technique => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 resource-item';
+        col.dataset.categories = technique.category;
+        
+        col.innerHTML = `
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="category-badge bg-success text-white">${technique.category}</span>
+                        <span class="badge bg-info">${technique.duration}</span>
+                    </div>
+                    <h5 class="card-title">${technique.title}</h5>
+                    <p class="card-text"><strong>When to use:</strong> ${technique.when_to_use}</p>
+                    <button class="btn btn-success btn-sm" onclick="showTechnique(${technique.id}, '${technique.title}', '${technique.steps.join('|')}', '${technique.duration}')">
+                        <i class="fas fa-play"></i> Try This Technique
+                    </button>
+                </div>
+            </div>
+        `;
+        container.appendChild(col);
+    });
+}
+
+function loadWellnessActivities(activities) {
+    const container = document.getElementById('wellness-container');
+    activities.forEach(activity => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4 resource-item';
+        col.dataset.categories = activity.category;
+        
+        col.innerHTML = `
+            <div class="card resource-card h-100">
+                <div class="card-body text-center">
+                    <span class="category-badge bg-warning text-dark mb-3 d-inline-block">${activity.frequency}</span>
+                    <h5 class="card-title">${activity.title}</h5>
+                    <p class="card-text">${activity.instructions}</p>
+                    <div class="mt-auto">
+                        <small class="text-muted"><strong>Benefits:</strong> ${activity.benefits.join(', ')}</small>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.appendChild(col);
+    });
+}
+
+function filterResources(filter) {
+    const items = document.querySelectorAll('.resource-item');
+    items.forEach(item => {
+        if (filter === 'all') {
+            item.style.display = 'block';
+        } else {
+            const categories = item.dataset.categories.toLowerCase();
+            if (categories.includes(filter)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        }
+    });
+}
+
+function showTechnique(id, title, stepsStr, duration) {
+    const steps = stepsStr.split('|');
+    const modal = document.getElementById('techniqueModal');
+    const modalTitle = document.getElementById('techniqueModalTitle');
+    const modalBody = document.getElementById('techniqueModalBody');
+    
+    modalTitle.textContent = title;
+    modalBody.innerHTML = `
+        <div class="text-center mb-3">
+            <span class="badge bg-info fs-6">${duration}</span>
+        </div>
+        <div class="technique-steps">
+            <h6>Steps to follow:</h6>
+            <ol>
+                ${steps.map(step => `<li class="mb-2">${step}</li>`).join('')}
+            </ol>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn btn-success" onclick="startGuidedTechnique('${title}', '${stepsStr}')">
+                <i class="fas fa-play"></i> Start Guided Practice
+            </button>
+        </div>
+    `;
+    
+    new bootstrap.Modal(modal).show();
+}
+
+function startGuidedTechnique(title, stepsStr) {
+    // This could integrate with your meditation system
+    alert(`Starting guided practice for: ${title}\n\nThis feature can be integrated with your existing meditation system!`);
+}
+
+function readArticle(title, content) {
+    // This could open a dedicated article reader
+    alert(`Opening article: ${title}\n\nThis can be expanded to show full articles with better formatting!`);
+}
+</script>
+{% endblock %}

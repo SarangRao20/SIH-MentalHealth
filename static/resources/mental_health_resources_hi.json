@@ -1,0 +1,144 @@
+{
+  "self_help_articles": [
+    {
+      "id": 1,
+      "title": "चिंता को समझना: एक छात्र की गाइड",
+      "title_en": "Understanding Anxiety: A Student's Guide",
+      "category": "चिंता",
+      "category_en": "anxiety",
+      "difficulty": "शुरुआती",
+      "duration": "5 मिनट पढ़ना",
+      "content": "चिंता तनाव के लिए एक सामान्य प्रतिक्रिया है, लेकिन जब यह अत्यधिक हो जाती है...",
+      "content_en": "Anxiety is a normal response to stress, but when it becomes overwhelming...",
+      "tags": ["चिंता", "तनाव", "छात्र-जीवन"],
+      "tags_en": ["anxiety", "stress", "student-life"],
+      "helpful_for": ["हल्की चिंता", "परीक्षा का तनाव", "सामाजिक चिंता"],
+      "helpful_for_en": ["mild anxiety", "exam stress", "social anxiety"]
+    },
+    {
+      "id": 2,
+      "title": "शैक्षणिक दबाव से निपटना",
+      "title_en": "Coping with Academic Pressure",
+      "category": "तनाव",
+      "category_en": "stress",
+      "difficulty": "शुरुआती", 
+      "duration": "7 मिनट पढ़ना",
+      "content": "शैक्षणिक दबाव वास्तविक है, लेकिन सिद्ध रणनीतियां हैं...",
+      "content_en": "Academic pressure is real, but there are proven strategies...",
+      "tags": ["तनाव", "शिक्षा", "समय-प्रबंधन"],
+      "tags_en": ["stress", "academics", "time-management"],
+      "helpful_for": ["परीक्षा की चिंता", "पूर्णतावाद", "थकावट"],
+      "helpful_for_en": ["exam anxiety", "perfectionism", "burnout"]
+    }
+  ],
+
+  "coping_strategies": [
+    {
+      "id": 1,
+      "title": "5-4-3-2-1 ग्राउंडिंग तकनीक",
+      "title_en": "5-4-3-2-1 Grounding Technique",
+      "category": "चिंता",
+      "category_en": "anxiety",
+      "type": "तत्काल",
+      "type_en": "immediate",
+      "steps": [
+        "5 चीजों के नाम बताएं जो आप देख सकते हैं",
+        "4 चीजों के नाम बताएं जिन्हें आप छू सकते हैं",
+        "3 चीजों के नाम बताएं जो आप सुन सकते हैं", 
+        "2 चीजों के नाम बताएं जिन्हें आप सूंघ सकते हैं",
+        "1 चीज़ का नाम बताएं जिसका आप स्वाद ले सकते हैं"
+      ],
+      "steps_en": [
+        "Name 5 things you can see",
+        "Name 4 things you can touch",
+        "Name 3 things you can hear",
+        "Name 2 things you can smell", 
+        "Name 1 thing you can taste"
+      ],
+      "when_to_use": "पैनिक अटैक, अत्यधिक चिंता",
+      "when_to_use_en": "Panic attacks, overwhelming anxiety",
+      "duration": "2-3 मिनट"
+    },
+    {
+      "id": 2,
+      "title": "बॉक्स ब्रीदिंग",
+      "title_en": "Box Breathing",
+      "category": "तनाव",
+      "category_en": "stress",
+      "type": "तत्काल",
+      "type_en": "immediate",
+      "steps": [
+        "4 गिनती के लिए सांस अंदर लें",
+        "4 गिनती के लिए रोकें",
+        "4 गिनती के लिए सांस छोड़ें",
+        "4 गिनती के लिए रोकें",
+        "4-8 बार दोहराएं"
+      ],
+      "steps_en": [
+        "Breathe in for 4 counts",
+        "Hold for 4 counts", 
+        "Breathe out for 4 counts",
+        "Hold for 4 counts",
+        "Repeat 4-8 times"
+      ],
+      "when_to_use": "तनाव, चिंता, परीक्षा से पहले",
+      "when_to_use_en": "Stress, anxiety, before exams",
+      "duration": "2-5 मिनट"
+    }
+  ],
+
+  "crisis_resources": [
+    {
+      "name": "राष्ट्रीय आत्महत्या रोकथाम लाइफलाइन",
+      "name_en": "National Suicide Prevention Lifeline",
+      "number": "988",
+      "availability": "24/7",
+      "type": "फोन",
+      "type_en": "phone",
+      "description": "संकट में लोगों के लिए निःशुल्क और गोपनीय सहायता",
+      "description_en": "Free and confidential support for people in distress"
+    },
+    {
+      "name": "संकट टेक्स्ट लाइन",
+      "name_en": "Crisis Text Line", 
+      "contact": "741741 पर HOME टेक्स्ट करें",
+      "contact_en": "Text HOME to 741741",
+      "availability": "24/7",
+      "type": "टेक्स्ट",
+      "type_en": "text",
+      "description": "टेक्स्ट संदेश के माध्यम से निःशुल्क संकट सहायता",
+      "description_en": "Free crisis support via text message"
+    }
+  ],
+
+  "wellness_activities": [
+    {
+      "title": "दैनिक कृतज्ञता डायरी",
+      "title_en": "Daily Gratitude Journal",
+      "category": "मूड",
+      "category_en": "mood",
+      "difficulty": "आसान",
+      "difficulty_en": "easy",
+      "frequency": "दैनिक",
+      "frequency_en": "daily",
+      "instructions": "हर दिन 3 चीजें लिखें जिसके लिए आप आभारी हैं",
+      "instructions_en": "Write down 3 things you're grateful for each day",
+      "benefits": ["बेहतर मूड", "बेहतर नींद", "अधिक आशावाद"],
+      "benefits_en": ["Improved mood", "Better sleep", "Increased optimism"]
+    },
+    {
+      "title": "ध्यानपूर्वक चलना",
+      "title_en": "Mindful Walking",
+      "category": "माइंडफुलनेस",
+      "category_en": "mindfulness",
+      "difficulty": "आसान",
+      "difficulty_en": "easy", 
+      "frequency": "आवश्यकता अनुसार",
+      "frequency_en": "as needed",
+      "instructions": "केवल अपने आसपास पर ध्यान देते हुए 10 मिनट की सैर करें",
+      "instructions_en": "Take a 10-minute walk focusing only on your surroundings",
+      "benefits": ["तनाव कम", "बेहतर फोकस", "शारीरिक गतिविधि"],
+      "benefits_en": ["Reduced stress", "Better focus", "Physical activity"]
+    }
+  ]
+}

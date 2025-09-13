@@ -1,0 +1,157 @@
+{
+  "self_help_articles": [
+    {
+      "id": 1,
+      "title": "Understanding Anxiety: A Student's Guide",
+      "category": "anxiety",
+      "difficulty": "beginner",
+      "duration": "5 min read",
+      "content": "Anxiety is a normal response to stress, but when it becomes overwhelming...",
+      "tags": ["anxiety", "stress", "student-life"],
+      "helpful_for": ["mild anxiety", "exam stress", "social anxiety"]
+    },
+    {
+      "id": 2,
+      "title": "Coping with Academic Pressure",
+      "category": "stress",
+      "difficulty": "beginner", 
+      "duration": "7 min read",
+      "content": "Academic pressure is real, but there are proven strategies...",
+      "tags": ["stress", "academics", "time-management"],
+      "helpful_for": ["exam anxiety", "perfectionism", "burnout"]
+    },
+    {
+      "id": 3,
+      "title": "Building Healthy Sleep Habits",
+      "category": "wellness",
+      "difficulty": "beginner",
+      "duration": "6 min read", 
+      "content": "Quality sleep is fundamental to mental health...",
+      "tags": ["sleep", "wellness", "routine"],
+      "helpful_for": ["insomnia", "fatigue", "mood issues"]
+    }
+  ],
+
+  "coping_strategies": [
+    {
+      "id": 1,
+      "title": "5-4-3-2-1 Grounding Technique",
+      "category": "anxiety",
+      "type": "immediate",
+      "steps": [
+        "Name 5 things you can see",
+        "Name 4 things you can touch", 
+        "Name 3 things you can hear",
+        "Name 2 things you can smell",
+        "Name 1 thing you can taste"
+      ],
+      "when_to_use": "Panic attacks, overwhelming anxiety",
+      "duration": "2-3 minutes"
+    },
+    {
+      "id": 2,
+      "title": "Box Breathing",
+      "category": "stress",
+      "type": "immediate",
+      "steps": [
+        "Breathe in for 4 counts",
+        "Hold for 4 counts",
+        "Breathe out for 4 counts", 
+        "Hold for 4 counts",
+        "Repeat 4-8 times"
+      ],
+      "when_to_use": "Stress, anxiety, before exams",
+      "duration": "2-5 minutes"
+    },
+    {
+      "id": 3,
+      "title": "Progressive Muscle Relaxation",
+      "category": "stress",
+      "type": "extended",
+      "steps": [
+        "Start with your toes, tense for 5 seconds",
+        "Release and notice the relaxation",
+        "Move up to calves, thighs, etc.",
+        "Work through each muscle group",
+        "End with deep breathing"
+      ],
+      "when_to_use": "Before sleep, general tension",
+      "duration": "10-20 minutes"
+    }
+  ],
+
+  "crisis_resources": [
+    {
+      "name": "National Suicide Prevention Lifeline",
+      "number": "988",
+      "availability": "24/7",
+      "type": "phone",
+      "description": "Free and confidential support for people in distress"
+    },
+    {
+      "name": "Crisis Text Line", 
+      "contact": "Text HOME to 741741",
+      "availability": "24/7",
+      "type": "text",
+      "description": "Free crisis support via text message"
+    },
+    {
+      "name": "SAMHSA National Helpline",
+      "number": "1-800-662-4357",
+      "availability": "24/7",
+      "type": "phone", 
+      "description": "Treatment referral and information service"
+    }
+  ],
+
+  "wellness_activities": [
+    {
+      "title": "Daily Gratitude Journal",
+      "category": "mood",
+      "difficulty": "easy",
+      "frequency": "daily",
+      "instructions": "Write down 3 things you're grateful for each day",
+      "benefits": ["Improved mood", "Better sleep", "Increased optimism"]
+    },
+    {
+      "title": "Mindful Walking",
+      "category": "mindfulness",
+      "difficulty": "easy", 
+      "frequency": "as needed",
+      "instructions": "Take a 10-minute walk focusing only on your surroundings",
+      "benefits": ["Reduced stress", "Better focus", "Physical activity"]
+    },
+    {
+      "title": "Study Break Stretches",
+      "category": "physical",
+      "difficulty": "easy",
+      "frequency": "every hour",
+      "instructions": "5-minute stretching routine to release tension",
+      "benefits": ["Reduced muscle tension", "Better circulation", "Mental break"]
+    }
+  ],
+
+  "professional_help_guide": {
+    "when_to_seek_help": [
+      "Symptoms persist for more than 2 weeks",
+      "Difficulty with daily activities",
+      "Thoughts of self-harm",
+      "Substance use to cope",
+      "Relationship or academic problems"
+    ],
+    "types_of_professionals": {
+      "counselor": {
+        "description": "Licensed professional for talk therapy",
+        "good_for": ["Anxiety", "Depression", "Stress", "Relationship issues"]
+      },
+      "psychologist": {
+        "description": "PhD-level professional, can provide therapy and testing",
+        "good_for": ["Complex issues", "Psychological testing", "Specialized therapy"]
+      },
+      "psychiatrist": {
+        "description": "Medical doctor who can prescribe medication",
+        "good_for": ["Medication management", "Severe mental health conditions"]
+      }
+    }
+  }
+}

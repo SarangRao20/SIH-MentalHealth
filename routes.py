@@ -621,6 +621,12 @@ def submit_assessment():
         flash(f'Error processing assessment: {str(e)}', 'error')
         return redirect(url_for('assessments'))
 
+@app.route('/resources')
+@login_required
+def resources():
+    """Mental Health Resources page with coping strategies and self-help content"""
+    return render_template('resources.html')
+
 @app.route('/meditation')
 @login_required
 def meditation():
