@@ -17,16 +17,23 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <!-- Sidebar -->
+    <!-- Professional Sidebar -->
     <nav id="sidebar" class="sidebar d-flex flex-column">
         <!-- Sidebar Header -->
-        <div class="sidebar-header d-flex align-items-center justify-content-between px-3 py-2">
-            <a class="navbar-brand d-flex align-items-center logo-section" href="{{ url_for('index') }}">
-                <i class="fas fa-heart me-2"></i>
-                <span class="label">MindCare</span>
-            </a>
-            <button class="btn btn-sm btn-toggle-sidebar" id="sidebarCollapse">
-                <i class="fas fa-bars"></i>
+        <div class="sidebar-header">
+            <div class="logo-section">
+                <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="brand-name">MindCare</span>
+                        <span class="brand-tagline">Mental Health Platform</span>
+                    </div>
+                </a>
+            </div>
+            <button class="btn-toggle-sidebar" id="sidebarCollapse">
+                <i class="fas fa-chevron-left"></i>
             </button>
         </div>
 
@@ -67,9 +74,33 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url_for('vr_meditation') }}">
+                    <i class="fas fa-vr-cardboard icon"></i>
+                    <span class="label">🥽 VR Meditation</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('ar_breathing') }}">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <span class="label">📱 AR Breathing</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('resources') }}">
+                    <i class="fas fa-book-medical icon"></i>
+                    <span class="label">{{ _('Resources') }}</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ url_for('venting_room') }}">
                     <i class="fas fa-fire icon"></i>
                     <span class="label">{{ _('Private Venting Room') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('sound_venting') }}">
+                    <i class="fas fa-microphone icon"></i>
+                    <span class="label">🎤 Sound Venting</span>
                 </a>
             </li>
             <li>
@@ -102,46 +133,71 @@
     {% endif %}
 </ul>
 
-        <!-- Footer -->
-        <div class="sidebar-footer mt-auto">
-            <!-- Language Switcher -->
-            <div class="language-switcher px-3 py-2 mb-2">
-                <div class="d-flex justify-content-center">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <a href="{{ url_for('set_language', language='en') }}" class="btn btn-outline-secondary {% if session.language == 'en' or not session.language %}active{% endif %}" style="font-size: 0.75rem;">
-                            🇺🇸 EN
-                        </a>
-                        <a href="{{ url_for('set_language', language='hi') }}" class="btn btn-outline-secondary {% if session.language == 'hi' %}active{% endif %}" style="font-size: 0.75rem;">
-                            🇮🇳 हिं
-                        </a>
+        <!-- Professional Footer -->
+        <div class="sidebar-footer">
+            {% if current_user.is_authenticated %}
+                <!-- User Profile Card -->
+                <div class="user-profile-card">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="username">{{ current_user.username }}</div>
+                        <div class="user-role">{{ current_user.role|title if current_user.role else 'User' }}</div>
+                        {% if current_user.login_streak > 0 %}
+                            <div class="streak-badge">
+                                <i class="fas fa-fire"></i>
+                                <span>{{ current_user.login_streak }} {{ _('days') }}</span>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-            </div>
 
-            {% if current_user.is_authenticated %}
-                <div class="user-info px-3 py-2">
-                    <i class="fas fa-user icon"></i>
-                    <span class="label">{{ current_user.username }}</span>
-                    {% if current_user.login_streak > 0 %}
-                        <span class="badge bg-success">{{ current_user.login_streak }} {{ _('days') }}</span>
-                    {% endif %}
+                <!-- Action Buttons -->
+                <div class="footer-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <div class="language-toggle">
+                            <a href="{{ url_for('set_language', language='en') }}" 
+                               class="lang-btn {% if session.language == 'en' or not session.language %}active{% endif %}">
+                                EN
+                            </a>
+                            <a href="{{ url_for('set_language', language='hi') }}" 
+                               class="lang-btn {% if session.language == 'hi' %}active{% endif %}">
+                                हिं
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <a class="logout-btn" href="{{ url_for('logout') }}" title="{{ _('Logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="label">{{ _('Logout') }}</span>
+                    </a>
                 </div>
-                <a class="btn btn-sm btn-danger w-100 mt-2" href="{{ url_for('logout') }}">
-                    <i class="fas fa-sign-out-alt icon" style="color: white;"></i>
-                    <span class="label" style="color: white; font-weight: bold;">{{ _('Logout') }}</span>
-                </a>
             {% else %}
-                <a class="btn btn-sm btn-primary w-100 mb-2" href="{{ url_for('login') }}">
-                    <i class="fas fa-sign-in-alt icon"></i>
-                    <span class="label">{{ _('Login') }}</span>
-                </a>
-                <a class="btn btn-sm btn-success w-100" href="{{ url_for('register') }}">
-                    <i class="fas fa-user-plus icon"></i>
-                    <span class="label">{{ _('Register') }}</span>
-                </a>
+                <!-- Login/Register Buttons -->
+                <div class="auth-buttons">
+                    <a class="auth-btn login-btn" href="{{ url_for('login') }}">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="label">{{ _('Login') }}</span>
+                    </a>
+                    <a class="auth-btn register-btn" href="{{ url_for('register') }}">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="label">{{ _('Register') }}</span>
+                    </a>
+                </div>
             {% endif %}
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn d-md-none" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
 
     <!-- Page Content -->
     <div id="content" class="content">
@@ -184,20 +240,168 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Sidebar Toggle JS -->
+    <!-- Professional Sidebar Toggle JS -->
     <script>
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        const toggleBtn = document.getElementById("sidebarCollapse");
-        
+        document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+            
+            // Cache DOM elements
+            const sidebar = document.getElementById("sidebar");
+            const content = document.getElementById("content");
+            const toggleBtn = document.getElementById("sidebarCollapse");
+            const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+            const sidebarOverlay = document.getElementById("sidebarOverlay");
+            
+            // Debug: Check if elements exist
+            console.log('Sidebar elements found:', {
+                sidebar: !!sidebar,
+                content: !!content,
+                toggleBtn: !!toggleBtn,
+                mobileMenuBtn: !!mobileMenuBtn
+            });
+            
+            // Prevent errors if elements don't exist
+            if (!sidebar || !toggleBtn) {
+                console.warn('Required sidebar elements not found');
+                return;
+            }
+            
+            // Throttle function for performance
+            function throttle(func, limit) {
+                let inThrottle;
+                return function() {
+                    const args = arguments;
+                    const context = this;
+                    if (!inThrottle) {
+                        func.apply(context, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                }
+            }
+            
+            // Desktop toggle functionality
+            toggleBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                
+                console.log('Toggle button clicked');
+                
+                // Add loading class to prevent multiple clicks
+                toggleBtn.disabled = true;
+                
+                // Use requestAnimationFrame for smoother animation
+                requestAnimationFrame(() => {
+                    sidebar.classList.toggle("collapsed");
+                    
+                    const isCollapsed = sidebar.classList.contains("collapsed");
+                    console.log('Sidebar collapsed state:', isCollapsed);
+                    
+                    // Re-enable button after animation completes
+                    setTimeout(() => {
+                        toggleBtn.disabled = false;
+                    }, 300); // Match CSS transition duration
+                });
+                
+                // Save collapsed state to localStorage with error handling
+                try {
+                    const isCollapsed = sidebar.classList.contains("collapsed");
+                    localStorage.setItem("sidebarCollapsed", isCollapsed.toString());
+                } catch (e) {
+                    console.warn('Could not save sidebar state to localStorage:', e);
+                }
+            });
 
-        toggleBtn.addEventListener("click", function () {
-            sidebar.classList.toggle("collapsed");
-            content.classList.toggle("expanded");
+            // Mobile menu functionality
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    
+                    // Prevent multiple rapid clicks
+                    mobileMenuBtn.disabled = true;
+                    
+                    // Use requestAnimationFrame for smoother animation
+                    requestAnimationFrame(() => {
+                        sidebar.classList.add("show");
+                        if (sidebarOverlay) sidebarOverlay.classList.add("show");
+                        document.body.classList.add("sidebar-open");
+                        
+                        // Re-enable button after animation
+                        setTimeout(() => {
+                            mobileMenuBtn.disabled = false;
+                        }, 300);
+                    });
+                });
+            }
 
+            // Close mobile menu function
+            function closeMobileMenu() {
+                sidebar.classList.remove("show");
+                if (sidebarOverlay) sidebarOverlay.classList.remove("show");
+                document.body.classList.remove("sidebar-open");
+            }
+
+            // Close mobile menu when clicking overlay
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener("click", closeMobileMenu);
+            }
+
+            // Close mobile menu when clicking menu item (mobile only)
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closeMobileMenu();
+                    }
+                });
+            });
+
+            // Restore collapsed state on page load with error handling
+            try {
+                if (window.innerWidth > 768) {
+                    const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
+                    console.log('Restoring sidebar state:', isCollapsed);
+                    if (isCollapsed) {
+                        sidebar.classList.add("collapsed");
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not restore sidebar state from localStorage:', e);
+            }
+            
+            // Remove loading class and make visible
+            requestAnimationFrame(() => {
+                sidebar.classList.remove('loading');
+                sidebar.style.opacity = '1';
+            });
+            
+            // Handle active menu item highlighting
+            const menuLinks = document.querySelectorAll('.sidebar ul li a');
+            const currentPath = window.location.pathname;
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Handle window resize with throttling
+            const handleResize = throttle(function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+            }, 250);
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Prevent double-tap zoom on mobile
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            
         });
-
-
     </script>
 
     {% block extra_scripts %}{% endblock %}

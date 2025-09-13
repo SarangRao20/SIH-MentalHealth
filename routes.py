@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify, session, send_file
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
-from models import User, ChatSession, ChatMessage, Assessment, MeditationSession, VentingPost, VentingResponse, ConsultationRequest, AvailabilitySlot
+from models import User, ChatSession, ChatMessage, Assessment, MeditationSession, VentingPost, VentingResponse, ConsultationRequest, AvailabilitySlot, SoundVentingSession
 from gemini_service import chat_with_ai, analyze_assessment_results, suggest_assessment
 from voice_service import voice_service
 from utils import (hash_student_id, calculate_phq9_score, calculate_gad7_score, 
@@ -258,20 +258,50 @@ def chat():
 def save_venting_session():
     try:
         data = request.get_json()
-        # Create a simple meditation session record for venting activity
-        venting_session = MeditationSession(
-            user_id=current_user.id,
-            session_type='venting',
-            duration=1  # 1 minute default for venting session
-        )
         
-        db.session.add(venting_session)
-        db.session.commit()
-        
-        return jsonify({'success': True})
+        # Check if it's a sound venting session with decibel data
+        if 'max_decibel' in data:
+            # Sound venting session
+            duration = data.get('duration', 0)
+            max_decibel = data.get('max_decibel', 0)
+            avg_decibel = data.get('avg_decibel', 0)
+            scream_count = data.get('scream_count', 0)
+            session_type = data.get('session_type', 'sound_venting')
+            
+            session = SoundVentingSession(
+                user_id=current_user.id,
+                duration=duration,
+                max_decibel=max_decibel,
+                avg_decibel=avg_decibel,
+                scream_count=scream_count,
+                session_type=session_type
+            )
+            
+            db.session.add(session)
+            db.session.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Sound venting session saved successfully',
+                'duration': duration,
+                'max_decibel': max_decibel
+            })
+        else:
+            # Regular text venting session
+            venting_session = MeditationSession(
+                user_id=current_user.id,
+                session_type='venting',
+                duration=1  # 1 minute default for venting session
+            )
+            
+            db.session.add(venting_session)
+            db.session.commit()
+            
+            return jsonify({'success': True})
+            
     except Exception as e:
         logging.error(f"Error saving venting session: {e}")
-        return jsonify({'success': False}), 500
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/track_mood', methods=['POST'])
 @login_required
@@ -621,6 +651,55 @@ def submit_assessment():
         flash(f'Error processing assessment: {str(e)}', 'error')
         return redirect(url_for('assessments'))
 
+@app.route('/resources')
+@login_required
+def resources():
+    """Mental Health Resources page with coping strategies and self-help content"""
+    return render_template('resources.html')
+
+@app.route('/vr_meditation')
+@login_required
+def vr_meditation():
+    """VR Meditation experience using A-Frame"""
+    return render_template('vr_meditation.html')
+
+@app.route('/ar_breathing')
+@login_required
+def ar_breathing():
+    """AR Breathing exercises for anxiety relief"""
+    return render_template('ar_breathing.html')
+
+@app.route('/save_breathing_session', methods=['POST'])
+@login_required
+def save_breathing_session():
+    """Save AR breathing session data"""
+    try:
+        data = request.get_json()
+        duration = data.get('duration', 0)
+        pattern = data.get('pattern', 'Unknown')
+        session_type = data.get('session_type', 'breathing')
+        
+        # Save as meditation session with special type
+        session = MeditationSession(
+            user_id=current_user.id,
+            duration=duration,
+            date=datetime.utcnow().date(),
+            session_type=session_type
+        )
+        
+        db.session.add(session)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': f'{pattern} session saved successfully',
+            'duration': duration
+        })
+        
+    except Exception as e:
+        print(f"Error saving breathing session: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @app.route('/meditation')
 @login_required
 def meditation():
@@ -693,6 +772,14 @@ def meditation_completed():
 @login_required
 def venting_room():
     return render_template('venting_room.html')
+
+@app.route('/sound_venting')
+@login_required
+def sound_venting():
+    """Sound Venting Room with decibel tracking"""
+    # Get user's previous venting sessions count
+    venting_sessions = VentingPost.query.filter_by(user_id=current_user.id).count()
+    return render_template('sound_venting.html', venting_sessions=venting_sessions)
 
 @app.route('/venting_hall')
 @login_required

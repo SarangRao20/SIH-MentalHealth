@@ -1,0 +1,671 @@
+{% extends "base.html" %}
+
+{% block title %}Sound Venting Room - MindCare{% endblock %}
+
+{% block extra_head %}
+<style>
+    .sound-venting-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        color: white;
+        margin: 2rem 0;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .decibel-meter {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1.5rem 0;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .decibel-display {
+        font-size: 4rem;
+        font-weight: bold;
+        color: #4ecdc4;
+        text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        margin: 1rem 0;
+        animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .sound-visualizer {
+        height: 200px;
+        background: rgba(0,0,0,0.3);
+        border-radius: 10px;
+        margin: 1rem 0;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        gap: 3px;
+        padding: 10px;
+    }
+    
+    .sound-bar {
+        width: 8px;
+        background: linear-gradient(to top, #ff6b6b, #4ecdc4, #45b7d1);
+        border-radius: 4px;
+        transition: height 0.1s ease;
+        min-height: 5px;
+    }
+    
+    .intensity-levels {
+        display: flex;
+        justify-content: space-around;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+    }
+    
+    .intensity-level {
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        margin: 0.3rem;
+        font-weight: bold;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .level-whisper { background: rgba(108, 117, 125, 0.3); }
+    .level-normal { background: rgba(40, 167, 69, 0.3); }
+    .level-loud { background: rgba(255, 193, 7, 0.3); }
+    .level-shout { background: rgba(220, 53, 69, 0.3); }
+    .level-scream { background: rgba(138, 43, 226, 0.3); }
+    
+    .level-active {
+        transform: scale(1.1);
+        border-color: white;
+        box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+    
+    .venting-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+    }
+    
+    .stat-card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+        min-width: 120px;
+        margin: 0.5rem;
+        backdrop-filter: blur(5px);
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #4ecdc4;
+    }
+    
+    .control-buttons {
+        text-align: center;
+        margin: 2rem 0;
+    }
+    
+    .venting-btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 150px;
+    }
+    
+    .btn-start {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+    }
+    
+    .btn-stop {
+        background: linear-gradient(135deg, #dc3545, #fd7e14);
+        color: white;
+    }
+    
+    .btn-reset {
+        background: linear-gradient(135deg, #6c757d, #495057);
+        color: white;
+    }
+    
+    .venting-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    .recording-indicator {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #dc3545;
+        color: white;
+        padding: 1rem;
+        border-radius: 50px;
+        z-index: 1000;
+        animation: blink 1s infinite;
+        display: none;
+    }
+    
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0.3; }
+    }
+    
+    .safety-notice {
+        background: rgba(255, 193, 7, 0.2);
+        border: 2px solid #ffc107;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: #212529;
+    }
+    
+    .encouragement-messages {
+        background: rgba(40, 167, 69, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+        font-style: italic;
+    }
+    
+    .peak-meter {
+        width: 100%;
+        height: 30px;
+        background: rgba(0,0,0,0.3);
+        border-radius: 15px;
+        position: relative;
+        margin: 1rem 0;
+        overflow: hidden;
+    }
+    
+    .peak-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #28a745, #ffc107, #dc3545);
+        border-radius: 15px;
+        transition: width 0.1s ease;
+        width: 0%;
+    }
+    
+    .peak-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        opacity: 0.8;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="display-4 text-primary">🎤 Sound Venting Room</h1>
+        <p class="lead">Release your emotions safely - scream, shout, or whisper</p>
+    </div>
+
+    <!-- Safety Notice -->
+    <div class="safety-notice">
+        <h5><i class="fas fa-shield-alt"></i> Safe Space Guidelines:</h5>
+        <ul class="mb-0">
+            <li><strong>This is YOUR space</strong> - Feel free to express yourself however you need</li>
+            <li><strong>Privacy guaranteed</strong> - No recordings are saved, only volume statistics</li>
+            <li><strong>Healthy release</strong> - Shouting and screaming can be therapeutic</li>
+            <li><strong>No judgment</strong> - Express anger, frustration, sadness, or joy freely</li>
+        </ul>
+    </div>
+
+    <!-- Main Sound Venting Container -->
+    <div class="sound-venting-container">
+        <!-- Recording Indicator -->
+        <div class="recording-indicator" id="recordingIndicator">
+            <i class="fas fa-microphone"></i> LISTENING
+        </div>
+
+        <!-- Decibel Display -->
+        <div class="decibel-meter">
+            <h3><i class="fas fa-volume-up"></i> Current Volume Level</h3>
+            <div class="decibel-display" id="decibelDisplay">0 dB</div>
+            
+            <!-- Peak Meter -->
+            <div class="peak-meter">
+                <div class="peak-fill" id="peakFill"></div>
+            </div>
+            <div class="peak-labels">
+                <span>Silence</span>
+                <span>Whisper</span>
+                <span>Normal</span>
+                <span>Loud</span>
+                <span>SCREAM!</span>
+            </div>
+        </div>
+
+        <!-- Sound Visualizer -->
+        <div class="sound-visualizer" id="soundVisualizer">
+            <!-- Sound bars will be generated by JavaScript -->
+        </div>
+
+        <!-- Intensity Levels -->
+        <div class="intensity-levels">
+            <div class="intensity-level level-whisper" data-level="whisper">
+                😶 Whisper<br><small>0-30 dB</small>
+            </div>
+            <div class="intensity-level level-normal" data-level="normal">
+                😊 Normal<br><small>30-50 dB</small>
+            </div>
+            <div class="intensity-level level-loud" data-level="loud">
+                😤 Loud<br><small>50-70 dB</small>
+            </div>
+            <div class="intensity-level level-shout" data-level="shout">
+                😡 Shout<br><small>70-90 dB</small>
+            </div>
+            <div class="intensity-level level-scream" data-level="scream">
+                🤬 SCREAM<br><small>90+ dB</small>
+            </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-buttons">
+            <button class="venting-btn btn-start" onclick="startVenting()" id="startBtn">
+                <i class="fas fa-play"></i> Start Venting
+            </button>
+            <button class="venting-btn btn-stop" onclick="stopVenting()" id="stopBtn" disabled>
+                <i class="fas fa-stop"></i> Stop Session
+            </button>
+            <button class="venting-btn btn-reset" onclick="resetStats()">
+                <i class="fas fa-refresh"></i> Reset Stats
+            </button>
+        </div>
+
+        <!-- Venting Statistics -->
+        <div class="venting-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="sessionDuration">0:00</div>
+                <div>Session Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="maxDecibel">0</div>
+                <div>Peak Volume (dB)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgDecibel">0</div>
+                <div>Average (dB)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="screamCount">0</div>
+                <div>Scream Count</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="ventingSessions">{{ venting_sessions or 0 }}</div>
+                <div>Total Sessions</div>
+            </div>
+        </div>
+
+        <!-- Encouragement Messages -->
+        <div class="encouragement-messages" id="encouragementMessage">
+            <p>💪 "It's okay to let it all out. You're in a safe space here."</p>
+        </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-lightbulb text-warning"></i> Venting Tips</h5>
+                    <ul class="list-unstyled">
+                        <li>🗣️ <strong>Say what you feel:</strong> "I'm so frustrated!"</li>
+                        <li>😤 <strong>Express anger:</strong> It's healthy to feel angry sometimes</li>
+                        <li>😢 <strong>Cry if needed:</strong> Tears are a natural release</li>
+                        <li>🤬 <strong>Scream it out:</strong> Let go of built-up tension</li>
+                        <li>😮‍💨 <strong>Deep breaths:</strong> Between venting, breathe deeply</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-heart text-danger"></i> After Venting</h5>
+                    <ul class="list-unstyled">
+                        <li>🧘 <strong>Breathe deeply:</strong> <a href="{{ url_for('ar_breathing') }}">Try AR Breathing</a></li>
+                        <li>🛀 <strong>Self-care:</strong> Take a warm shower or bath</li>
+                        <li>📝 <strong>Reflect:</strong> Write down what you discovered</li>
+                        <li>🎵 <strong>Listen to music:</strong> Something that soothes you</li>
+                        <li>💬 <strong>Talk to someone:</strong> <a href="{{ url_for('consultation') }}">Get professional support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let audioContext = null;
+let analyser = null;
+let microphone = null;
+let dataArray = null;
+let isVenting = false;
+let ventingStartTime = null;
+let sessionTimer = null;
+let maxDecibel = 0;
+let totalDecibel = 0;
+let measurementCount = 0;
+let screamCount = 0;
+let currentLevel = 'whisper';
+
+// Encouragement messages for different volume levels
+const encouragementMessages = {
+    whisper: [
+        "💭 Sometimes the quietest voices carry the deepest pain. That's okay.",
+        "🤫 Even whispers matter. Your feelings are valid.",
+        "🌱 Small releases can grow into big healing."
+    ],
+    normal: [
+        "😊 You're finding your voice. Keep going.",
+        "💪 Normal is perfectly fine. Express yourself however feels right.",
+        "🌟 You're doing great - no need to force anything."
+    ],
+    loud: [
+        "😤 Yes! Let those feelings out! You're doing amazing!",
+        "🔥 Feel that energy! It's okay to be loud about your emotions!",
+        "💥 Your voice deserves to be heard - keep going!"
+    ],
+    shout: [
+        "😡 THAT'S IT! Shout it all out! You're being so brave!",
+        "🎯 You're releasing so much tension - this is healthy!",
+        "⚡ Feel that power in your voice! Let it ALL out!"
+    ],
+    scream: [
+        "🤬 YES! SCREAM IT ALL OUT! You're incredibly strong!",
+        "🌪️ Feel that release! You're letting go of so much pain!",
+        "🚀 AMAZING! You're transforming pain into power!",
+        "⭐ You're a warrior! This is pure emotional strength!"
+    ]
+};
+
+async function startVenting() {
+    try {
+        // Request microphone access
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        
+        // Set up audio context
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(stream);
+        
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        
+        microphone.connect(analyser);
+        
+        // Start venting session
+        isVenting = true;
+        ventingStartTime = Date.now();
+        maxDecibel = 0;
+        totalDecibel = 0;
+        measurementCount = 0;
+        screamCount = 0;
+        
+        // Update UI
+        document.getElementById('startBtn').disabled = true;
+        document.getElementById('stopBtn').disabled = false;
+        document.getElementById('recordingIndicator').style.display = 'block';
+        
+        // Start timers
+        startSessionTimer();
+        startDecibelMeasurement();
+        
+        console.log('Sound venting started successfully');
+        
+    } catch (error) {
+        console.error('Error accessing microphone:', error);
+        alert('Unable to access microphone. Please allow microphone permissions and try again.');
+    }
+}
+
+function stopVenting() {
+    isVenting = false;
+    
+    // Stop audio processing
+    if (microphone) {
+        microphone.disconnect();
+        microphone = null;
+    }
+    
+    if (audioContext) {
+        audioContext.close();
+        audioContext = null;
+    }
+    
+    // Clear timers
+    if (sessionTimer) {
+        clearInterval(sessionTimer);
+        sessionTimer = null;
+    }
+    
+    // Update UI
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('stopBtn').disabled = true;
+    document.getElementById('recordingIndicator').style.display = 'none';
+    
+    // Save venting session
+    saveVentingSession();
+    
+    // Reset active level
+    document.querySelectorAll('.intensity-level').forEach(level => {
+        level.classList.remove('level-active');
+    });
+    
+    console.log('Sound venting stopped');
+}
+
+function startSessionTimer() {
+    sessionTimer = setInterval(() => {
+        if (!isVenting || !ventingStartTime) return;
+        
+        const elapsed = Math.floor((Date.now() - ventingStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        
+        document.getElementById('sessionDuration').textContent = 
+            `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
+}
+
+function startDecibelMeasurement() {
+    if (!isVenting || !analyser) return;
+    
+    analyser.getByteFrequencyData(dataArray);
+    
+    // Calculate average amplitude
+    let sum = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+        sum += dataArray[i];
+    }
+    const average = sum / dataArray.length;
+    
+    // Convert to approximate decibel level (simplified calculation)
+    const decibel = Math.round(20 * Math.log10(average + 1));
+    const displayDecibel = Math.max(0, Math.min(120, decibel)); // Clamp between 0-120
+    
+    // Update decibel display
+    document.getElementById('decibelDisplay').textContent = `${displayDecibel} dB`;
+    
+    // Update peak meter
+    const peakPercentage = Math.min(100, (displayDecibel / 100) * 100);
+    document.getElementById('peakFill').style.width = `${peakPercentage}%`;
+    
+    // Update statistics
+    if (displayDecibel > maxDecibel) {
+        maxDecibel = displayDecibel;
+        document.getElementById('maxDecibel').textContent = maxDecibel;
+    }
+    
+    totalDecibel += displayDecibel;
+    measurementCount++;
+    const avgDecibel = Math.round(totalDecibel / measurementCount);
+    document.getElementById('avgDecibel').textContent = avgDecibel;
+    
+    // Determine current level and update UI
+    updateIntensityLevel(displayDecibel);
+    
+    // Update sound visualizer
+    updateSoundVisualizer(dataArray);
+    
+    // Count screams (above 90 dB)
+    if (displayDecibel >= 90) {
+        screamCount++;
+        document.getElementById('screamCount').textContent = screamCount;
+    }
+    
+    // Continue measurement
+    requestAnimationFrame(startDecibelMeasurement);
+}
+
+function updateIntensityLevel(decibel) {
+    let newLevel;
+    
+    if (decibel < 30) newLevel = 'whisper';
+    else if (decibel < 50) newLevel = 'normal';
+    else if (decibel < 70) newLevel = 'loud';
+    else if (decibel < 90) newLevel = 'shout';
+    else newLevel = 'scream';
+    
+    if (newLevel !== currentLevel) {
+        currentLevel = newLevel;
+        
+        // Update active level indicator
+        document.querySelectorAll('.intensity-level').forEach(level => {
+            level.classList.remove('level-active');
+        });
+        document.querySelector(`[data-level="${currentLevel}"]`).classList.add('level-active');
+        
+        // Update encouragement message
+        updateEncouragementMessage(currentLevel);
+    }
+}
+
+function updateEncouragementMessage(level) {
+    const messages = encouragementMessages[level];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    
+    document.getElementById('encouragementMessage').innerHTML = `<p>${randomMessage}</p>`;
+}
+
+function updateSoundVisualizer(dataArray) {
+    const visualizer = document.getElementById('soundVisualizer');
+    
+    // Create bars if they don't exist
+    if (visualizer.children.length === 0) {
+        for (let i = 0; i < 32; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'sound-bar';
+            visualizer.appendChild(bar);
+        }
+    }
+    
+    // Update bar heights
+    const bars = visualizer.children;
+    for (let i = 0; i < bars.length; i++) {
+        const barHeight = (dataArray[i * 4] / 255) * 180; // Scale to visualizer height
+        bars[i].style.height = `${Math.max(5, barHeight)}px`;
+    }
+}
+
+function resetStats() {
+    maxDecibel = 0;
+    totalDecibel = 0;
+    measurementCount = 0;
+    screamCount = 0;
+    
+    document.getElementById('sessionDuration').textContent = '0:00';
+    document.getElementById('maxDecibel').textContent = '0';
+    document.getElementById('avgDecibel').textContent = '0';
+    document.getElementById('screamCount').textContent = '0';
+    document.getElementById('decibelDisplay').textContent = '0 dB';
+    document.getElementById('peakFill').style.width = '0%';
+    
+    // Reset encouragement message
+    document.getElementById('encouragementMessage').innerHTML = 
+        '<p>💪 "It\'s okay to let it all out. You\'re in a safe space here."</p>';
+}
+
+function saveVentingSession() {
+    if (!ventingStartTime) return;
+    
+    const duration = Math.floor((Date.now() - ventingStartTime) / 1000);
+    const avgDecibel = measurementCount > 0 ? Math.round(totalDecibel / measurementCount) : 0;
+    
+    fetch('/save_venting_session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            duration: duration,
+            max_decibel: maxDecibel,
+            avg_decibel: avgDecibel,
+            scream_count: screamCount,
+            session_type: 'sound_venting'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Sound venting session saved:', data);
+        
+        // Update total sessions count
+        const currentSessions = parseInt(document.getElementById('ventingSessions').textContent);
+        document.getElementById('ventingSessions').textContent = currentSessions + 1;
+        
+        // Show completion message
+        updateEncouragementMessage('completion');
+        setTimeout(() => {
+            document.getElementById('encouragementMessage').innerHTML = 
+                '<p>🎉 <strong>Session Complete!</strong> You did amazing work releasing those emotions. Take a moment to breathe and be proud of yourself.</p>';
+        }, 1000);
+        
+    })
+    .catch(error => console.error('Error saving session:', error));
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    resetStats();
+    
+    // Add completion message to encouragement messages
+    encouragementMessages.completion = [
+        "🎉 You did it! That was incredibly brave and healing!",
+        "⭐ What a powerful session! You should be proud of yourself!",
+        "💪 Amazing work! You're taking control of your emotional health!"
+    ];
+});
+
+// Handle page visibility change (stop recording when tab is hidden)
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && isVenting) {
+        stopVenting();
+    }
+});
+</script>
+{% endblock %}

@@ -10,7 +10,14 @@ from sqlalchemy.orm import DeclarativeBase
 ## Removed inkblot import; will define inkblot routes in routes.py
 from database import db
 
-logging.basicConfig(level=logging.DEBUG)
+# Configure logging with reduced noise from comtypes
+logging.basicConfig(level=logging.INFO)
+
+# Suppress verbose debugging from comtypes (Windows Speech API)
+logging.getLogger('comtypes').setLevel(logging.WARNING)
+logging.getLogger('comtypes.client').setLevel(logging.WARNING)
+logging.getLogger('comtypes._post_coinit').setLevel(logging.WARNING)
+logging.getLogger('comtypes._comobject').setLevel(logging.WARNING)
 
 class Base(DeclarativeBase):
     pass
@@ -85,3 +92,6 @@ app.jinja_env.globals['get_locale'] = get_locale
 import routes
 
 ## Removed inkblot_bp blueprint registration; now using direct route in routes.py
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)

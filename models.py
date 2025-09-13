@@ -146,6 +146,19 @@ class VentingResponse(db.Model):
     
     user = db.relationship('User', backref='venting_responses')
 
+class SoundVentingSession(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    duration = db.Column(db.Integer, nullable=False)  # Session duration in seconds
+    max_decibel = db.Column(db.Float)  # Maximum decibel level reached
+    avg_decibel = db.Column(db.Float)  # Average decibel level
+    scream_count = db.Column(db.Integer, default=0)  # Number of screams (90+ dB)
+    session_type = db.Column(db.String(20), default='sound_venting')  # sound_venting, therapy_scream
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.Date, default=datetime.utcnow().date)
+    
+    user = db.relationship('User', backref='sound_venting_sessions')
+
 class ConsultationRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -175,21 +188,4 @@ class AvailabilitySlot(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     counsellor = db.relationship('User', foreign_keys=[counsellor_id], backref='availability_slots')
-
-class RoutineTask(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    title = db.Column(db.String(100), nullable=False)
-    start_time = db.Column(db.String(5), nullable=False) # HH:MM
-    end_time = db.Column(db.String(5), nullable=False)   # HH:MM
-    notes = db.Column(db.Text)
-    status = db.Column(db.String(20), default='pending') # pending, completed, skipped
-    created_date = db.Column(db.Date, default=datetime.utcnow().date)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
-    user = db.relationship('User', backref='routine_tasks')
-
-    def __repr__(self):
-        return f"<RoutineTask {self.id}: {self.title} ({self.start_time}-{self.end_time})>"
 
