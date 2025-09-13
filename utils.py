@@ -163,23 +163,24 @@ def get_meditation_content():
             }
         ],
         "music": [
-            {
-                "title": "Nature Sounds",
-                "duration": 30,
-                "description": "Relaxing sounds of rain and forest",
-                "audio_url": "https://www.soundjay.com/nature/sounds/rain-03.wav"
-            },
-            {
-                "title": "Piano Relaxation",
-                "duration": 25,
-                "description": "Gentle piano melodies for stress relief",
-                "audio_url": "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav"
-            },
-            {
-                "title": "Ocean Waves",
-                "duration": 45,
-                "description": "Calming ocean sounds for deep relaxation",
-                "audio_url": "https://www.soundjay.com/nature/sounds/rain-03.wav"
-            }
-        ]
+    {
+        "title": "Nature Sounds",
+        "duration": 30,
+        "description": "Relaxing sounds of rain and forest",
+        "audio_url": "/static/audio/nature-documentary-309042.mp3"
+    },
+    {
+        "title": "Piano Relaxation",
+        "duration": 25,
+        "description": "Gentle piano melodies for stress relief",
+        "audio_url": "/static/audio/nostalgic-piano-396511.mp3"
+    },
+    {
+        "title": "Ocean Waves",
+        "duration": 45,
+        "description": "Calming ocean sounds for deep relaxation",
+        "audio_url": "/static/audio/waves-382467.mp3"
+    }
+]
+
     }
