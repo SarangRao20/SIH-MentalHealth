@@ -1,0 +1,459 @@
+{% extends "base.html" %}
+
+{% block title %}VR Meditation - MindCare{% endblock %}
+
+{% block extra_head %}
+<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+<style>
+    .vr-container {
+        width: 100%;
+        height: 80vh;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        margin: 2rem 0;
+    }
+    
+    .vr-controls {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        text-align: center;
+    }
+    
+    .environment-selector {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+    }
+    
+    .env-btn {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .env-btn:hover, .env-btn.active {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .breathing-guide {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        z-index: 100;
+    }
+    
+    .vr-instructions {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        border-left: 4px solid #007bff;
+    }
+    
+    .meditation-timer {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+        margin: 1rem 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="display-4 text-primary">🥽 VR Meditation Experience</h1>
+        <p class="lead">Immerse yourself in calming virtual environments</p>
+    </div>
+
+    <!-- VR Instructions -->
+    <div class="vr-instructions">
+        <h5><i class="fas fa-info-circle text-primary"></i> How to Use VR Meditation:</h5>
+        <ul class="mb-0">
+            <li><strong>Desktop/Laptop:</strong> Use mouse to look around, click and drag to explore</li>
+            <li><strong>Mobile:</strong> Move your phone to look around, tap the VR icon for cardboard mode</li>
+            <li><strong>VR Headset:</strong> Click the VR icon and put on your headset</li>
+            <li><strong>Fullscreen:</strong> Click fullscreen icon for better immersion</li>
+        </ul>
+    </div>
+
+    <!-- Environment Controls -->
+    <div class="vr-controls">
+        <h4><i class="fas fa-palette"></i> Choose Your Environment</h4>
+        <div class="environment-selector">
+            <button class="env-btn active" onclick="changeEnvironment('forest')" data-env="forest">
+                🌲 Peaceful Forest
+            </button>
+            <button class="env-btn" onclick="changeEnvironment('beach')" data-env="beach">
+                🏖️ Calm Beach
+            </button>
+            <button class="env-btn" onclick="changeEnvironment('space')" data-env="space">
+                🌌 Cosmic Space
+            </button>
+            <button class="env-btn" onclick="changeEnvironment('mountain')" data-env="mountain">
+                🏔️ Mountain Valley
+            </button>
+        </div>
+        
+        <!-- Meditation Timer -->
+        <div class="meditation-timer" id="timer">00:00</div>
+        <div>
+            <button class="btn btn-light mx-2" onclick="startMeditation(5)">5 min</button>
+            <button class="btn btn-light mx-2" onclick="startMeditation(10)">10 min</button>
+            <button class="btn btn-light mx-2" onclick="startMeditation(15)">15 min</button>
+            <button class="btn btn-outline-light mx-2" onclick="stopMeditation()">Stop</button>
+        </div>
+    </div>
+
+    <!-- VR Scene Container -->
+    <div class="vr-container">
+        <div class="breathing-guide" id="breathingGuide">
+            <div id="breathingText">Breathe in... Hold... Breathe out...</div>
+            <div style="font-size: 0.9rem; opacity: 0.8;">Follow the glowing sphere</div>
+        </div>
+        
+        <a-scene id="vrScene" embedded style="height: 100%; width: 100%;" 
+                 vr-mode-ui="enabled: true" 
+                 device-orientation-permission-ui="enabled: false"
+                 background="color: #87CEEB">
+            
+            <!-- Assets -->
+            <a-assets>
+                <!-- 360 Environment Images (you can replace these with actual 360° photos) -->
+                <img id="forestSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
+                <img id="beachSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/cubes.jpg">
+                <img id="spaceSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+                <img id="mountainSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/lake.jpg">
+                
+                <!-- Audio Assets -->
+                <audio id="forestAudio" src="/static/audio/nature-documentary-309042.mp3" preload="auto" loop></audio>
+                <audio id="beachAudio" src="/static/audio/waves-382467.mp3" preload="auto" loop></audio>
+                <audio id="relaxAudio" src="/static/audio/nostalgic-piano-396511.mp3" preload="auto" loop></audio>
+            </a-assets>
+
+            <!-- 360 Degree Background -->
+            <a-sky id="environmentSky" src="#forestSky" animation="property: rotation; to: 0 360 0; loop: true; dur: 120000"></a-sky>
+
+            <!-- Breathing Guide Sphere -->
+            <a-sphere id="breathingSphere" 
+                     position="0 2 -5" 
+                     radius="0.5" 
+                     color="#4CC3D9" 
+                     opacity="0.7"
+                     animation="property: scale; to: 1.5 1.5 1.5; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                <a-animation attribute="material.color" 
+                           to="#EF2D5E" 
+                           direction="alternate" 
+                           dur="4000" 
+                           repeat="indefinite"></a-animation>
+            </a-sphere>
+
+            <!-- Floating Particles for Ambiance -->
+            <a-entity id="particles">
+                <a-sphere position="-3 3 -8" radius="0.1" color="#FFC65D" opacity="0.6"
+                         animation="property: position; to: 3 4 -6; dur: 8000; loop: true; dir: alternate"></a-sphere>
+                <a-sphere position="4 4 -10" radius="0.15" color="#7BC8A4" opacity="0.5"
+                         animation="property: position; to: -2 5 -7; dur: 10000; loop: true; dir: alternate"></a-sphere>
+                <a-sphere position="0 5 -12" radius="0.08" color="#CC90E2" opacity="0.7"
+                         animation="property: position; to: 2 3 -9; dur: 6000; loop: true; dir: alternate"></a-sphere>
+            </a-entity>
+
+            <!-- Ambient Light -->
+            <a-light type="ambient" color="#404040" intensity="0.5"></a-light>
+            <a-light type="directional" position="1 1 1" color="#FFF" intensity="0.3"></a-light>
+
+            <!-- Ground (optional, for some environments) -->
+            <a-plane id="ground" position="0 -1 -4" rotation="-90 0 0" width="20" height="20" 
+                    color="#7BC8A4" opacity="0.3" visible="false"></a-plane>
+
+            <!-- Meditation Text -->
+            <a-text id="meditationText" 
+                   value="Find your inner peace..." 
+                   position="0 4 -6" 
+                   align="center" 
+                   color="#FFFFFF" 
+                   font="kelsonsans"
+                   geometry="primitive: plane; width: auto; height: auto"
+                   material="color: rgba(0,0,0,0.5); opacity: 0.8"
+                   animation="property: position; to: 0 4.2 -6; dir: alternate; dur: 3000; loop: true"></a-text>
+
+            <!-- Camera with look controls -->
+            <a-camera id="camera" look-controls wasd-controls position="0 1.6 0">
+                <a-cursor color="#FF6B6B" opacity="0.8" 
+                         animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                         animation__fusing="property: scale; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                         raycaster="objects: .clickable"></a-cursor>
+            </a-camera>
+        </a-scene>
+    </div>
+
+    <!-- Meditation Stats -->
+    <div class="row mt-4">
+        <div class="col-md-4 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-success" id="todayMinutes">0</h3>
+                    <p class="card-text">Minutes Today</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-info" id="weekSessions">0</h3>
+                    <p class="card-text">Sessions This Week</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-warning" id="currentStreak">0</h3>
+                    <p class="card-text">Day Streak</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let meditationTimer = null;
+let meditationStarted = false;
+let sessionStartTime = null;
+let currentAudio = null;
+
+// Environment configurations
+const environments = {
+    forest: {
+        sky: '#forestSky',
+        audio: 'forestAudio',
+        color: '#228B22',
+        ground: true,
+        text: 'Feel the peace of the forest...'
+    },
+    beach: {
+        sky: '#beachSky', 
+        audio: 'beachAudio',
+        color: '#4169E1',
+        ground: false,
+        text: 'Listen to the calming waves...'
+    },
+    space: {
+        sky: '#spaceSky',
+        audio: 'relaxAudio',
+        color: '#191970',
+        ground: false,
+        text: 'Float in cosmic tranquility...'
+    },
+    mountain: {
+        sky: '#mountainSky',
+        audio: 'relaxAudio',
+        color: '#8B4513',
+        ground: true,
+        text: 'Breathe in the mountain air...'
+    }
+};
+
+function changeEnvironment(envName) {
+    const config = environments[envName];
+    if (!config) return;
+    
+    // Update sky
+    const sky = document.querySelector('#environmentSky');
+    sky.setAttribute('src', config.sky);
+    
+    // Update meditation text
+    const text = document.querySelector('#meditationText');
+    text.setAttribute('value', config.text);
+    
+    // Update breathing sphere color
+    const sphere = document.querySelector('#breathingSphere');
+    sphere.setAttribute('color', config.color);
+    
+    // Update ground visibility
+    const ground = document.querySelector('#ground');
+    ground.setAttribute('visible', config.ground);
+    
+    // Change audio
+    if (currentAudio) {
+        currentAudio.pause();
+    }
+    currentAudio = document.querySelector('#' + config.audio);
+    if (currentAudio && meditationStarted) {
+        currentAudio.play().catch(e => console.log('Audio play failed:', e));
+    }
+    
+    // Update active button
+    document.querySelectorAll('.env-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-env="${envName}"]`).classList.add('active');
+}
+
+function startMeditation(minutes) {
+    meditationStarted = true;
+    sessionStartTime = Date.now();
+    
+    // Start audio
+    if (currentAudio) {
+        currentAudio.play().catch(e => console.log('Audio play failed:', e));
+    }
+    
+    // Start timer
+    let totalSeconds = minutes * 60;
+    const timerDisplay = document.getElementById('timer');
+    
+    meditationTimer = setInterval(() => {
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        if (totalSeconds <= 0) {
+            completeMeditation();
+            return;
+        }
+        totalSeconds--;
+    }, 1000);
+    
+    // Start breathing guide
+    startBreathingGuide();
+    
+    // Update UI
+    document.querySelector('.meditation-timer').style.color = '#28a745';
+}
+
+function stopMeditation() {
+    meditationStarted = false;
+    
+    if (meditationTimer) {
+        clearInterval(meditationTimer);
+        meditationTimer = null;
+    }
+    
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+    }
+    
+    document.getElementById('timer').textContent = '00:00';
+    document.querySelector('.meditation-timer').style.color = '#667eea';
+    
+    stopBreathingGuide();
+    
+    // Save partial session if it was more than 1 minute
+    if (sessionStartTime && (Date.now() - sessionStartTime) > 60000) {
+        saveMeditationSession();
+    }
+}
+
+function completeMeditation() {
+    // Meditation completed successfully
+    stopMeditation();
+    
+    // Save session
+    saveMeditationSession();
+    
+    // Show completion message
+    const text = document.querySelector('#meditationText');
+    text.setAttribute('value', '🎉 Meditation Complete! Well done!');
+    text.setAttribute('color', '#FFD700');
+    
+    // Celebration effect
+    setTimeout(() => {
+        text.setAttribute('value', 'Find your inner peace...');
+        text.setAttribute('color', '#FFFFFF');
+    }, 5000);
+}
+
+function saveMeditationSession() {
+    if (!sessionStartTime) return;
+    
+    const duration = Math.floor((Date.now() - sessionStartTime) / 1000);
+    
+    fetch('/meditation_completed', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            duration: duration,
+            session_type: 'vr_meditation'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('VR Meditation session saved:', data);
+        updateStats(data);
+    })
+    .catch(error => console.error('Error saving session:', error));
+}
+
+function startBreathingGuide() {
+    const breathingText = document.getElementById('breathingText');
+    const phases = ['Breathe in...', 'Hold...', 'Breathe out...', 'Hold...'];
+    let phaseIndex = 0;
+    
+    breathingText.style.fontSize = '1.2rem';
+    
+    setInterval(() => {
+        if (!meditationStarted) return;
+        breathingText.textContent = phases[phaseIndex];
+        phaseIndex = (phaseIndex + 1) % phases.length;
+    }, 4000); // Match the sphere animation
+}
+
+function stopBreathingGuide() {
+    document.getElementById('breathingText').textContent = 'Breathe naturally...';
+}
+
+function updateStats(data) {
+    if (data.today_minutes !== undefined) {
+        document.getElementById('todayMinutes').textContent = Math.floor(data.today_minutes / 60);
+    }
+    if (data.weekly_sessions !== undefined) {
+        document.getElementById('weekSessions').textContent = data.weekly_sessions;
+    }
+}
+
+// Initialize with forest environment
+document.addEventListener('DOMContentLoaded', function() {
+    changeEnvironment('forest');
+    
+    // Load user stats
+    fetch('/meditation_stats')
+        .then(response => response.json())
+        .then(data => updateStats(data))
+        .catch(error => console.log('Stats not available'));
+});
+
+// Handle VR mode changes
+document.querySelector('#vrScene').addEventListener('enter-vr', function() {
+    console.log('Entered VR mode');
+});
+
+document.querySelector('#vrScene').addEventListener('exit-vr', function() {
+    console.log('Exited VR mode');
+});
+</script>
+{% endblock %}

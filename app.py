@@ -85,3 +85,6 @@ app.jinja_env.globals['get_locale'] = get_locale
 import routes
 
 ## Removed inkblot_bp blueprint registration; now using direct route in routes.py
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)

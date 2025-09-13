@@ -146,6 +146,19 @@ class VentingResponse(db.Model):
     
     user = db.relationship('User', backref='venting_responses')
 
+class SoundVentingSession(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    duration = db.Column(db.Integer, nullable=False)  # Session duration in seconds
+    max_decibel = db.Column(db.Float)  # Maximum decibel level reached
+    avg_decibel = db.Column(db.Float)  # Average decibel level
+    scream_count = db.Column(db.Integer, default=0)  # Number of screams (90+ dB)
+    session_type = db.Column(db.String(20), default='sound_venting')  # sound_venting, therapy_scream
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.Date, default=datetime.utcnow().date)
+    
+    user = db.relationship('User', backref='sound_venting_sessions')
+
 class ConsultationRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

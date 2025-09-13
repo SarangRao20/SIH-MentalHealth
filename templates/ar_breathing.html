@@ -1,0 +1,531 @@
+{% extends "base.html" %}
+
+{% block title %}AR Breathing Exercise - MindCare{% endblock %}
+
+{% block extra_head %}
+<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.5/aframe/build/aframe-ar.js"></script>
+<style>
+    .ar-container {
+        width: 100%;
+        height: 70vh;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        margin: 2rem 0;
+        position: relative;
+    }
+    
+    .ar-controls {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        text-align: center;
+    }
+    
+    .breathing-instructions {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        z-index: 100;
+        text-align: center;
+    }
+    
+    .ar-instructions {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        border-left: 4px solid #ff6b6b;
+    }
+    
+    .breathing-pattern-selector {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+    }
+    
+    .pattern-btn {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .pattern-btn:hover, .pattern-btn.active {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .panic-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: white;
+        border: none;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        z-index: 1000;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    
+    .webcam-view {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="display-4 text-primary">📱 AR Breathing Exercise</h1>
+        <p class="lead">Augmented Reality guided breathing for anxiety relief</p>
+    </div>
+
+    <!-- AR Instructions -->
+    <div class="ar-instructions">
+        <h5><i class="fas fa-info-circle text-danger"></i> How to Use AR Breathing:</h5>
+        <ul class="mb-0">
+            <li><strong>Allow Camera Access:</strong> Click "Allow" when prompted for camera permissions</li>
+            <li><strong>Point Camera:</strong> Point your phone/webcam at any flat surface</li>
+            <li><strong>Follow the Guide:</strong> A 3D breathing sphere will appear in your real environment</li>
+            <li><strong>Breathe with the Sphere:</strong> Inhale when it grows, exhale when it shrinks</li>
+            <li><strong>Emergency Mode:</strong> Red panic button for immediate anxiety relief</li>
+        </ul>
+    </div>
+
+    <!-- Breathing Pattern Controls -->
+    <div class="ar-controls">
+        <h4><i class="fas fa-lungs"></i> Choose Breathing Pattern</h4>
+        <div class="breathing-pattern-selector">
+            <button class="pattern-btn active" onclick="setBreathingPattern('4-4-4-4')" data-pattern="4-4-4-4">
+                📦 Box Breathing (4-4-4-4)
+            </button>
+            <button class="pattern-btn" onclick="setBreathingPattern('4-7-8')" data-pattern="4-7-8">
+                🌙 Sleep Breathing (4-7-8)
+            </button>
+            <button class="pattern-btn" onclick="setBreathingPattern('6-2-6-2')" data-pattern="6-2-6-2">
+                🧘 Calm Breathing (6-2-6-2)
+            </button>
+            <button class="pattern-btn" onclick="setBreathingPattern('emergency')" data-pattern="emergency">
+                🚨 Emergency (3-3-3)
+            </button>
+        </div>
+        
+        <div>
+            <button class="btn btn-light mx-2" onclick="startBreathing()">Start AR Breathing</button>
+            <button class="btn btn-outline-light mx-2" onclick="stopBreathing()">Stop</button>
+        </div>
+    </div>
+
+    <!-- AR Scene Container -->
+    <div class="ar-container">
+        <div class="breathing-instructions" id="breathingInstructions">
+            <div id="currentPhase">Get Ready...</div>
+            <div id="patternInfo" style="font-size: 0.9rem; opacity: 0.8;">Box Breathing: In-4, Hold-4, Out-4, Hold-4</div>
+        </div>
+        
+        <!-- AR Scene using device camera -->
+        <a-scene id="arScene" 
+                 embedded 
+                 style="height: 100%; width: 100%;"
+                 arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+                 vr-mode-ui="enabled: false"
+                 device-orientation-permission-ui="enabled: false">
+            
+            <!-- AR Marker (you can use any QR code or create a custom marker) -->
+            <a-marker id="breathingMarker" 
+                      preset="hiro" 
+                      smooth="true" 
+                      smoothCount="10" 
+                      smoothTolerance="0.01" 
+                      smoothThreshold="5">
+                
+                <!-- Breathing Guide Sphere -->
+                <a-sphere id="arBreathingSphere" 
+                         position="0 0.5 0" 
+                         radius="0.3" 
+                         color="#ff6b6b" 
+                         opacity="0.8"
+                         material="transparent: true; shader: standard"
+                         geometry="primitive: sphere; segmentsWidth: 32; segmentsHeight: 16"
+                         animation="property: scale; to: 2 2 2; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                    
+                    <!-- Inner glow effect -->
+                    <a-sphere radius="0.35" 
+                             color="#ffffff" 
+                             opacity="0.3"
+                             animation="property: opacity; to: 0.7; dir: alternate; dur: 4000; loop: true"></a-sphere>
+                </a-sphere>
+                
+                <!-- Breathing Text -->
+                <a-text id="arBreathingText" 
+                       value="Breathe In..." 
+                       position="0 1.5 0" 
+                       align="center" 
+                       color="#ffffff" 
+                       font="kelsonsans"
+                       scale="1.5 1.5 1.5"
+                       geometry="primitive: plane; width: auto; height: auto"
+                       material="color: rgba(0,0,0,0.7); opacity: 0.9"></a-text>
+                
+                <!-- Particle Ring -->
+                <a-ring id="breathingRing" 
+                       position="0 0 0" 
+                       radius-inner="0.8" 
+                       radius-outer="1" 
+                       color="#4ecdc4" 
+                       opacity="0.6"
+                       rotation="90 0 0"
+                       animation="property: rotation; to: 90 360 0; dur: 8000; loop: true"></a-ring>
+                
+            </a-marker>
+            
+            <!-- Markerless AR fallback -->
+            <a-entity id="markerlessBreathing" visible="false">
+                <a-sphere position="0 0 -2" 
+                         radius="0.2" 
+                         color="#ff6b6b" 
+                         opacity="0.8"
+                         animation="property: scale; to: 1.5 1.5 1.5; dir: alternate; dur: 4000; loop: true"></a-sphere>
+                
+                <a-text value="Follow the sphere" 
+                       position="0 0.8 -2" 
+                       align="center" 
+                       color="#ffffff"
+                       scale="0.8 0.8 0.8"></a-text>
+            </a-entity>
+
+            <!-- Camera -->
+            <a-entity camera look-controls-enabled="false" wasd-controls-enabled="false"></a-entity>
+        </a-scene>
+    </div>
+
+    <!-- Emergency Panic Button -->
+    <button class="panic-button" onclick="emergencyBreathing()" title="Emergency Breathing">
+        <i class="fas fa-heartbeat"></i><br>
+        <small>SOS</small>
+    </button>
+
+    <!-- Breathing Statistics -->
+    <div class="row mt-4">
+        <div class="col-md-3 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-success" id="todayBreathingSessions">0</h3>
+                    <p class="card-text">Sessions Today</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-info" id="totalBreathingMinutes">0</h3>
+                    <p class="card-text">Total Minutes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-warning" id="currentPattern">Box</h3>
+                    <p class="card-text">Current Pattern</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-danger" id="panicButtonUses">0</h3>
+                    <p class="card-text">Emergency Uses</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alternative Non-AR Mode -->
+    <div class="text-center mt-4">
+        <p class="text-muted">Camera not working? <a href="{{ url_for('meditation') }}" class="text-primary">Try Regular Breathing Exercises</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let breathingActive = false;
+let breathingInterval = null;
+let currentPattern = { inhale: 4, hold1: 4, exhale: 4, hold2: 4 };
+let currentPhase = 0; // 0: inhale, 1: hold1, 2: exhale, 3: hold2
+let sessionStartTime = null;
+
+// Breathing patterns
+const patterns = {
+    '4-4-4-4': { inhale: 4, hold1: 4, exhale: 4, hold2: 4, name: 'Box Breathing' },
+    '4-7-8': { inhale: 4, hold1: 7, exhale: 8, hold2: 0, name: 'Sleep Breathing' },
+    '6-2-6-2': { inhale: 6, hold1: 2, exhale: 6, hold2: 2, name: 'Calm Breathing' },
+    'emergency': { inhale: 3, hold1: 0, exhale: 3, hold2: 0, name: 'Emergency' }
+};
+
+function setBreathingPattern(patternName) {
+    currentPattern = patterns[patternName];
+    
+    // Update active button
+    document.querySelectorAll('.pattern-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-pattern="${patternName}"]`).classList.add('active');
+    
+    // Update pattern info
+    const info = document.getElementById('patternInfo');
+    if (patternName === '4-7-8') {
+        info.textContent = 'Sleep Breathing: In-4, Hold-7, Out-8';
+    } else if (patternName === '6-2-6-2') {
+        info.textContent = 'Calm Breathing: In-6, Hold-2, Out-6, Hold-2';
+    } else if (patternName === 'emergency') {
+        info.textContent = 'Emergency: Quick In-3, Out-3 (for panic attacks)';
+    } else {
+        info.textContent = 'Box Breathing: In-4, Hold-4, Out-4, Hold-4';
+    }
+    
+    // Update current pattern display
+    document.getElementById('currentPattern').textContent = currentPattern.name.split(' ')[0];
+    
+    // If breathing is active, restart with new pattern
+    if (breathingActive) {
+        stopBreathing();
+        setTimeout(() => startBreathing(), 500);
+    }
+}
+
+function startBreathing() {
+    breathingActive = true;
+    sessionStartTime = Date.now();
+    currentPhase = 0;
+    
+    // Update AR elements
+    updateBreathingElements();
+    
+    // Start breathing cycle
+    breathingInterval = setInterval(() => {
+        nextBreathingPhase();
+    }, 1000);
+    
+    console.log('AR Breathing started with pattern:', currentPattern.name);
+}
+
+function stopBreathing() {
+    breathingActive = false;
+    
+    if (breathingInterval) {
+        clearInterval(breathingInterval);
+        breathingInterval = null;
+    }
+    
+    // Reset instructions
+    document.getElementById('currentPhase').textContent = 'Breathing Stopped';
+    
+    // Save session if it was more than 30 seconds
+    if (sessionStartTime && (Date.now() - sessionStartTime) > 30000) {
+        saveBreathingSession();
+    }
+    
+    console.log('AR Breathing stopped');
+}
+
+function nextBreathingPhase() {
+    const phases = ['inhale', 'hold1', 'exhale', 'hold2'];
+    const phaseNames = ['Breathe In', 'Hold', 'Breathe Out', 'Hold'];
+    const phaseDurations = [
+        currentPattern.inhale,
+        currentPattern.hold1,
+        currentPattern.exhale, 
+        currentPattern.hold2
+    ];
+    
+    // Skip phases with 0 duration
+    while (phaseDurations[currentPhase] === 0) {
+        currentPhase = (currentPhase + 1) % 4;
+    }
+    
+    const phaseName = phaseNames[currentPhase];
+    const duration = phaseDurations[currentPhase];
+    
+    // Update instructions
+    document.getElementById('currentPhase').textContent = `${phaseName} (${duration}s)`;
+    
+    // Update AR sphere animation
+    updateSphereAnimation(phases[currentPhase], duration);
+    
+    // Update AR text
+    const arText = document.querySelector('#arBreathingText');
+    if (arText) {
+        arText.setAttribute('value', phaseName);
+        
+        // Change color based on phase
+        if (phases[currentPhase] === 'inhale') {
+            arText.setAttribute('color', '#4ecdc4');
+        } else if (phases[currentPhase] === 'exhale') {
+            arText.setAttribute('color', '#ff6b6b');
+        } else {
+            arText.setAttribute('color', '#feca57');
+        }
+    }
+    
+    // Wait for phase duration, then move to next phase
+    setTimeout(() => {
+        if (breathingActive) {
+            currentPhase = (currentPhase + 1) % 4;
+        }
+    }, duration * 1000);
+}
+
+function updateSphereAnimation(phase, duration) {
+    const sphere = document.querySelector('#arBreathingSphere');
+    if (!sphere) return;
+    
+    // Remove existing animation
+    sphere.removeAttribute('animation');
+    
+    let scale, color;
+    if (phase === 'inhale') {
+        scale = '2 2 2';
+        color = '#4ecdc4';
+    } else if (phase === 'exhale') {
+        scale = '0.5 0.5 0.5';
+        color = '#ff6b6b';
+    } else {
+        scale = '1.5 1.5 1.5';
+        color = '#feca57';
+    }
+    
+    // Apply new animation
+    sphere.setAttribute('animation', `property: scale; to: ${scale}; dur: ${duration * 1000}; easing: easeInOutSine`);
+    sphere.setAttribute('color', color);
+}
+
+function updateBreathingElements() {
+    // This function ensures AR elements are properly initialized
+    const sphere = document.querySelector('#arBreathingSphere');
+    const text = document.querySelector('#arBreathingText');
+    
+    if (sphere && text) {
+        console.log('AR elements found and ready');
+    } else {
+        console.log('AR elements not ready, retrying...');
+        setTimeout(updateBreathingElements, 1000);
+    }
+}
+
+function emergencyBreathing() {
+    // Immediate panic attack relief
+    setBreathingPattern('emergency');
+    startBreathing();
+    
+    // Track emergency usage
+    let panicUses = parseInt(document.getElementById('panicButtonUses').textContent) + 1;
+    document.getElementById('panicButtonUses').textContent = panicUses;
+    
+    // Show emergency message
+    document.getElementById('currentPhase').textContent = '🚨 Emergency Mode - Focus on breathing';
+    
+    // Auto-stop after 2 minutes
+    setTimeout(() => {
+        if (breathingActive) {
+            stopBreathing();
+            alert('Emergency breathing complete. Consider reaching out for support if needed.');
+        }
+    }, 120000);
+    
+    console.log('Emergency breathing activated');
+}
+
+function saveBreathingSession() {
+    if (!sessionStartTime) return;
+    
+    const duration = Math.floor((Date.now() - sessionStartTime) / 1000);
+    
+    fetch('/save_breathing_session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            duration: duration,
+            pattern: currentPattern.name,
+            session_type: 'ar_breathing'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('AR Breathing session saved:', data);
+        updateStats();
+    })
+    .catch(error => console.error('Error saving session:', error));
+}
+
+function updateStats() {
+    // Update breathing statistics
+    let todaySessions = parseInt(document.getElementById('todayBreathingSessions').textContent) + 1;
+    document.getElementById('todayBreathingSessions').textContent = todaySessions;
+    
+    if (sessionStartTime) {
+        let totalMinutes = parseInt(document.getElementById('totalBreathingMinutes').textContent);
+        totalMinutes += Math.floor((Date.now() - sessionStartTime) / 60000);
+        document.getElementById('totalBreathingMinutes').textContent = totalMinutes;
+    }
+}
+
+// Handle AR marker detection
+document.addEventListener('DOMContentLoaded', function() {
+    const marker = document.querySelector('#breathingMarker');
+    
+    if (marker) {
+        marker.addEventListener('markerFound', function() {
+            console.log('AR Marker found - breathing guide visible');
+            document.querySelector('#markerlessBreathing').setAttribute('visible', 'false');
+        });
+        
+        marker.addEventListener('markerLost', function() {
+            console.log('AR Marker lost - switching to markerless mode');
+            document.querySelector('#markerlessBreathing').setAttribute('visible', 'true');
+        });
+    }
+    
+    // Initialize with box breathing
+    setBreathingPattern('4-4-4-4');
+});
+
+// Handle page visibility change (pause when tab is hidden)
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && breathingActive) {
+        stopBreathing();
+    }
+});
+</script>
+{% endblock %}
