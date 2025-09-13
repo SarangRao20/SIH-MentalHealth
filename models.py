@@ -189,20 +189,3 @@ class AvailabilitySlot(db.Model):
 
     counsellor = db.relationship('User', foreign_keys=[counsellor_id], backref='availability_slots')
 
-class RoutineTask(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    title = db.Column(db.String(100), nullable=False)
-    start_time = db.Column(db.String(5), nullable=False) # HH:MM
-    end_time = db.Column(db.String(5), nullable=False)   # HH:MM
-    notes = db.Column(db.Text)
-    status = db.Column(db.String(20), default='pending') # pending, completed, skipped
-    created_date = db.Column(db.Date, default=datetime.utcnow().date)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
-    user = db.relationship('User', backref='routine_tasks')
-
-    def __repr__(self):
-        return f"<RoutineTask {self.id}: {self.title} ({self.start_time}-{self.end_time})>"
-
