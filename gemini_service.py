@@ -104,7 +104,7 @@ Respond in JSON format with these fields:
 """
 
         response = client.models.generate_content(
-            model="gemini-2.5-pro",
+            model="gemini-1.5-pro",
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_mime_type="application/json"
@@ -156,7 +156,7 @@ Respond in JSON format:
 """
 
         response = client.models.generate_content(
-            model="gemini-2.5-pro",
+            model="gemini-1.5-pro",
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_mime_type="application/json"

@@ -8,21 +8,21 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-lg mt-4">
                 <div class="card-header bg-success text-white text-center">
-                    <h3><i class="fas fa-user-plus"></i> Join MindCare</h3>
+                    <h3><i class="fas fa-user-plus"></i> {{ _('Join MindCare') }}</h3>
                 </div>
                 <div class="card-body p-4">
                     <form method="POST">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="full_name" class="form-label">
-                                    <i class="fas fa-id-card text-success"></i> Full Name
+                                    <i class="fas fa-id-card text-success"></i> {{ _('Full Name') }}
                                 </label>
                                 <input type="text" class="form-control" id="full_name" name="full_name" required>
                             </div>
                             
                             <div class="col-md-6 mb-3">
                                 <label for="username" class="form-label">
-                                    <i class="fas fa-user text-success"></i> Username
+                                    <i class="fas fa-user text-success"></i> {{ _('Username') }}
                                 </label>
                                 <input type="text" class="form-control" id="username" name="username" required>
                             </div>
@@ -30,14 +30,14 @@
                         
                         <div class="mb-3">
                             <label for="email" class="form-label">
-                                <i class="fas fa-envelope text-success"></i> Email
+                                <i class="fas fa-envelope text-success"></i> {{ _('Email') }}
                             </label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="password" class="form-label">
-                                <i class="fas fa-lock text-success"></i> Password
+                                <i class="fas fa-lock text-success"></i> {{ _('Password') }}
                             </label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
@@ -45,54 +45,54 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="role" class="form-label">
-                                    <i class="fas fa-users text-success"></i> Role
+                                    <i class="fas fa-users text-success"></i> {{ _('Role') }}
                                 </label>
                                 <select class="form-select" id="role" name="role" required>
-                                    <option value="student">Student</option>
-                                    <option value="teacher">Teacher/Mentor</option>
-                                    <option value="counsellor">Counsellor</option>
-                                    <option value="admin">Administrator</option>
+                                    <option value="student">{{ _('Student') }}</option>
+                                    <option value="teacher">{{ _('Teacher/Mentor') }}</option>
+                                    <option value="counsellor">{{ _('Counsellor') }}</option>
+                                    <option value="admin">{{ _('Administrator') }}</option>
                                 </select>
                             </div>
                             
                             <div class="col-md-6 mb-3" id="student_fields">
                                 <label for="student_id" class="form-label">
-                                    <i class="fas fa-id-badge text-success"></i> Student ID
+                                    <i class="fas fa-id-badge text-success"></i> {{ _('Student ID') }}
                                 </label>
                                 <input type="text" class="form-control" id="student_id" name="student_id">
-                                <small class="form-text text-muted">Will be encrypted for privacy</small>
+                                <small class="form-text text-muted">{{ _('Will be encrypted for privacy') }}</small>
                             </div>
                         </div>
                         
                         <div class="mb-3" id="accommodation_field">
                             <label for="accommodation_type" class="form-label">
-                                <i class="fas fa-home text-success"></i> Accommodation Type
+                                <i class="fas fa-home text-success"></i> {{ _('Accommodation Type') }}
                             </label>
                             <select class="form-select" id="accommodation_type" name="accommodation_type">
-                                <option value="">Select...</option>
-                                <option value="hostel">Hostel</option>
-                                <option value="local">Local</option>
+                                <option value="">{{ _('Select...') }}</option>
+                                <option value="hostel">{{ _('Hostel') }}</option>
+                                <option value="local">{{ _('Local') }}</option>
                             </select>
                         </div>
                         
                         <div class="d-grid mb-3">
                             <button type="submit" class="btn btn-success btn-lg">
-                                <i class="fas fa-user-plus"></i> Create Account
+                                <i class="fas fa-user-plus"></i> {{ _('Create Account') }}
                             </button>
                         </div>
                     </form>
                     
                     <div class="text-center">
                         <p class="text-muted">
-                            Already have an account? 
-                            <a href="{{ url_for('login') }}" class="text-success">Login here</a>
+                            {{ _('Already have an account?') }} 
+                            <a href="{{ url_for('login') }}" class="text-success">{{ _('Login here') }}</a>
                         </p>
                     </div>
                     
                     <div class="alert alert-success mt-3">
                         <small>
                             <i class="fas fa-shield-alt"></i>
-                            Your personal information is encrypted and secure. Student IDs are hashed for privacy protection.
+                            {{ _('Your personal information is encrypted and secure. Student IDs are hashed for privacy protection.') }}
                         </small>
                     </div>
                 </div>

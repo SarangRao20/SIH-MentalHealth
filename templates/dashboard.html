@@ -10,9 +10,17 @@
 <div class="row mb-3">
   <div class="col-12" style="font-family: 'Inter', sans-serif;">
     <h1 style="font-size:1.6rem; font-weight:700; color:#809BCE; margin-bottom:0.3rem;">
-      👋 Welcome back, {{ current_user.full_name }}
+      👋 {{ _('Welcome back') }}, {{ current_user.full_name }}
     </h1>
-
+    <!-- Streak Display -->
+    <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+      <span class="badge bg-primary rounded-pill px-3 py-2">
+        <i class="fas fa-fire me-1"></i>{{ _('Login Streak') }}: {{ login_streak }} {{ _('days') }}
+      </span>
+      <span class="badge bg-success rounded-pill px-3 py-2">
+        <i class="fas fa-leaf me-1"></i>{{ _('Meditation Sessions') }}: {{ meditation_streak }} {{ _('this week') }}
+      </span>
+    </div>
   </div>
 </div>
 
@@ -20,8 +28,8 @@
   <!-- Motivation Banner -->
   <div class="row mb-5">
     <div class="col-12 hero-banner rounded-4 text-center py-5 shadow hover-lift">
-      <h2 class="fw-bold mb-3">🌟 Daily Inspiration 🌟</h2>
-      <p class="lead mb-0 fst-italic">"Every small step you take today brings you closer to a brighter tomorrow."</p>
+      <h2 class="fw-bold mb-3">🌟 {{ _('Daily Inspiration') }} 🌟</h2>
+      <p class="lead mb-0 fst-italic">"{{ _('Every small step you take today brings you closer to a brighter tomorrow.') }}"</p>
     </div>
   </div>
 
@@ -30,18 +38,18 @@
     <div class="col-lg-4 col-md-6">
       <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white">
         <div class="mb-3"><i class="fas fa-leaf fa-2x text-periwinkle"></i></div>
-        <h6 class="text-muted mb-2">Meditation</h6>
-        <div class="fs-3 fw-bold text-periwinkle">{{ total_minutes_meditated|default(0) }} min</div>
-        <div class="small text-muted mt-2">Sessions this week: <strong>{{ weekly_sessions_count|default(0) }}</strong></div>
+        <h6 class="text-muted mb-2">{{ _('Meditation') }}</h6>
+        <div class="fs-3 fw-bold text-periwinkle">{{ total_minutes_meditated|default(0) }} {{ _('min') }}</div>
+        <div class="small text-muted mt-2">{{ _('Sessions this week') }}: <strong>{{ weekly_sessions_count|default(0) }}</strong></div>
       </div>
     </div>
 
     <div class="col-lg-4 col-md-6">
       <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white">
         <div class="mb-3"><i class="fas fa-check-circle fa-2x text-success"></i></div>
-        <h6 class="text-muted mb-2">Tasks</h6>
+        <h6 class="text-muted mb-2">{{ _('Tasks') }}</h6>
         <div class="fs-3 fw-bold text-success">{{ tasks_completed|default(0) }}/{{ total_tasks|default(0) }}</div>
-        <div class="small text-muted mt-2">Completed today</div>
+        <div class="small text-muted mt-2">{{ _('Completed today') }}</div>
         <div class="progress mt-3 rounded-pill" style="height:12px;">
           <div class="progress-bar bg-success" role="progressbar" style="width: {{ tasks_progress|default(0) }}%;" aria-valuenow="{{ tasks_progress|default(0) }}" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
@@ -51,7 +59,7 @@
     <div class="col-lg-4 col-md-12">
       <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white d-flex flex-column align-items-center">
         <div class="mb-3"><i class="fas fa-smile-beam fa-2x text-warning"></i></div>
-        <h6 class="text-muted mb-3">How are you feeling?</h6>
+        <h6 class="text-muted mb-3">{{ _('How are you feeling?') }}</h6>
         <div class="d-flex gap-3 justify-content-center mb-3">
           <button class="mood-btn" data-mood="Very Happy">😊</button>
           <button class="mood-btn" data-mood="Happy">🙂</button>
@@ -59,35 +67,43 @@
           <button class="mood-btn" data-mood="Sad">☹️</button>
           <button class="mood-btn" data-mood="Very Sad">😢</button>
         </div>
-        <div id="mood-status" class="small text-muted">Tap an emoji to quickly log your mood (stored locally)</div>
+        <div id="mood-status" class="small text-muted">{{ _('Tap an emoji to quickly log your mood (stored locally)') }}</div>
       </div>
     </div>
   </div>
 
   <!-- Quick Actions -->
   <div class="row g-4 mb-5">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-periwinkle">
         <div class="mb-3"><i class="fas fa-head-side-medical fa-2x text-periwinkle"></i></div>
-        <h6 class="fw-bold">Start Meditation</h6>
-        <p class="text-muted small mb-3">Take a calm 5–10 minute session.</p>
-        <a href="{{ url_for('meditation') }}" class="btn btn-outline-periwinkle btn-sm">Start</a>
+        <h6 class="fw-bold">{{ _('Start Meditation') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Take a calm 5–10 minute session.') }}</p>
+        <a href="{{ url_for('meditation') }}" class="btn btn-outline-periwinkle btn-sm">{{ _('Start') }}</a>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-success">
         <div class="mb-3"><i class="fas fa-calendar-check fa-2x text-success"></i></div>
-        <h6 class="fw-bold">Plan Your Day</h6>
-        <p class="text-muted small mb-3">Organize tasks and keep focus.</p>
-        <a href="{{ url_for('routine') }}" class="btn btn-outline-success btn-sm">Plan</a>
+        <h6 class="fw-bold">{{ _('Plan Your Day') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Organize tasks and keep focus.') }}</p>
+        <a href="{{ url_for('routine') }}" class="btn btn-outline-success btn-sm">{{ _('Plan') }}</a>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+      <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-info">
+        <div class="mb-3"><i class="fas fa-user-md fa-2x text-info"></i></div>
+        <h6 class="fw-bold">{{ _('Professional Consultation') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Connect with qualified counsellors.') }}</p>
+        <a href="{{ url_for('consultation') }}" class="btn btn-outline-info btn-sm">{{ _('Book Now') }}</a>
+      </div>
+    </div>
+    <div class="col-md-3">
       <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-warning">
         <div class="mb-3"><i class="fas fa-comments fa-2x text-warning"></i></div>
-        <h6 class="fw-bold">Chat Support</h6>
-        <p class="text-muted small mb-3">Immediate help when you need it.</p>
-        <a href="{{ url_for('chatbot') }}" class="btn btn-outline-warning btn-sm">Chat</a>
+        <h6 class="fw-bold">{{ _('Chat Support') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Immediate help when you need it.') }}</p>
+        <a href="{{ url_for('chatbot') }}" class="btn btn-outline-warning btn-sm">{{ _('Chat') }}</a>
       </div>
     </div>
   </div>
@@ -97,8 +113,8 @@
     <div class="col-12">
       <div class="card border-0 shadow-sm hover-lift rounded-4">
         <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
-          <h5 class="mb-0 fw-bold"><i class="fas fa-history me-2 text-secondary"></i>Assessment History</h5>
-          <a href="{{ url_for('assessments') }}" class="small text-periwinkle">View all</a>
+          <h5 class="mb-0 fw-bold"><i class="fas fa-history me-2 text-secondary"></i>{{ _('Assessment History') }}</h5>
+          <a href="{{ url_for('assessments') }}" class="small text-periwinkle">{{ _('View all') }}</a>
         </div>
         <div class="card-body p-0">
           {% if recent_assessments %}
@@ -106,11 +122,11 @@
               <table class="table mb-0 align-middle">
                 <thead class="table-light">
                   <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Score</th>
-                    <th>Severity</th>
-                    <th>Action</th>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Type') }}</th>
+                    <th>{{ _('Score') }}</th>
+                    <th>{{ _('Severity') }}</th>
+                    <th>{{ _('Action') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,14 +140,14 @@
                         {{ a.severity_level }}
                       </span>
                     </td>
-                    <td><a href="{{ url_for('assessment_results', assessment_id=a.id) }}" class="btn btn-sm btn-outline-periwinkle">View</a></td>
+                    <td><a href="{{ url_for('assessment_results', assessment_id=a.id) }}" class="btn btn-sm btn-outline-periwinkle">{{ _('View') }}</a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
             </div>
           {% else %}
-            <div class="p-3 text-muted">No assessments found. Try completing one to track progress.</div>
+            <div class="p-3 text-muted">{{ _('No assessments found. Try completing one to track progress.') }}</div>
           {% endif %}
         </div>
       </div>

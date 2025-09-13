@@ -73,11 +73,14 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">
                             <i class="fas fa-chart-line"></i>
-                            {{ assessment.assessment_type }} Results
+                            {{ assessment.assessment_type }} {{ _('Results') }}
                         </h4>
                         <span class="badge bg-light text-dark fs-6">
-                            Completed: {{ assessment.completed_at.strftime('%m/%d/%Y at %I:%M %p') }}
+                            {{ assessment.created_at.strftime('%m/%d/%Y at %I:%M %p') }}
                         </span>
+                    </div>
+                    <div class="text-muted">
+                        {{ _('Completed') }}: {{ assessment.completed_at.strftime('%m/%d/%Y at %I:%M %p') }}
                     </div>
                 </div>
                 
@@ -92,17 +95,18 @@
                                     {% else %}text-danger{% endif %}">
                                     {{ assessment.score }}
                                 </h2>
-                                <p class="text-muted mb-0">Total Score</p>
+                                <p class="text-muted mb-0">{{ assessment.severity_level }}</p>
+                                <p class="text-muted mb-0">{{ _('Total Score') }}</p>
                             </div>
                         </div>
                         
                         <div class="col-md-8">
-                            <h5 class="text-periwinkle">Score Interpretation</h5>
+                            <h5 class="text-periwinkle">{{ _('Score Interpretation') }}</h5>
                             <div class="alert 
                                 {% if assessment.severity_level in ['Minimal', 'Good'] %}alert-success
                                 {% elif assessment.severity_level in ['Mild', 'Fair'] %}alert-warning
                                 {% else %}alert-danger{% endif %}">
-                                <h6 class="alert-heading">{{ assessment.severity_level }} Level</h6>
+                                <h6 class="alert-heading">{{ assessment.severity_level }} {{ _('Level') }}</h6>
                                 <p class="mb-0">{{ analysis.interpretation }}</p>
                             </div>
                         </div>
@@ -115,7 +119,7 @@
                                 <div class="card-header">
                                     <h6 class="card-title mb-0">
                                         <i class="fas fa-lightbulb text-warning"></i>
-                                        Recommendations
+                                        {{ _('Recommendations') }}
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -136,7 +140,7 @@
                                 <div class="card-header">
                                     <h6 class="card-title mb-0">
                                         <i class="fas fa-tools text-info"></i>
-                                        Coping Strategies
+                                        {{ _('Coping Strategies') }}
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -160,19 +164,19 @@
                             <div class="col-md-8">
                                 <h6 class="alert-heading">
                                     <i class="fas fa-user-md"></i>
-                                    Professional Support Recommended
+                                    {{ _('Professional Support Recommended') }}
                                 </h6>
                                 <p class="mb-0">
-                                    Your results suggest that speaking with a mental health professional could provide valuable support and insight!!
+                                    {{ _('Your results suggest that speaking with a mental health professional could provide valuable support and insight!') }}
                                     {% if analysis.urgency_level == 'high' %}
-                                    <strong>Please consider seeking help soon.</strong>
+                                    <strong>{{ _('Please consider seeking help soon.') }}</strong>
                                     {% endif %}
                                 </p>
                             </div>
                             <div class="col-md-4 text-md-end">
                                 <a href="{{ url_for('consultation') }}" class="btn btn-primary">
                                     <i class="fas fa-calendar-plus"></i>
-                                    Request Consultation
+                                    {{ _('Request Consultation') }}
                                 </a>
                             </div>
                         </div>
@@ -186,18 +190,18 @@
                             <div class="col-md-8">
                                 <h6 class="alert-heading">
                                     <i class="fas fa-exclamation-triangle"></i>
-                                    Immediate Support Available
+                                    {{ _('Immediate Support Available') }}
                                 </h6>
                                 <p class="mb-0">
-                                    If you’re struggling with thoughts of self-harm or suicide, please seek help right away. Support is available, and you deserve care and safety.
+                                    {{ _('If you’re struggling with thoughts of self-harm or suicide, please seek help right away. Support is available, and you deserve care and safety.') }}
                                 </p>
                             </div>
                             <div class="col-md-4 text-md-end">
                                 <a href="tel:988" class="btn btn btn-call me-2">
-                                    <i class="fas fa-phone"></i> Call 988
+                                    <i class="fas fa-phone"></i> {{ _('Call 988') }}
                                 </a>
                                 <a href="{{ url_for('chatbot') }}" class="btn btn btn-chat-now">
-                                    <i class="fas fa-comments"></i> Chat Now
+                                    <i class="fas fa-comments"></i> {{ _('Chat Now') }}
                                 </a>
                             </div>
                         </div>
@@ -209,7 +213,7 @@
                         <div class="card-header">
                             <h6 class="card-title mb-0">
                                 <i class="fas fa-arrow-right text-periwinkle"></i>
-                                Next Steps
+                                {{ _('Next Steps') }}
                             </h6>
                         </div>
                         <div class="card-body">
@@ -217,28 +221,28 @@
                                 <div class="col-md-6 col-lg-3">
                                     <a href="{{ url_for('chatbot') }}" class="btn btn-outline-primary w-100">
                                         <i class="fas fa-comments d-block mb-2"></i>
-                                        Chat Support
+                                        {{ _('Chat Support') }}
                                     </a>
                                 </div>
                                 
                                 <div class="col-md-6 col-lg-3">
                                     <a href="{{ url_for('meditation') }}" class="btn btn-outline-share w-100">
                                         <i class="fas fa-leaf d-block mb-2"></i>
-                                        Meditation
+                                        {{ _('Meditation') }}
                                     </a>
                                 </div>
                                 
                                 <div class="col-md-6 col-lg-3" style="color:#95B8D1">
                                     <a href="{{ url_for('venting_hall') }}" class="btn btn-outline-venting w-100">
                                         <i class="fas fa-users d-block mb-2"></i>
-                                        Venting Hall
+                                        {{ _('Venting Hall') }}
                                     </a>
                                 </div>
                                 
                                 <div class="col-md-6 col-lg-3">
                                     <a href="{{ url_for('assessments') }}" class="btn btn-outline-secondary w-100">
                                         <i class="fas fa-clipboard-list d-block mb-2"></i>
-                                        More Assessments
+                                        {{ _('More Assessments') }}
                                     </a>
                                 </div>
                             </div>
@@ -249,26 +253,26 @@
                 <div class="card-footer text-center">
                     <div class="d-flex justify-content-center gap-3">
                         <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
-                            <i class="fas fa-home"></i> Dashboard
+                            <i class="fas fa-home"></i> {{ _('Dashboard') }}
                         </a>
                         <button class="btn btn-outline-primary" onclick="window.print()">
-                            <i class="fas fa-print"></i> Print Results
+                            <i class="fas fa-print"></i> {{ _('Print Results') }}
                         </button>
                         <button class="btn btn-outline-share" onclick="shareResults()">
-                            <i class="fas fa-share"></i> Share
+                            <i class="fas fa-share"></i> {{ _('Share') }}
                         </button>
                         <button class="btn btn-send" data-bs-toggle="modal" data-bs-target="#shareModal">
-                            <i class="fas fa-paper-plane"></i> Send to Counsellor
+                            <i class="fas fa-paper-plane"></i> {{ _('Send to Counsellor') }}
                         </button>
                         {% if sent_to_counsellor %}
-                        <div class="alert alert-success mt-3 mb-0 py-1 px-2">Your results have been sent to the counsellor!</div>
+                        <div class="alert alert-success mt-3 mb-0 py-1 px-2">{{ _('Your results have been sent to the counsellor!') }}</div>
                         {% endif %}
                     </div>
                     
                     <p class="text-muted mt-3 mb-0">
                         <small>
                             <i class="fas fa-shield-alt"></i>
-                            Your assessment results are confidential and encrypted for your privacy.
+                            {{ _('Your assessment results are confidential and encrypted for your privacy.') }}
                         </small>
                     </p>
                 </div>
@@ -284,34 +288,34 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <i class="fas fa-share text-periwinkle"></i>
-                    Share Results
+                    {{ _('Share Results') }}
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p>You can share these results with:</p>
+                <p>{{ _('You can share these results with:') }}</p>
                 <div class="list-group mb-3">
                     <a href="mailto:?subject=Mental Health Assessment Results&body=I recently completed a {{ assessment.assessment_type }} assessment. Please find my results summary attached." 
                        class="list-group-item list-group-item-action">
                         <i class="fas fa-envelope text-periwinkle"></i>
-                        Email to Healthcare Provider
+                        {{ _('Email to Healthcare Provider') }}
                     </a>
                 </div>
                 <form method="POST" action="{{ url_for('send_result_to_counsellor', assessment_id=assessment.id) }}">
                     <div class="mb-3">
-                        <label for="counsellor_id" class="form-label">Select Counsellor</label>
+                        <label for="counsellor_id" class="form-label">{{ _('Select Counsellor') }}</label>
                         <select name="counsellor_id" id="counsellor_id" class="form-select" required>
-                            <option value="">Choose counsellor...</option>
+                            <option value="">{{ _('Choose counsellor...') }}</option>
                             {% for counsellor in counsellors %}
                                 <option value="{{ counsellor.id }}">{{ counsellor.full_name }} ({{ counsellor.username }})</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">Send Result to Counsellor</button>
+                    <button type="submit" class="btn btn-success w-100">{{ _('Send to Counsellor') }}</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
             </div>
         </div>
     </div>

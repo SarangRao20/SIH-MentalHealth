@@ -8,42 +8,42 @@
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-lg mt-5">
                 <div class="card-header bg-periwinkle text-white text-center">
-                    <h3><i class="fas fa-sign-in-alt"></i> Welcome Back</h3>
+                    <h3><i class="fas fa-sign-in-alt"></i> {{ _('Welcome Back') }}</h3>
                 </div>
                 <div class="card-body p-4">
                     <form method="POST">
                         <div class="mb-3">
                             <label for="username" class="form-label">
-                                <i class="fas fa-user text-periwinkle"></i> Username
+                                <i class="fas fa-user text-periwinkle"></i> {{ _('Username') }}
                             </label>
                             <input type="text" class="form-control" id="username" name="username" required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="password" class="form-label">
-                                <i class="fas fa-lock text-periwinkle"></i> Password
+                                <i class="fas fa-lock text-periwinkle"></i> {{ _('Password') }}
                             </label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         
                         <div class="d-grid mb-3">
                             <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-sign-in-alt"></i> Login
+                                <i class="fas fa-sign-in-alt"></i> {{ _('Login') }}
                             </button>
                         </div>
                     </form>
                     
                     <div class="text-center">
                         <p class="text-muted">
-                            Don't have an account? 
-                            <a href="{{ url_for('register') }}" class="text-primary">Create one here</a>
+                            {{ _("Don't have an account?") }} 
+                            <a href="{{ url_for('register') }}" class="text-primary">{{ _('Create one here') }}</a>
                         </p>
                     </div>
                     
                     <div class="alert alert-info mt-3">
                         <small>
                             <i class="fas fa-info-circle"></i>
-                            Your privacy and security are our top priority. All data is encrypted and handled securely.
+                            {{ _('Your privacy and security are our top priority. All data is encrypted and handled securely.') }}
                         </small>
                     </div>
                 </div>
