@@ -1,4 +1,4 @@
-# MindCare Mental Health Platform
+# MindCare Mental Health Platform!!
 
 ## Overview
 
@@ -9,6 +9,7 @@ MindCare is a comprehensive mental health support platform built with Flask that
 Preferred communication style: Simple, everyday language.
 
 ## System Architecture
+we need to add this for ppt also
 
 ### Backend Framework
 - **Flask**: Core web framework with SQLAlchemy ORM for database operations
