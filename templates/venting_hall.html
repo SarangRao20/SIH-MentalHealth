@@ -54,7 +54,7 @@
 }
 
 .new-post-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #809bce;
     color: white;
     border: none;
     border-radius: 15px;
@@ -149,6 +149,64 @@
     gap: 1rem;
     flex-wrap: wrap;
 }
+
+/* ===== Modal sizing / box model reset ===== */
+.modal,
+.modal-dialog,
+.modal-content,
+.modal-header,
+.modal-body,
+.modal-footer {
+  box-sizing: border-box;
+}
+
+/* keep dialog width predictable */
+.modal-dialog {
+  max-width: 760px;        /* adjust as you like */
+  margin: 1.75rem auto !important;
+  width: 100%;
+}
+
+/* content should exactly match dialog */
+.modal-content {
+  width: 100%;
+  overflow: visible;       /* avoid hiding shadows, but not overflow layout */
+  border-radius: 15px;
+  overflow:hidden;
+}
+
+/* ensure form controls never exceed container */
+.modal .form-control,
+.modal textarea.form-control,
+.modal .input-group,
+.modal .form-select {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  display: block;
+}
+
+/* If you use flex rows inside modals, allow wrapping so inputs don't push out */
+.modal .row,
+.modal .d-flex {
+  flex-wrap: wrap !important;
+}
+
+/* Textarea fine tuning */
+.modal textarea.form-control {
+  min-height: 120px;
+  max-height: 350px;   /* keep textarea usable but not huge */
+  resize: vertical;
+  overflow-y: auto;
+}
+
+/* header/footer padding consistency */
+.modal-header, .modal-body, .modal-footer {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
 </style>
 {% endblock %}
 
@@ -159,12 +217,12 @@
             <div class="d-flex justify-content-between align-items-center py-4">
                 <div>
                     <h1 class="h2 text-periwinkle">
-                        <i class="fas fa-users"></i> Venting Hall
+                        <i class="fas fa-users"></i> {{ _('Venting Hall') }}
                     </h1>
-                    <p class="text-muted">A safe space to share your thoughts and connect with others</p>
+                    <p class="text-muted">{{ _('A safe space to share your thoughts and connect with others') }}</p>
                 </div>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPostModal">
-                    <i class="fas fa-plus"></i> Share Your Thoughts
+                    <i class="fas fa-plus"></i> {{ _('Share Your Thoughts') }}
                 </button>
             </div>
         </div>
@@ -176,10 +234,10 @@
             <div class="card wellbeing-reminder">
                 <div class="card-body text-center">
                     <h5 class="card-title">
-                        <i class="fas fa-heart"></i> Remember: You Are Not Alone
+                        <i class="fas fa-heart"></i> {{ _('Remember: You Are Not Alone') }}
                     </h5>
                     <p class="card-text">
-                        This is a supportive community where everyone is valued. Please be kind, respectful, and remember that sharing can be healing.
+                        {{ _('This is a supportive community where everyone is valued. Please be kind, respectful, and remember that sharing can be healing.') }}
                     </p>
                     <div class="support-btn-group">
                         <a href="{{ url_for('chatbot') }}" class="support-btn">
@@ -226,7 +284,7 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item text-danger" href="#" onclick="deletePost({{ post.id }})">
+                                    <li><a class="dropdown-item text-danger" href="#" onclick="deletePost('{{ post.id }}')">
                                         <i class="fas fa-trash"></i> Delete
                                     </a></li>
                                 </ul>
@@ -248,14 +306,14 @@
                                         <i class="fas fa-heart text-danger"></i> {{ post.likes }}
                                     </button>
                                 </form>
-                                <button class="reaction-btn" onclick="toggleResponses({{ post.id }})">
+                                <button class="reaction-btn" onclick="toggleResponses('{{ post.id }}')">
                                     <i class="fas fa-comment"></i> {{ post.responses|length }}
                                 </button>
-                                <button class="reaction-btn" onclick="sendSupport({{ post.id }})">
+                                <button class="reaction-btn" onclick="sendSupport('{{ post.id }}')">
                                     <i class="fas fa-hands-helping"></i> Support
                                 </button>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary" onclick="toggleResponseForm({{ post.id }})">
+                            <button class="btn btn-sm btn-outline-primary" onclick="toggleResponseForm('{{ post.id }}')">
                                 <i class="fas fa-reply"></i> Respond
                             </button>
                         </div>
@@ -276,7 +334,7 @@
                                         </label>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-sm btn-secondary me-2" onclick="toggleResponseForm({{ post.id }})">
+                                        <button type="button" class="btn btn-sm btn-secondary me-2" onclick="toggleResponseForm('{{ post.id }}')">
                                             Cancel
                                         </button>
                                         <button type="submit" class="btn btn-sm btn-primary">
@@ -358,7 +416,7 @@
                                   placeholder="Share your thoughts, feelings, or what you're going through... This is a judgment-free space." 
                                   required></textarea>
                         <div class="form-text">
-                            <i class="fas fa-shield-alt text-primary"></i>
+                            <i class="fas fa-shield-alt text-periwinkle"></i>
                             This is a safe space. All posts are moderated for community guidelines.
                         </div>
                     </div>

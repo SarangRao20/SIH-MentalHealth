@@ -1,34 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style="margin:8em 25em 0 0;">
-	<p style="font-family:Helvetica;">Interpreting the complexity of human personality, characteristics, and emotional functioning:</p>
-	<h1 style="font-size:100px;width:876px;margin:0 0 1em 0;font-weight:460;">Inkblot test for psycho analysis</h1>
-	<div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;">
-		<a href="{{ url_for('inkblot_userinfo') }}">
-			<button style="border-radius:0;font-size:12px;font-style:italic;text-transform:none;">Start Analysis &#8594;</button>
-		</a>
-		<a href="{{ url_for('about') }}" style="color:#7D7D7D;font-style:italic;font-size:12px;margin-right:1em;">What is this?</a>
-		<div style="display:flex;align-items:flex-start;justify-content:space-between;width:100%;margin-top:2em;">
-			<p style="color:#C1C1C1;font-weight:bold;font-size:30px;margin:0 18px 0 0;">1</p>
-			<div>
-				<p style="margin-top:0;line-height:133%;">Read the blots in sequence and note all your answers</p>
-				<a href="{{ url_for('about') }}" style="color:inherit;">Read more &#8594;</a>
-			</div>
-		</div>
-		<div style="display:flex;align-items:flex-start;justify-content:space-between;width:100%;margin-top:2em;">
-			<p style="color:#C1C1C1;font-weight:bold;font-size:30px;margin:0 18px 0 0;">2</p>
-			<div>
-				<p style="margin-top:0;line-height:133%;">There is no correct answer to each of these blots, choose the one that initially comes to mind</p>
-				<a href="{{ url_for('about') }}" style="color:inherit;">Read more &#8594;</a>
-			</div>
-		</div>
-		<div style="display:flex;align-items:flex-start;justify-content:space-between;width:100%;margin-top:2em;">
-			<p style="color:#C1C1C1;font-weight:bold;font-size:30px;margin:0 18px 0 0;">3</p>
-			<div>
-				<p style="margin-top:0;line-height:133%;">This test is meant for you to understand your sub-conscious behaviour</p>
-				<a href="{{ url_for('about') }}" style="color:inherit;">Read more &#8594;</a>
-			</div>
-		</div>
-	</div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card border-0 shadow-sm p-5 text-center">
+                <h1 class="fw-light mb-4">Inkblot Test for Psychoanalysis</h1>
+                <p class="text-muted mb-5">
+                    Interpreting the complexity of human personality, characteristics, 
+                    and emotional functioning.
+                </p>
+
+                <div class="d-flex justify-content-center align-items-center mb-4">
+                    <a href="{{ url_for('inkblot_userinfo') }}" class="btn btn-primary me-3">
+                        Start Analysis &nbsp; &#8594;
+                    </a>
+                    <a href="{{ url_for('about') }}" class="text-secondary fst-italic small">
+                        What is this?
+                    </a>
+                </div>
+
+                <div class="text-start">
+                    <div class="d-flex mb-4">
+                        <h3 class="me-3 text-muted">1</h3>
+                        <div>
+                            <p class="mb-1">Read the blots in sequence and note all your answers.</p>
+                            <a href="{{ url_for('about') }}" class="small">Read more →</a>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <h3 class="me-3 text-muted">2</h3>
+                        <div>
+                            <p class="mb-1">There is no correct answer; choose the one that first comes to mind.</p>
+                            <a href="{{ url_for('about') }}" class="small">Read more →</a>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <h3 class="me-3 text-muted">3</h3>
+                        <div>
+                            <p class="mb-1">This test is meant to help you understand your subconscious behaviour.</p>
+                            <a href="{{ url_for('about') }}" class="small">Read more →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -114,6 +114,7 @@ class Assessment(db.Model):
     score = db.Column(db.Integer, nullable=False)
     severity_level = db.Column(db.String(20), nullable=False)
     recommendations = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     completed_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class MeditationSession(db.Model):

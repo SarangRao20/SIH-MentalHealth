@@ -11,7 +11,7 @@
                     <i class="fas fa-clipboard-list" style="color: #809bce;"></i> Mental Health Assessments
                 </h1>
                 <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#assessmentInfoModal">
-                    <i class="fas fa-info-circle"></i> About Assessments
+                    <i class="fas fa-info-circle"></i> {{ _('About Assessments') }}
                 </button>
             </div>
         </div>
@@ -22,23 +22,23 @@
             <div class="card h-100 border-destructive">
                 <div class="card-header bg-destructive text-white">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-paint-brush"></i> Inkblot Test
+                        <i class="fas fa-paint-brush"></i> {{ _('Inkblot Test') }}
                     </h5>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Projective Personality Assessment</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('Projective Personality Assessment') }}</h6>
                     <p class="card-text">
-                        The Inkblot Test is a projective psychological test to analyze personality and emotional functioning.
+                        {{ _('The Inkblot Test is a projective psychological test to analyze personality and emotional functioning.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-destructive"></i> Takes 5-10 minutes</li>
-                        <li><i class="fas fa-paint-brush text-destructive"></i> 10 inkblots</li>
-                        <li><i class="fas fa-share text-destructive"></i> Share results with mentor/counsellor</li>
+                        <li><i class="fas fa-clock text-destructive"></i> {{ _('Takes 5-10 minutes') }}</li>
+                        <li><i class="fas fa-paint-brush text-destructive"></i> {{ _('10 inkblots') }}</li>
+                        <li><i class="fas fa-share text-destructive"></i> {{ _('Share results with mentor/counsellor') }}</li>
                     </ul>
                 </div>
                 <div class="card-footer">
                         <a href="/inkblot" class="btn btn-destructive w-100">
-                        <i class="fas fa-play"></i> Start Inkblot Test
+                        <i class="fas fa-play"></i> {{ _('Start Inkblot Test') }}
                     </a>
                 </div>
             </div>
@@ -51,19 +51,19 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Depression Screening</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('Depression Screening') }}</h6>
                     <p class="card-text">
-                        The PHQ-9 is a reliable tool for screening, diagnosing, monitoring and measuring the severity of depression.
+                        {{ _('The PHQ-9 is a reliable tool for screening, diagnosing, monitoring and measuring the severity of depression.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-periwinkle"></i> Takes 2-3 minutes</li>
-                        <li><i class="fas fa-question text-periwinkle"></i> 9 questions</li>
-                        <li><i class="fas fa-chart-line text-periwinkle"></i> Severity scoring</li>
+                        <li><i class="fas fa-clock text-periwinkle"></i> {{ _('Takes 2-3 minutes') }}</li>
+                        <li><i class="fas fa-question text-periwinkle"></i> {{ _('9 questions') }}</li>
+                        <li><i class="fas fa-chart-line text-periwinkle"></i> {{ _('Severity scoring') }}</li>
                     </ul>
                 </div>
                 <div class="card-footer">
                     <a href="{{ url_for('assessment_form', assessment_type='PHQ-9') }}" class="btn btn-primary w-100">
-                        <i class="fas fa-play"></i> Start PHQ-9
+                        <i class="fas fa-play"></i> {{ _('Start PHQ-9') }}
                     </a>
                 </div>
             </div>
@@ -73,23 +73,24 @@
             <div class="card h-100 border-accent">
                 <div class="card-header bg-accent text-white">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-heart-rate"></i> GAD-7
+                        <i class="fas fa-heart-rate"></i> {{ _('GAD-7') }}
+                    GAD-7
                     </h5>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Anxiety Screening</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('Anxiety Screening') }}</h6>
                     <p class="card-text">
-                        The GAD-7 is a validated tool for screening and measuring the severity of generalized anxiety disorder.
+                        {{ _('The GAD-7 is a validated tool for screening and measuring the severity of generalized anxiety disorder.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-accent"></i> Takes 2-3 minutes</li>
-                        <li><i class="fas fa-question text-accent"></i> 7 questions</li>
-                        <li><i class="fas fa-chart-line text-accent"></i> Anxiety levels</li>
+                        <li><i class="fas fa-clock text-accent"></i> {{ _('Takes 2-3 minutes') }}</li>
+                        <li><i class="fas fa-question text-accent"></i> {{ _('7 questions') }}</li>
+                        <li><i class="fas fa-chart-line text-accent"></i> {{ _('Anxiety levels') }}</li>
                     </ul>
                 </div>
                 <div class="card-footer">
                     <a href="{{ url_for('assessment_form', assessment_type='GAD-7') }}" class="btn btn-accent w-100">
-                        <i class="fas fa-play"></i> Start GAD-7
+                        <i class="fas fa-play"></i> {{ _('Start GAD-7') }}
                     </a>
                 </div>
             </div>
@@ -99,23 +100,23 @@
             <div class="card h-100">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-user-check"></i> GHQ
+                        <i class="fas fa-user-check"></i> {{ _('GHQ') }}
                     </h5>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">General Health Questionnaire</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('General Health Questionnaire') }}</h6>
                     <p class="card-text">
-                        The GHQ is designed to detect psychiatric disorders in community settings and general medical practice.
+                        {{ _('The GHQ is designed to detect psychiatric disorders in community settings and general medical practice.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-secondary"></i> Takes 3-4 minutes</li>
-                        <li><i class="fas fa-question text-secondary"></i> 12 questions</li>
-                        <li><i class="fas fa-chart-line text-secondary"></i> Overall wellbeing</li>
+                        <li><i class="fas fa-clock text-secondary"></i> {{ _('Takes 3-4 minutes') }}</li>
+                        <li><i class="fas fa-question text-secondary"></i> {{ _('12 questions') }}</li>
+                        <li><i class="fas fa-chart-line text-secondary"></i> {{ _('Overall wellbeing') }}</li>
                     </ul>
                 </div>
                 <div class="card-footer">
                     <a href="{{ url_for('assessment_form', assessment_type='GHQ') }}" class="btn btn-secondary w-100">
-                        <i class="fas fa-play"></i> Start GHQ
+                        <i class="fas fa-play"></i> {{ _('Start GHQ') }}
                     </a>
                 </div>
             </div>
@@ -125,9 +126,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header text-white"style="background-color: #809bce;">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-history"></i> Your Assessment History
+                        <i class="fas fa-history"></i> {{ _('Your Assessment History') }}
                     </h5>
                 </div>
                 <div class="card-body">
@@ -136,11 +137,11 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Assessment</th>
-                                        <th>Date</th>
-                                        <th>Score</th>
-                                        <th>Severity</th>
-                                        <th>Actions</th>
+                                        <th>{{ _('Assessment') }}</th>
+                                        <th>{{ _('Date') }}</th>
+                                        <th>{{ _('Score') }}</th>
+                                        <th>{{ _('Severity') }}</th>
+                                        <th>{{ _('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -150,9 +151,9 @@
                                             <strong>{{ assessment.assessment_type }}</strong>
                                             <br>
                                             <small class="text-muted">
-                                                {% if assessment.assessment_type == 'PHQ-9' %}Depression Screening
-                                                {% elif assessment.assessment_type == 'GAD-7' %}Anxiety Screening
-                                                {% elif assessment.assessment_type == 'GHQ' %}General Health
+                                                {% if assessment.assessment_type == 'PHQ-9' %}{{ _('Depression Screening') }}
+                                                {% elif assessment.assessment_type == 'GAD-7' %}{{ _('Anxiety Screening') }}
+                                                {% elif assessment.assessment_type == 'GHQ' %}{{ _('General Health') }}
                                                 {% endif %}
                                             </small>
                                         </td>
@@ -171,7 +172,7 @@
                                         <td>
                                             <button class="btn btn-sm btn-outline-primary" 
                                                     onclick="viewResults('{{ assessment.id }}')">
-                                                <i class="fas fa-eye"></i> View Results
+                                                <i class="fas fa-eye"></i> {{ _('View Results') }}
                                             </button>
                                         </td>
                                     </tr>
@@ -182,9 +183,9 @@
                     {% else %}
                         <div class="text-center py-5">
                             <i class="fas fa-clipboard text-muted fa-3x mb-3"></i>
-                            <h5 class="text-muted">No Assessments Yet</h5>
+                            <h5 class="text-muted">{{ _('No Assessments Yet') }}</h5>
                             <p class="text-muted">
-                                Take your first assessment to start tracking your mental health journey.
+                                {{ _('Take your first assessment to start tracking your mental health journey.') }}
                             </p>
                         </div>
                     {% endif %}
@@ -199,37 +200,37 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fas fa-info-circle text-periwinkle"></i>
-                        About Mental Health Assessments
+                        {{ _('About Mental Health Assessments') }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <h6 class="text-periwinkle">Why Take These Assessments?</h6>
+                            <h6 class="text-periwinkle">{{ _('Why Take These Assessments?') }}</h6>
                             <p>
-                                These standardized tools help identify symptoms and track your mental health over time. 
-                                They are used by healthcare professionals worldwide and provide valuable insights into your wellbeing.
+                                {{ _('These standardized tools help identify symptoms and track your mental health over time.') }}
+                                {{ _('They are used by healthcare professionals worldwide and provide valuable insights into your wellbeing.') }}
                             </p>
-                            
-                            <h6 class="text-periwinkle mt-4">Important Notes:</h6>
+
+                            <h6 class="text-periwinkle mt-4">{{ _('Important Notes:') }}</h6>
                             <ul>
-                                <li>These assessments are <strong>not</strong> a substitute for professional diagnosis</li>
-                                <li>Results are confidential and encrypted for your privacy</li>
-                                <li>Regular monitoring can help track progress and identify concerning patterns</li>
-                                <li>Consider sharing results with a mental health professional</li>
+                                <li>{{ _('These assessments are') }} <strong>{{ _('not') }}</strong> {{ _('a substitute for professional diagnosis') }}</li>
+                                <li>{{ _('Results are confidential and encrypted for your privacy') }}</li>
+                                <li>{{ _('Regular monitoring can help track progress and identify concerning patterns') }}</li>
+                                <li>{{ _('Consider sharing results with a mental health professional') }}</li>
                             </ul>
                             
                             <div class="alert alert-warning mt-4">
                                 <i class="fas fa-exclamation-triangle"></i>
-                                <strong>Remember:</strong> If you're experiencing thoughts of self-harm or suicide, 
-                                please seek immediate help by calling 988 or visiting your nearest emergency room.
+                                <strong>{{ _('Remember:') }}</strong> {{ _('If you\'re experiencing thoughts of self-harm or suicide,') }}
+                                {{ _('please seek immediate help by calling 988 or visiting your nearest emergency room.') }}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
                 </div>
             </div>
         </div>

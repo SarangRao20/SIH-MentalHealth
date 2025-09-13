@@ -286,11 +286,7 @@ function initializeGlobalFeatures() {
         observer.observe(el);
     });
     
-    // Dark mode toggle (if implemented)
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', toggleDarkMode);
-    }
+    
     
     // Initialize crisis detection warnings
     initializeCrisisDetection();
@@ -405,32 +401,9 @@ function showWellnessReminder() {
     localStorage.setItem('lastWellnessReminder', now.toString());
 }
 
-// Dark mode functionality
-function toggleDarkMode() {
-    const body = document.body;
-    const isDark = body.classList.toggle('dark-mode');
-    
-    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-    
-    // Update button icon
-    const toggle = document.getElementById('darkModeToggle');
-    if (toggle) {
-        const icon = toggle.querySelector('i');
-        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    }
-}
 
-// Load dark mode preference
-function loadDarkModePreference() {
-    const darkMode = localStorage.getItem('darkMode');
-    if (darkMode === 'enabled') {
-        document.body.classList.add('dark-mode');
-        const toggle = document.getElementById('darkModeToggle');
-        if (toggle) {
-            toggle.querySelector('i').className = 'fas fa-sun';
-        }
-    }
-}
+
+
 
 // Offline detection
 function initializeOfflineDetection() {
@@ -461,8 +434,7 @@ window.addEventListener('error', function(event) {
     }
 });
 
-// Load preferences on page load
-document.addEventListener('DOMContentLoaded', loadDarkModePreference);
+
 
 // Export for use in other scripts
 window.MindCare = MindCare;

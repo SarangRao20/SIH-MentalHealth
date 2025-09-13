@@ -37,7 +37,7 @@
             <li>
                 <a href="{{ url_for('counsellor_dashboard') }}">
                     <i class="fas fa-tachometer-alt icon"></i>
-                    <span class="label">Dashboard</span>
+                    <span class="label">{{ _('Dashboard') }}</span>
                 </a>
             </li>
             <!-- Hide all student features for counsellor role -->
@@ -45,56 +45,56 @@
             <li>
                 <a href="{{ url_for('dashboard') }}">
                     <i class="fas fa-tachometer-alt icon"></i>
-                    <span class="label">Dashboard</span>
+                    <span class="label">{{ _('Dashboard') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('chatbot') }}">
                     <img id="chatbot-icon" src="{{ url_for('static', filename='images/bot.png') }}" alt="Chatbot Icon" class="icon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 10px;">
-                    <span class="label">Chat Support</span>
+                    <span class="label">{{ _('Chat Support') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('assessments') }}">
                     <i class="fas fa-clipboard-list icon"></i>
-                    <span class="label">Assessments</span>
+                    <span class="label">{{ _('Assessments') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('meditation') }}">
                     <i class="fas fa-leaf icon"></i>
-                    <span class="label">Meditation</span>
+                    <span class="label">{{ _('Meditation') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('venting_room') }}">
                     <i class="fas fa-fire icon"></i>
-                    <span class="label">Private Venting Room</span>
+                    <span class="label">{{ _('Private Venting Room') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('venting_hall') }}">
                     <i class="fas fa-users icon"></i>
-                    <span class="label">Community Support</span>
+                    <span class="label">{{ _('Community Support') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('consultation') }}">
                     <i class="fas fa-user-md icon"></i>
-                    <span class="label">Consultation</span>
+                    <span class="label">{{ _('Consultation') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url_for('routine') }}">
                     <i class="fas fa-calendar-alt icon"></i>
-                    <span class="label">Routine</span>
+                    <span class="label">{{ _('Routine') }}</span>
                 </a>
             </li>
             {% if current_user.role in ['teacher', 'admin'] %}
             <li>
                 <a href="{{ url_for('mentor_dashboard') }}">
                     <i class="fas fa-chart-bar icon"></i>
-                    <span class="label">Mentor Dashboard</span>
+                    <span class="label">{{ _('Mentor Dashboard') }}</span>
                 </a>
             </li>
             {% endif %}
@@ -104,26 +104,40 @@
 
         <!-- Footer -->
         <div class="sidebar-footer mt-auto">
+            <!-- Language Switcher -->
+            <div class="language-switcher px-3 py-2 mb-2">
+                <div class="d-flex justify-content-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <a href="{{ url_for('set_language', language='en') }}" class="btn btn-outline-secondary {% if session.language == 'en' or not session.language %}active{% endif %}" style="font-size: 0.75rem;">
+                            🇺🇸 EN
+                        </a>
+                        <a href="{{ url_for('set_language', language='hi') }}" class="btn btn-outline-secondary {% if session.language == 'hi' %}active{% endif %}" style="font-size: 0.75rem;">
+                            🇮🇳 हिं
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             {% if current_user.is_authenticated %}
                 <div class="user-info px-3 py-2">
                     <i class="fas fa-user icon"></i>
                     <span class="label">{{ current_user.username }}</span>
                     {% if current_user.login_streak > 0 %}
-                        <span class="badge bg-success">{{ current_user.login_streak }} days</span>
+                        <span class="badge bg-success">{{ current_user.login_streak }} {{ _('days') }}</span>
                     {% endif %}
                 </div>
                 <a class="btn btn-sm btn-danger w-100 mt-2" href="{{ url_for('logout') }}">
                     <i class="fas fa-sign-out-alt icon" style="color: white;"></i>
-                    <span class="label" style="color: white; font-weight: bold;">Logout</span>
+                    <span class="label" style="color: white; font-weight: bold;">{{ _('Logout') }}</span>
                 </a>
             {% else %}
                 <a class="btn btn-sm btn-primary w-100 mb-2" href="{{ url_for('login') }}">
                     <i class="fas fa-sign-in-alt icon"></i>
-                    <span class="label">Login</span>
+                    <span class="label">{{ _('Login') }}</span>
                 </a>
                 <a class="btn btn-sm btn-success w-100" href="{{ url_for('register') }}">
                     <i class="fas fa-user-plus icon"></i>
-                    <span class="label">Register</span>
+                    <span class="label">{{ _('Register') }}</span>
                 </a>
             {% endif %}
         </div>

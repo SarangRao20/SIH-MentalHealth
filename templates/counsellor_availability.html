@@ -1,37 +1,37 @@
 {% extends "base.html" %}
-{% block title %}Manage Availability{% endblock %}
+{% block title %}{{ _('Manage Availability') }}{% endblock %}
 {% block content %}
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Manage Availability</h2>
-        <a href="{{ url_for('counsellor_dashboard') }}" class="btn btn-outline-secondary btn-sm">Back</a>
+        <h2 class="mb-0">{{ _('Manage Availability') }}</h2>
+        <a href="{{ url_for('counsellor_dashboard') }}" class="btn btn-outline-secondary btn-sm">{{ _('Back') }}</a>
     </div>
     <form method="POST" class="row g-3 mb-4">
         <div class="col-md-5">
-            <label for="start_time" class="form-label">Start</label>
+            <label for="start_time" class="form-label">{{ _('Start') }}</label>
             <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
         </div>
         <div class="col-md-5">
-            <label for="end_time" class="form-label">End</label>
+            <label for="end_time" class="form-label">{{ _('End') }}</label>
             <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
         </div>
         <div class="col-md-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus"></i> Add Slot</button>
+            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus"></i> {{ _('Add Slot') }}</button>
         </div>
     </form>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Your Slots</span>
-            <a href="{{ url_for('counsellor_dashboard') }}" class="btn btn-sm btn-outline-secondary">Back to Dashboard</a>
+            <span>{{ _('Your Slots') }}</span>
+            <a href="{{ url_for('counsellor_dashboard') }}" class="btn btn-sm btn-outline-secondary">{{ _('Back to Dashboard') }}</a>
         </div>
         <div class="card-body">
             {% if slots %}
             <table class="table table-bordered align-middle">
                 <thead>
                     <tr>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Status</th>
+                        <th>{{ _('Start') }}</th>
+                        <th>{{ _('End') }}</th>
+                        <th>{{ _('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,14 +40,14 @@
                         <td>{{ s.start_time.strftime('%d %b %Y, %I:%M %p') }}</td>
                         <td>{{ s.end_time.strftime('%I:%M %p') }}</td>
                         <td>
-                            {% if s.is_booked %}<span class="badge bg-success">Booked</span>{% else %}<span class="badge bg-secondary">Open</span>{% endif %}
+                            {% if s.is_booked %}<span class="badge bg-success">{{ _('Booked') }}</span>{% else %}<span class="badge bg-secondary">{{ _('Open') }}</span>{% endif %}
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             {% else %}
-            <div class="text-muted">No slots yet. Add your first availability above.</div>
+            <div class="text-muted">{{ _('No slots yet. Add your first availability above.') }}</div>
             {% endif %}
         </div>
     </div>

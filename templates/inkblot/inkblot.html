@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style="text-align:center;margin-top:5em;">
-	<h2 style="font-size:30px;font-weight:300;margin-bottom:2em;">Inkblot Test</h2>
-	<form method="post" style="display:inline-block;text-align:left;">
-		{% set blot_num = blot_num if blot_num is defined else 1 %}
-		<div style="margin-bottom: 30px;">
-			<img src="{{ url_for('static', filename='img/blot' ~ blot_num ~ '.jpg') }}" alt="Inkblot {{ blot_num }}" style="max-width:300px; display:block; margin-bottom:10px; border-radius:8px; box-shadow:0 2px 8px #ccc;">
-			<label for="response" style="font-size:1.1em;">Your response:</label>
-			<input type="text" id="response" name="response" style="width:60%;padding:8px;font-size:1em;border-radius:4px;border:1px solid #ccc;">
-		</div>
-		<input type="hidden" name="blot_num" value="{{ blot_num }}">
-		<button type="submit" style="border-radius:0;text-transform:none;font-style:italic;width:164px;font-size:12px;margin-top:2em;">Next</button>
-	</form>
+<div class="container py-5 text-center">
+    <h2 class="mb-4 fw-light">Inkblot Test</h2>
+    <form method="post" class="d-inline-block text-start bg-white p-4 shadow-sm rounded" style="max-width: 500px; width: 100%;">
+        {% set blot_num = blot_num if blot_num is defined else 1 %}
+        
+        <div class="mb-4 text-center">
+            <img src="{{ url_for('static', filename='img/blot' ~ blot_num ~ '.jpg') }}" 
+                 alt="Inkblot {{ blot_num }}" 
+                 class="img-fluid rounded shadow-sm mb-3" 
+                 style="max-width: 300px;">
+        </div>
+
+        <div class="mb-3">
+            <label for="response" class="form-label fw-semibold">Your response:</label>
+            <input type="text" id="response" name="response" 
+                   class="form-control" placeholder="Type what you see...">
+        </div>
+
+        <input type="hidden" name="blot_num" value="{{ blot_num }}">
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">
+                Next &nbsp; &#8594;
+            </button>
+        </div>
+    </form>
 </div>
 {% endblock %}

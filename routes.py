@@ -23,6 +23,13 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 
+@app.route('/set_language/<language>')
+def set_language(language=None):
+    """Set the language for the current session"""
+    if language and language in app.config['LANGUAGES']:
+        session['language'] = language
+    return redirect(request.referrer or url_for('dashboard'))
+
 def send_email(subject: str, body: str, to_email: str, sender_type: str = 'user') -> bool:
     """Send email using environment SMTP settings; fallback to logging. Sender type can be 'user', 'mentor', or 'counsellor'."""
     try:
@@ -58,7 +65,9 @@ def send_email(subject: str, body: str, to_email: str, sender_type: str = 'user'
 
 @app.route('/')
 def index():
-    return redirect(url_for('dashboard'))
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    return render_template('landing.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -128,7 +137,7 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out successfully', 'info')
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 @app.route('/dashboard')
 @login_required
@@ -350,61 +359,267 @@ def assessment_results(assessment_id):
 def generate_analysis(assessment_type, score):
     if assessment_type == 'PHQ-9':
         if score <= 4:
-            return "Your PHQ-9 score suggests minimal or no depression. This is great news!"
+            return {
+                "interpretation": "Your PHQ-9 score suggests minimal or no depression. This is great news!",
+                "recommendations": [
+                    "Continue with healthy lifestyle habits",
+                    "Practice regular self-care activities",
+                    "Maintain social connections"
+                ],
+                "coping_strategies": [
+                    "Regular exercise and physical activity",
+                    "Maintain a consistent sleep schedule",
+                    "Practice mindfulness and meditation"
+                ],
+                "professional_help_recommended": False,
+                "urgency_level": "low"
+            }
         elif score <= 9:
-            return "Your PHQ-9 score suggests mild depression. Consider monitoring your mood and seeking support if symptoms persist."
+            return {
+                "interpretation": "Your PHQ-9 score suggests mild depression. Consider monitoring your mood and seeking support if symptoms persist.",
+                "recommendations": [
+                    "Monitor your mood daily",
+                    "Consider counseling or therapy",
+                    "Engage in regular physical activity"
+                ],
+                "coping_strategies": [
+                    "Practice stress reduction techniques",
+                    "Maintain regular social activities",
+                    "Focus on healthy eating habits"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "low"
+            }
         elif score <= 14:
-            return "Your PHQ-9 score suggests moderate depression. You may benefit from professional support."
+            return {
+                "interpretation": "Your PHQ-9 score suggests moderate depression. You may benefit from professional support.",
+                "recommendations": [
+                    "Seek professional counseling",
+                    "Consider therapy sessions",
+                    "Discuss with healthcare provider"
+                ],
+                "coping_strategies": [
+                    "Develop a daily routine",
+                    "Practice relaxation techniques",
+                    "Stay connected with support system"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "medium"
+            }
         elif score <= 19:
-            return "Your PHQ-9 score suggests moderately severe depression. We recommend seeking professional help."
+            return {
+                "interpretation": "Your PHQ-9 score suggests moderately severe depression. We recommend seeking professional help.",
+                "recommendations": [
+                    "Seek immediate professional help",
+                    "Consider medication evaluation",
+                    "Regular therapy sessions recommended"
+                ],
+                "coping_strategies": [
+                    "Focus on basic self-care",
+                    "Reach out to trusted friends/family",
+                    "Practice grounding techniques"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "high"
+            }
         else:
-            return "Your PHQ-9 score suggests severe depression. We strongly recommend seeking professional help as soon as possible."
+            return {
+                "interpretation": "Your PHQ-9 score suggests severe depression. We strongly recommend seeking professional help as soon as possible.",
+                "recommendations": [
+                    "Seek immediate professional help",
+                    "Contact crisis helpline if needed",
+                    "Consider emergency support"
+                ],
+                "coping_strategies": [
+                    "Prioritize safety and basic needs",
+                    "Stay with trusted support person",
+                    "Use crisis resources when needed"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "high"
+            }
     elif assessment_type == 'GAD-7':
         if score < 5:
-            return "Your GAD-7 score suggests minimal anxiety. This is great news!"
+            return {
+                "interpretation": "Your GAD-7 score suggests minimal anxiety. This is great news!",
+                "recommendations": [
+                    "Continue current coping strategies",
+                    "Maintain healthy stress management",
+                    "Practice preventive self-care"
+                ],
+                "coping_strategies": [
+                    "Regular relaxation exercises",
+                    "Maintain work-life balance",
+                    "Practice deep breathing"
+                ],
+                "professional_help_recommended": False,
+                "urgency_level": "low"
+            }
         elif score < 10:
-            return "Your GAD-7 score suggests mild anxiety. Consider monitoring your anxiety levels."
+            return {
+                "interpretation": "Your GAD-7 score suggests mild anxiety. Consider monitoring your anxiety levels.",
+                "recommendations": [
+                    "Track anxiety triggers",
+                    "Learn stress management techniques",
+                    "Consider counseling if persistent"
+                ],
+                "coping_strategies": [
+                    "Practice mindfulness meditation",
+                    "Regular physical exercise",
+                    "Limit caffeine intake"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "low"
+            }
         elif score < 15:
-            return "Your GAD-7 score suggests moderate anxiety. You may benefit from professional support."
+            return {
+                "interpretation": "Your GAD-7 score suggests moderate anxiety. You may benefit from professional support.",
+                "recommendations": [
+                    "Seek professional counseling",
+                    "Consider anxiety management therapy",
+                    "Discuss with healthcare provider"
+                ],
+                "coping_strategies": [
+                    "Practice progressive muscle relaxation",
+                    "Use grounding techniques",
+                    "Maintain regular sleep schedule"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "medium"
+            }
         else:
-            return "Your GAD-7 score suggests severe anxiety. We recommend seeking professional help."
+            return {
+                "interpretation": "Your GAD-7 score suggests severe anxiety. We recommend seeking professional help.",
+                "recommendations": [
+                    "Seek immediate professional help",
+                    "Consider medication evaluation",
+                    "Regular therapy sessions"
+                ],
+                "coping_strategies": [
+                    "Focus on breathing exercises",
+                    "Use crisis coping techniques",
+                    "Stay connected with support system"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "high"
+            }
     else:  # GHQ
         if score < 4:
-            return "Your GHQ score suggests good psychological well-being."
+            return {
+                "interpretation": "Your GHQ score suggests good psychological well-being.",
+                "recommendations": [
+                    "Continue healthy lifestyle",
+                    "Maintain current wellness practices",
+                    "Regular self-assessment"
+                ],
+                "coping_strategies": [
+                    "Keep balanced lifestyle",
+                    "Regular social activities",
+                    "Stress prevention techniques"
+                ],
+                "professional_help_recommended": False,
+                "urgency_level": "low"
+            }
         elif score < 12:
-            return "Your GHQ score suggests some psychological distress. Consider monitoring your well-being."
+            return {
+                "interpretation": "Your GHQ score suggests some psychological distress. Consider monitoring your well-being.",
+                "recommendations": [
+                    "Monitor stress levels",
+                    "Consider counseling support",
+                    "Practice self-care activities"
+                ],
+                "coping_strategies": [
+                    "Regular exercise routine",
+                    "Mindfulness practices",
+                    "Social support engagement"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "medium"
+            }
         else:
-            return "Your GHQ score suggests significant psychological distress. We recommend seeking professional support."
+            return {
+                "interpretation": "Your GHQ score suggests significant psychological distress. We recommend seeking professional support.",
+                "recommendations": [
+                    "Seek professional counseling",
+                    "Consider comprehensive assessment",
+                    "Regular mental health check-ins"
+                ],
+                "coping_strategies": [
+                    "Focus on stress reduction",
+                    "Practice relaxation techniques",
+                    "Build strong support network"
+                ],
+                "professional_help_recommended": True,
+                "urgency_level": "high"
+            }
 
 @app.route('/submit_assessment', methods=['POST'])
 @login_required
 def submit_assessment():
-    assessment_type = request.form['assessment_type']
-    responses = {}
-    for i in range(len(get_assessment_questions(assessment_type))):
-        responses[f'q{i}'] = int(request.form[f'q{i}'])
-    if assessment_type == "PHQ-9":
-        score, severity = calculate_phq9_score(responses)
-    elif assessment_type == "GAD-7":
-        score, severity = calculate_gad7_score(responses)
-    elif assessment_type == "GHQ":
-        score, severity = calculate_ghq_score(responses)
-    analysis = analyze_assessment_results(assessment_type, responses, score)
-    assessment = Assessment(
-        user_id=current_user.id,
-        assessment_type=assessment_type,
-        responses=json.dumps(responses),
-        score=score,
-        severity_level=severity,
-        recommendations=json.dumps(analysis)
-    )
-    db.session.add(assessment)
-    db.session.commit()
-    counsellors = User.query.filter_by(role='counsellor').all()
-    return render_template('assessment_results.html',
-                         assessment=assessment,
-                         analysis=analysis,
-                         counsellors=counsellors)
+    try:
+        assessment_type = request.form['assessment_type']
+        print(f"Debug: Assessment type: {assessment_type}")
+        
+        responses = {}
+        for i in range(len(get_assessment_questions(assessment_type))):
+            responses[f'q{i}'] = int(request.form[f'q{i}'])
+        print(f"Debug: Responses: {responses}")
+        
+        if assessment_type == "PHQ-9":
+            score, severity = calculate_phq9_score(responses)
+        elif assessment_type == "GAD-7":
+            score, severity = calculate_gad7_score(responses)
+        elif assessment_type == "GHQ":
+            score, severity = calculate_ghq_score(responses)
+        
+        print(f"Debug: Score: {score}, Severity: {severity}")
+        
+        # Try to get analysis from Gemini
+        try:
+            analysis = analyze_assessment_results(assessment_type, responses, score)
+            print(f"Debug: Analysis successful: {type(analysis)}")
+        except Exception as e:
+            print(f"Debug: Analysis failed: {e}")
+            # Fallback analysis
+            analysis = {
+                "interpretation": f"Your {assessment_type} score is {score}, indicating {severity.lower()} symptoms.",
+                "recommendations": [
+                    "Consider speaking with a mental health professional",
+                    "Practice regular self-care activities",
+                    "Maintain social connections"
+                ],
+                "coping_strategies": [
+                    "Practice deep breathing exercises",
+                    "Maintain regular sleep schedule",
+                    "Engage in physical activity"
+                ],
+                "professional_help_recommended": score > 9,
+                "urgency_level": "medium" if score > 14 else "low"
+            }
+        
+        assessment = Assessment(
+            user_id=current_user.id,
+            assessment_type=assessment_type,
+            responses=json.dumps(responses),
+            score=score,
+            severity_level=severity,
+            recommendations=json.dumps(analysis)
+        )
+        
+        db.session.add(assessment)
+        db.session.commit()
+        print(f"Debug: Assessment saved with ID: {assessment.id}")
+        
+        counsellors = User.query.filter_by(role='counsellor').all()
+        return render_template('assessment_results.html',
+                             assessment=assessment,
+                             analysis=analysis,
+                             counsellors=counsellors)
+                             
+    except Exception as e:
+        print(f"Debug: Error in submit_assessment: {e}")
+        flash(f'Error processing assessment: {str(e)}', 'error')
+        return redirect(url_for('assessments'))
 
 @app.route('/meditation')
 @login_required

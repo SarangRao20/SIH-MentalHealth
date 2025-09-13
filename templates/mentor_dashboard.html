@@ -5,6 +5,14 @@
 {% block extra_head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+
+.card-header {
+    background-color: #809bce !important;
+    color: #fff !important;
+    border-bottom: none; /* optional for cleaner look */
+}
+
+
 .stats-card {
     transition: all 0.3s ease;
     border: none;
@@ -47,12 +55,48 @@
 }
 
 .comparison-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: #f8f9fa;
+    color:#6b7280 ;
 }
 
 .insight-card {
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #809bce;
+}
+
+.btn-workshop-outline {
+    border-color: #28a745; /* Your original success color */
+    color: #28a745;
+    background-color: transparent;
+}
+
+.btn-workshop-outline:hover {
+    background-color: #B8E0D2; /* The new hover background color */
+    color: #374151; /* A dark text color for readability */
+    border-color: #B8E0D2;
+}
+
+.btn-report-outline {
+    border-color: #95b8d1; /* Your original success color */
+    color: #95b8d1;
+    background-color: transparent;
+}
+
+.btn-report-outline:hover {
+    background-color: #95B8D1; /* The new hover background color */
+    color: #374151; /* A dark text color for readability */
+    border-color: #95B8D1;
+}
+
+.btn-outline-flag{
+    border-color: #f6d656; /* Your original success color */
+    color: #f7d44a;
+    background-color: transparent;
+}
+
+.btn-outline-flag:hover {
+    background-color: #faf0ca; /* The new hover background color */
+    color: #374151; /* A dark text color for readability */
+    border-color: #faf0ca;
 }
 </style>
 {% endblock %}
@@ -63,17 +107,17 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center py-4">
                 <div>
-                    <h1 class="h2 text-primary">
-                        <i class="fas fa-chart-bar"></i> Mentor Dashboard
+                    <h1 class="h2 text-periwinkle">
+                        <i class="fas fa-chart-bar"></i> {{ _('Mentor Dashboard') }}
                     </h1>
-                    <p class="text-muted">Monitor student mental health and wellness trends</p>
+                    <p class="text-muted">{{ _('Monitor student mental health and wellness trends') }}</p>
                 </div>
                 <div class="d-flex gap-2">
                     <button class="btn btn-outline-primary" onclick="exportData()">
-                        <i class="fas fa-download"></i> Export Data
+                        <i class="fas fa-download"></i> {{ _('Export Data') }}
                     </button>
                     <button class="btn btn-outline-info" onclick="generateReport()">
-                        <i class="fas fa-file-alt"></i> Generate Report
+                        <i class="fas fa-file-alt"></i> {{ _('Generate Report') }}
                     </button>
                 </div>
             </div>
@@ -83,16 +127,16 @@
     <!-- Key Metrics -->
     <div class="row g-4 mb-4">
         <div class="col-lg-3 col-md-6">
-            <div class="card stats-card bg-primary text-white h-100">
+            <div class="card stats-card bg-periwinkle text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h6 class="card-title">Total Students</h6>
+                            <h6 class="card-title">{{ _('Total Students') }}</h6>
                             <div class="metric-value">{{ stats.total_students }}</div>
-                            <small>Registered users</small>
+                            <small>{{ _('Registered users') }}</small>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-users fa-2x opacity-75"></i>
+                            <i class="fas fa-users fa-2x opacity-100"></i>
                         </div>
                     </div>
                 </div>
@@ -104,9 +148,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h6 class="card-title">Active This Week</h6>
+                            <h6 class="card-title">{{ _('Active This Week') }}</h6>
                             <div class="metric-value">{{ stats.active_users }}</div>
-                            <small>Regular engagement</small>
+                            <small>{{ _('Regular engagement') }}</small>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-chart-line fa-2x opacity-75"></i>
@@ -121,9 +165,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h6 class="card-title">Crisis Alerts</h6>
+                            <h6 class="card-title">{{ _('Crisis Alerts') }}</h6>
                             <div class="metric-value">{{ stats.crisis_sessions }}</div>
-                            <small>Last 30 days</small>
+                            <small>{{ _('Last 30 days') }}</small>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
@@ -141,9 +185,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h6 class="card-title">Assessments</h6>
+                            <h6 class="card-title">{{ _('Assessments Taken') }}</h6>
                             <div class="metric-value">{{ stats.recent_assessments|length }}</div>
-                            <small>This month</small>
+                            <small>{{ _('This month') }}</small>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-clipboard-list fa-2x opacity-75"></i>
@@ -160,7 +204,7 @@
             <div class="card comparison-card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-balance-scale"></i> Stress Level Comparison
+                        <i class="fas fa-balance-scale"></i> {{ _('Stress Level Comparison') }}
                     </h5>
                 </div>
                 <div class="card-body text-center">
@@ -169,16 +213,16 @@
                             <div class="mb-3">
                                 <i class="fas fa-building fa-2x mb-2"></i>
                                 <h3>{{ stats.hostel_avg_stress }}</h3>
-                                <p class="mb-0">Hostel Students</p>
-                                <small>{{ stats.hostel_students }} students</small>
+                                <p class="mb-0">{{ _('Hostel Students') }}</p>
+                                <small>{{ stats.hostel_students }} {{ _('students') }}</small>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <i class="fas fa-home fa-2x mb-2"></i>
                                 <h3>{{ stats.local_avg_stress }}</h3>
-                                <p class="mb-0">Local Students</p>
-                                <small>{{ stats.local_students }} students</small>
+                                <p class="mb-0">{{ _('Local Students') }}</p>
+                                <small>{{ stats.local_students }} {{ _('students') }}</small>
                             </div>
                         </div>
                     </div>
@@ -215,7 +259,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-chart-pie"></i> Assessment Distribution
+                        <i class="fas fa-chart-pie"></i> {{ _('Assessment Distribution') }}
                     </h5>
                 </div>
                 <div class="card-body">
@@ -231,7 +275,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-chart-area"></i> Mental Health Trends
+                        <i class="fas fa-chart-area"></i> {{ _('Mental Health Trends') }}
                     </h5>
                 </div>
                 <div class="card-body">
@@ -244,12 +288,12 @@
             <div class="card insight-card">
                 <div class="card-header">
                     <h6 class="card-title mb-0">
-                        <i class="fas fa-lightbulb text-warning"></i> Key Insights
+                        <i class="fas fa-lightbulb text-warning"></i> {{ _('Key Insights') }}
                     </h6>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <h6 class="text-primary">Engagement Patterns</h6>
+                        <h6 class="text-periwinkle ">{{ _('Engagement Patterns') }}</h6>
                         <ul class="list-unstyled small">
                             <li class="mb-2">
                                 <i class="fas fa-arrow-up text-success"></i>
@@ -263,7 +307,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <h6 class="text-primary">Risk Factors</h6>
+                        <h6 class="text-periwinkle">{{ _('Risk Factors') }}</h6>
                         <ul class="list-unstyled small">
                             {% if stats.crisis_sessions > 0 %}
                             <li class="mb-2">
@@ -272,14 +316,14 @@
                             </li>
                             {% endif %}
                             <li class="mb-2">
-                                <i class="fas fa-chart-line text-primary"></i>
+                                <i class="fas fa-chart-line text-periwinkle"></i>
                                 Assessment completion trending up
                             </li>
                         </ul>
                     </div>
 
                     <div class="mb-3">
-                        <h6 class="text-primary">Recommendations</h6>
+                        <h6 class="text-periwinkle">{{ _('Recommendations') }}</h6>
                         <ul class="list-unstyled small">
                             {% if stats.hostel_avg_stress > stats.local_avg_stress + 1 %}
                             <li class="mb-2">
@@ -304,7 +348,7 @@
             <div class="card mt-4">
                 <div class="card-header">
                     <h6 class="card-title mb-0">
-                        <i class="fas fa-bolt text-warning"></i> Quick Actions
+                        <i class="fas fa-bolt text-warning"></i> {{ _('Quick Actions') }}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -312,13 +356,13 @@
                         <button class="btn btn-outline-primary btn-sm" onclick="sendWellnessReminder()">
                             <i class="fas fa-bell"></i> Send Wellness Reminder
                         </button>
-                        <button class="btn btn-outline-success btn-sm" onclick="scheduleWorkshop()">
+                        <button class="btn btn-workshop-outline btn-sm" onclick="scheduleWorkshop()">
                             <i class="fas fa-calendar-plus"></i> Schedule Workshop
                         </button>
-                        <button class="btn btn-outline-info btn-sm" onclick="viewDetailedReports()">
+                        <button class="btn btn-report-outline btn-sm" onclick="viewDetailedReports()">
                             <i class="fas fa-chart-bar"></i> Detailed Reports
                         </button>
-                        <button class="btn btn-outline-warning btn-sm" onclick="reviewCrisisFlags()">
+                        <button class="btn btn-outline-flag btn-sm" onclick="reviewCrisisFlags()">
                             <i class="fas fa-flag"></i> Review Crisis Flags
                         </button>
                     </div>
@@ -333,7 +377,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-clock"></i> Recent Assessment Activity
+                        <i class="fas fa-clock"></i> {{ _('Recent Assessment Activity') }}
                     </h5>
                 </div>
                 <div class="card-body">
@@ -412,6 +456,19 @@
 
 {% block extra_scripts %}
 <script>
+// NOTE: This is a Jinja2 template - VS Code may show syntax errors for template expressions
+// Chart data from backend
+const chartData = {
+    phq9Count: {{ stats.recent_assessments|selectattr('assessment_type', 'equalto', 'PHQ-9')|list|length|default(0) }},
+    gad7Count: {{ stats.recent_assessments|selectattr('assessment_type', 'equalto', 'GAD-7')|list|length|default(0) }},
+    ghqCount: {{ stats.recent_assessments|selectattr('assessment_type', 'equalto', 'GHQ')|list|length|default(0) }},
+    hostelStress: {{ stats.hostel_avg_stress|default(0) }},
+    localStress: {{ stats.local_avg_stress|default(0) }},
+    totalStudents: {{ stats.total_students|default(0) }},
+    activeUsers: {{ stats.active_users|default(0) }},
+    crisisSessions: {{ stats.crisis_sessions|default(0) }}
+};
+
 // Assessment Distribution Chart
 const assessmentCtx = document.getElementById('assessmentChart').getContext('2d');
 const assessmentChart = new Chart(assessmentCtx, {
@@ -419,11 +476,7 @@ const assessmentChart = new Chart(assessmentCtx, {
     data: {
         labels: ['PHQ-9', 'GAD-7', 'GHQ'],
         datasets: [{
-            data: [
-                {{ stats.recent_assessments|selectattr('assessment_type', 'equalto', 'PHQ-9')|list|length }},
-                {{ stats.recent_assessments|selectattr('assessment_type', 'equalto', 'GAD-7')|list|length }},
-                {{ stats.recent_assessments|selectattr('assessment_type', 'equalto', 'GHQ')|list|length }}
-            ],
+            data: [chartData.phq9Count, chartData.gad7Count, chartData.ghqCount],
             backgroundColor: ['#007bff', '#28a745', '#17a2b8'],
             borderWidth: 2,
             borderColor: '#fff'
@@ -448,13 +501,13 @@ const trendsChart = new Chart(trendsCtx, {
         labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
         datasets: [{
             label: 'Hostel Students',
-            data: [{{ stats.hostel_avg_stress }}, {{ stats.hostel_avg_stress - 0.5 }}, {{ stats.hostel_avg_stress + 0.3 }}, {{ stats.hostel_avg_stress }}],
+            data: [chartData.hostelStress, chartData.hostelStress - 0.5, chartData.hostelStress + 0.3, chartData.hostelStress],
             borderColor: '#007bff',
             backgroundColor: 'rgba(0, 123, 255, 0.1)',
             tension: 0.4
         }, {
             label: 'Local Students',
-            data: [{{ stats.local_avg_stress }}, {{ stats.local_avg_stress + 0.2 }}, {{ stats.local_avg_stress - 0.1 }}, {{ stats.local_avg_stress }}],
+            data: [chartData.localStress, chartData.localStress + 0.2, chartData.localStress - 0.1, chartData.localStress],
             borderColor: '#28a745',
             backgroundColor: 'rgba(40, 167, 69, 0.1)',
             tension: 0.4
@@ -504,13 +557,13 @@ function reviewCrisisFlags() {
 }
 
 function exportData() {
-    // Implement data export
+    // Implement data export using pre-defined chartData
     const data = {
-        total_students: {{ stats.total_students }},
-        active_users: {{ stats.active_users }},
-        crisis_sessions: {{ stats.crisis_sessions }},
-        hostel_avg_stress: {{ stats.hostel_avg_stress }},
-        local_avg_stress: {{ stats.local_avg_stress }}
+        total_students: chartData.totalStudents,
+        active_users: chartData.activeUsers,
+        crisis_sessions: chartData.crisisSessions,
+        hostel_avg_stress: chartData.hostelStress,
+        local_avg_stress: chartData.localStress
     };
     
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });

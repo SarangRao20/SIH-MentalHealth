@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Private Venting Room - MindCare{% endblock %}
+{% block title %}{{ _('Private Venting Room') }} - MindCare{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -312,39 +312,39 @@
 <div class="venting-room">
     <div class="container">
         <div class="room-header">
-            <h1><i class="fas fa-fire"></i> Private Venting Room</h1>
-            <p>Write your worries on a sticky note, then burn them away to let go</p>
+            <h1><i class="fas fa-fire"></i> {{ _('Private Venting Room') }}</h1>
+            <p>{{ _('Write your worries on a sticky note, then burn them away to let go') }}</p>
         </div>
         
         <div class="instructions">
-            <h5><i class="fas fa-lightbulb"></i> How it works:</h5>
-            <p>1. Click "New Note" to create a sticky note<br>
-               2. Write down what's bothering you<br>
-               3. Drag the note to the fire zone to burn it<br>
-               4. Watch your worries turn to ash and disappear</p>
+            <h5><i class="fas fa-lightbulb"></i> {{ _('How it works') }}:</h5>
+            <p>1. {{ _('Click "New Note" to create a sticky note') }}<br>
+               2. {{ _('Write down what\'s bothering you') }}<br>
+               3. {{ _('Drag the note to the fire zone to burn it') }}<br>
+               4. {{ _('Watch your worries turn to ash and disappear') }}</p>
         </div>
         
         <div id="notes-container"></div>
         
         <div class="burn-zone" id="burnZone">
-            <i class="fas fa-fire"></i> Drop to Burn
+            <i class="fas fa-fire"></i> {{ _('Drop to Burn') }}
         </div>
         
         <button class="new-note-btn" onclick="createNewNote()">
-            <i class="fas fa-plus"></i> New Note
+            <i class="fas fa-plus"></i> {{ _('New Note') }}
         </button>
     </div>
     
     <div class="completion-message" id="completionMessage">
         <div>
             <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-            <h4>Your worries have been released</h4>
-            <p>Sometimes letting go is the first step toward healing.</p>
+            <h4>{{ _('Your worries have been released') }}</h4>
+            <p>{{ _('Sometimes letting go is the first step toward healing.') }}</p>
             <div class="healing-quotes">
                 <p id="randomQuote"></p>
             </div>
             <button class="btn btn-primary mt-3" onclick="hideCompletionMessage()">
-                Continue
+                {{ _('Continue') }}
             </button>
         </div>
     </div>
@@ -395,7 +395,9 @@ function createNewNote() {
     // 📝 Textarea
     const textarea = document.createElement('textarea');
     textarea.className = 'note-textarea';
-    textarea.placeholder = "Write what's bothering you...\n\nThen let it go.";
+    const placeholder1 = `{{ _("Write what's bothering you...") }}`;
+    const placeholder2 = `{{ _('Then let it go.') }}`;
+    textarea.placeholder = placeholder1 + "\n\n" + placeholder2;
     textarea.maxLength = 500;
 
     // 🔥 Fire effect container
@@ -633,7 +635,10 @@ document.addEventListener('DOMContentLoaded', function() {
         createNewNote();
         const firstNote = document.querySelector('.note-textarea');
         if (firstNote) {
-            firstNote.placeholder = "Welcome to your private space!\\n\\nWrite anything that's weighing on your mind...\\n\\nThen drag this note to the fire to let it go.";
+            const welcomeMsg = `{{ _('Welcome to your private space!') }}`;
+            const mindMsg = `{{ _("Write anything that's weighing on your mind...") }}`;
+            const dragMsg = `{{ _('Then drag this note to the fire to let it go.') }}`;
+            firstNote.placeholder = welcomeMsg + "\n\n" + mindMsg + "\n\n" + dragMsg;
         }
     }, 500);
 });
