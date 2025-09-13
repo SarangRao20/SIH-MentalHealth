@@ -1,0 +1,2714 @@
+# Hindi translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-13 10:49+0530\n"
+"PO-Revision-Date: 2025-09-12 19:02+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: hi\n"
+"Language-Team: hi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: templates/404.html:6 templates/404.html:9
+msgid "Page Not Found"
+msgstr ""
+
+#: templates/404.html:10
+msgid "Sorry, the page you are looking for does not exist."
+msgstr ""
+
+#: templates/404.html:11
+#, fuzzy
+msgid "Go to Login"
+msgstr "लॉग इन"
+
+#: templates/admin_dashboard.html:5
+msgid "Admin Analytics Dashboard"
+msgstr ""
+
+#: templates/admin_dashboard.html:9
+msgid "Total Users"
+msgstr ""
+
+#: templates/admin_dashboard.html:17
+msgid "Total Counsellors"
+msgstr ""
+
+#: templates/admin_dashboard.html:25
+msgid "Total Bookings"
+msgstr ""
+
+#: templates/admin_dashboard.html:40
+msgid "rated"
+msgstr ""
+
+#: templates/admin_dashboard.html:44
+msgid "No feedback yet."
+msgstr ""
+
+#: templates/admin_dashboard.html:51
+msgid "Top Counsellors"
+msgstr ""
+
+#: templates/admin_dashboard.html:60
+msgid "No counsellor data yet."
+msgstr ""
+
+#: templates/assessment_form.html:3
+#, fuzzy
+msgid "Assessment - MindCare"
+msgstr "मूल्यांकन इतिहास"
+
+#: templates/assessment_form.html:11 templates/assessments.html:140
+#, fuzzy
+msgid "Assessment"
+msgstr "मूल्यांकन"
+
+#: templates/assessment_form.html:21
+msgid "Question"
+msgstr ""
+
+#: templates/assessment_form.html:42
+#, fuzzy
+msgid "Submit Assessment"
+msgstr "मूल्यांकन"
+
+#: templates/assessment_results.html:99
+#, fuzzy
+msgid "Total Score"
+msgstr "स्कोर"
+
+#: templates/assessment_results.html:104
+msgid "Score Interpretation"
+msgstr ""
+
+#: templates/assessment_results.html:122
+#, fuzzy
+msgid "Recommendations"
+msgstr "ध्यान"
+
+#: templates/assessment_results.html:167
+msgid "Professional Support Recommended"
+msgstr ""
+
+#: templates/assessment_results.html:170
+msgid ""
+"Your results suggest that speaking with a mental health professional "
+"could provide valuable support and insight!"
+msgstr ""
+
+#: templates/assessment_results.html:172
+msgid "Please consider seeking help soon."
+msgstr ""
+
+#: templates/assessment_results.html:179 templates/consultation.html:138
+msgid "Request Consultation"
+msgstr ""
+
+#: templates/assessment_results.html:193 templates/chatbot.html:147
+msgid "Immediate Support Available"
+msgstr ""
+
+#: templates/assessment_results.html:196
+msgid ""
+"If you’re struggling with thoughts of self-harm or suicide, please seek "
+"help right away. Support is available, and you deserve care and safety."
+msgstr ""
+
+#: templates/assessment_results.html:201 templates/chatbot.html:156
+#: templates/consultation.html:152
+msgid "Call 988"
+msgstr ""
+
+#: templates/assessment_results.html:204
+#, fuzzy
+msgid "Chat Now"
+msgstr "चैट"
+
+#: templates/assessment_results.html:216
+msgid "Next Steps"
+msgstr ""
+
+#: templates/assessment_results.html:224 templates/base.html:54
+#: templates/chatbot.html:129 templates/consultation.html:154
+#: templates/dashboard.html:88
+msgid "Chat Support"
+msgstr "चैट सहायता"
+
+#: templates/assessment_results.html:231 templates/base.html:66
+#: templates/dashboard.html:33
+msgid "Meditation"
+msgstr "ध्यान"
+
+#: templates/assessment_results.html:238 templates/venting_hall.html:220
+#, fuzzy
+msgid "Venting Hall"
+msgstr "सभी देखें"
+
+#: templates/assessment_results.html:245
+#, fuzzy
+msgid "More Assessments"
+msgstr "मूल्यांकन"
+
+#: templates/assessment_results.html:256 templates/base.html:48
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+#: templates/assessment_results.html:259
+msgid "Print Results"
+msgstr "परिणाम प्रिंट करें"
+
+#: templates/assessment_results.html:262
+#, fuzzy
+msgid "Share"
+msgstr "शुरू करें"
+
+#: templates/assessment_results.html:265 templates/assessment_results.html:314
+msgid "Send to Counsellor"
+msgstr "परामर्शदाता को भेजें"
+
+#: templates/assessment_results.html:268
+msgid "Your results have been sent to the counsellor!"
+msgstr ""
+
+#: templates/assessment_results.html:275
+msgid "Your assessment results are confidential and encrypted for your privacy."
+msgstr ""
+
+#: templates/assessment_results.html:291
+msgid "Share Results"
+msgstr ""
+
+#: templates/assessment_results.html:296
+msgid "You can share these results with:"
+msgstr ""
+
+#: templates/assessment_results.html:301
+msgid "Email to Healthcare Provider"
+msgstr ""
+
+#: templates/assessment_results.html:306 templates/consultation.html:415
+msgid "Select Counsellor"
+msgstr ""
+
+#: templates/assessment_results.html:308 templates/consultation.html:418
+msgid "Choose counsellor..."
+msgstr ""
+
+#: templates/assessment_results.html:315
+msgid "Send Result to Counsellor"
+msgstr ""
+
+#: templates/assessment_results.html:319 templates/assessments.html:233
+#: templates/consultation.html:534
+msgid "Close"
+msgstr "बंद करें"
+
+#: templates/assessments.html:14
+#, fuzzy
+msgid "About Assessments"
+msgstr "मूल्यांकन"
+
+#: templates/assessments.html:25
+msgid "Inkblot Test"
+msgstr "इंकब्लॉट टेस्ट"
+
+#: templates/assessments.html:29
+msgid "Projective Personality Assessment"
+msgstr "प्रक्षेपी व्यक्तित्व मूल्यांकन"
+
+#: templates/assessments.html:31
+msgid ""
+"The Inkblot Test is a projective psychological test to analyze "
+"personality and emotional functioning."
+msgstr ""
+
+#: templates/assessments.html:34
+#, fuzzy
+msgid "Takes 5-10 minutes"
+msgstr "एक शांत 5-10 मिनट का सत्र लें।"
+
+#: templates/assessments.html:35
+msgid "10 inkblots"
+msgstr "10 इंकब्लॉट्स"
+
+#: templates/assessments.html:36
+msgid "Share results with mentor/counsellor"
+msgstr "गुरु/परामर्शदाता के साथ परिणाम साझा करें"
+
+#: templates/assessments.html:41
+msgid "Start Inkblot Test"
+msgstr "इंकब्लॉट टेस्ट शुरू करें"
+
+#: templates/assessments.html:54 templates/assessments.html:154
+msgid "Depression Screening"
+msgstr "अवसाद स्क्रीनिंग"
+
+#: templates/assessments.html:56
+msgid ""
+"The PHQ-9 is a reliable tool for screening, diagnosing, monitoring and "
+"measuring the severity of depression."
+msgstr ""
+
+#: templates/assessments.html:59 templates/assessments.html:86
+msgid "Takes 2-3 minutes"
+msgstr "2-3 मिनट लगते हैं"
+
+#: templates/assessments.html:60
+msgid "9 questions"
+msgstr "9 सवाल"
+
+#: templates/assessments.html:61
+#, fuzzy
+msgid "Severity scoring"
+msgstr "गंभीरता"
+
+#: templates/assessments.html:66
+#, fuzzy
+msgid "Start PHQ-9"
+msgstr "शुरू करें"
+
+#: templates/assessments.html:76
+msgid "GAD-7"
+msgstr ""
+
+#: templates/assessments.html:81 templates/assessments.html:155
+msgid "Anxiety Screening"
+msgstr "चिंता स्क्रीनिंग"
+
+#: templates/assessments.html:83
+msgid ""
+"The GAD-7 is a validated tool for screening and measuring the severity of"
+" generalized anxiety disorder."
+msgstr ""
+
+#: templates/assessments.html:87
+msgid "7 questions"
+msgstr "7 सवाल"
+
+#: templates/assessments.html:88
+msgid "Anxiety levels"
+msgstr "चिंता के स्तर"
+
+#: templates/assessments.html:93
+#, fuzzy
+msgid "Start GAD-7"
+msgstr "शुरू करें"
+
+#: templates/assessments.html:103
+msgid "GHQ"
+msgstr ""
+
+#: templates/assessments.html:107
+msgid "General Health Questionnaire"
+msgstr ""
+
+#: templates/assessments.html:109
+msgid ""
+"The GHQ is designed to detect psychiatric disorders in community settings"
+" and general medical practice."
+msgstr ""
+
+#: templates/assessments.html:112
+msgid "Takes 3-4 minutes"
+msgstr ""
+
+#: templates/assessments.html:113
+msgid "12 questions"
+msgstr ""
+
+#: templates/assessments.html:114
+msgid "Overall wellbeing"
+msgstr ""
+
+#: templates/assessments.html:119
+#, fuzzy
+msgid "Start GHQ"
+msgstr "शुरू करें"
+
+#: templates/assessments.html:131
+#, fuzzy
+msgid "Your Assessment History"
+msgstr "मूल्यांकन इतिहास"
+
+#: templates/assessments.html:141 templates/dashboard.html:109
+msgid "Date"
+msgstr ""
+
+#: templates/assessments.html:142 templates/dashboard.html:111
+msgid "Score"
+msgstr "स्कोर"
+
+#: templates/assessments.html:143 templates/dashboard.html:112
+msgid "Severity"
+msgstr "गंभीरता"
+
+#: templates/assessments.html:144
+#, fuzzy
+msgid "Actions"
+msgstr "कार्रवाई"
+
+#: templates/assessments.html:156
+msgid "General Health"
+msgstr ""
+
+#: templates/assessments.html:175
+#, fuzzy
+msgid "View Results"
+msgstr "सभी देखें"
+
+#: templates/assessments.html:186
+#, fuzzy
+msgid "No Assessments Yet"
+msgstr "मूल्यांकन"
+
+#: templates/assessments.html:188
+msgid "Take your first assessment to start tracking your mental health journey."
+msgstr ""
+
+#: templates/assessments.html:203
+msgid "About Mental Health Assessments"
+msgstr ""
+
+#: templates/assessments.html:210
+msgid "Why Take These Assessments?"
+msgstr ""
+
+#: templates/assessments.html:212
+msgid ""
+"These standardized tools help identify symptoms and track your mental "
+"health over time."
+msgstr ""
+
+#: templates/assessments.html:213
+msgid ""
+"They are used by healthcare professionals worldwide and provide valuable "
+"insights into your wellbeing."
+msgstr ""
+
+#: templates/assessments.html:216
+msgid "Important Notes:"
+msgstr ""
+
+#: templates/assessments.html:218
+#, fuzzy
+msgid "These assessments are"
+msgstr "मूल्यांकन"
+
+#: templates/assessments.html:218
+msgid "not"
+msgstr ""
+
+#: templates/assessments.html:218
+msgid "a substitute for professional diagnosis"
+msgstr ""
+
+#: templates/assessments.html:219
+msgid "Results are confidential and encrypted for your privacy"
+msgstr ""
+
+#: templates/assessments.html:220
+msgid ""
+"Regular monitoring can help track progress and identify concerning "
+"patterns"
+msgstr ""
+
+#: templates/assessments.html:221
+msgid "Consider sharing results with a mental health professional"
+msgstr ""
+
+#: templates/assessments.html:226
+msgid "Remember:"
+msgstr ""
+
+#: templates/assessments.html:226
+msgid "If you're experiencing thoughts of self-harm or suicide,"
+msgstr ""
+
+#: templates/assessments.html:227
+msgid ""
+"please seek immediate help by calling 988 or visiting your nearest "
+"emergency room."
+msgstr ""
+
+#: templates/base.html:60
+msgid "Assessments"
+msgstr "मूल्यांकन"
+
+#: templates/base.html:72
+msgid "Private Venting Room"
+msgstr "निजी वेंटिंग रूम"
+
+#: templates/base.html:78
+msgid "Community Support"
+msgstr "सामुदायिक सहायता"
+
+#: templates/base.html:84
+#, fuzzy
+msgid "Consultation"
+msgstr "बधाई हो!"
+
+#: templates/base.html:90
+msgid "Routine"
+msgstr ""
+
+#: templates/base.html:97
+#, fuzzy
+msgid "Mentor Dashboard"
+msgstr "डैशबोर्ड"
+
+#: templates/base.html:126
+msgid "days"
+msgstr ""
+
+#: templates/base.html:131
+msgid "Logout"
+msgstr "लॉग आउट"
+
+#: templates/base.html:136 templates/login.html:31
+msgid "Login"
+msgstr "लॉग इन"
+
+#: templates/base.html:140
+msgid "Register"
+msgstr "रजिस्टर करें"
+
+#: templates/chatbot.html:133
+msgid "Clear Chat"
+msgstr "चैट साफ करें"
+
+#: templates/chatbot.html:136
+msgid "Voice Mode"
+msgstr "वॉयस मोड"
+
+#: templates/chatbot.html:149
+msgid "Crisis Support Available"
+msgstr ""
+
+#: templates/chatbot.html:151
+msgid ""
+"We noticed you might be going through a difficult time. Please consider "
+"reaching out for immediate help:"
+msgstr ""
+
+#: templates/chatbot.html:159
+msgid "Get Help"
+msgstr ""
+
+#: templates/chatbot.html:169
+#, fuzzy
+msgid "Assessment Recommended"
+msgstr "मूल्यांकन"
+
+#: templates/chatbot.html:175
+#, fuzzy
+msgid "Take Assessment"
+msgstr "मूल्यांकन"
+
+#: templates/chatbot.html:205
+#, fuzzy
+msgid "Welcome to Chat Support"
+msgstr "चैट सहायता"
+
+#: templates/chatbot.html:207
+msgid ""
+"I'm here to listen and provide support. Feel free to share what's on your"
+" mind."
+msgstr ""
+
+#: templates/chatbot.html:218
+msgid "Type your message here..."
+msgstr "यहाँ अपना संदेश टाइप करें..."
+
+#: templates/chatbot.html:228
+msgid "Your conversations are private and secure"
+msgstr ""
+
+#: templates/consultation.html:3
+msgid "Professional Consultation - MindCare"
+msgstr ""
+
+#: templates/consultation.html:133
+msgid "Professional Consultation"
+msgstr ""
+
+#: templates/consultation.html:135
+msgid "Connect with qualified mental health professionals"
+msgstr ""
+
+#: templates/consultation.html:148
+#, fuzzy
+msgid "Need Immediate Support?"
+msgstr "सामुदायिक सहायता"
+
+#: templates/consultation.html:150
+msgid "Crisis support is available 24/7"
+msgstr ""
+
+#: templates/consultation.html:153
+msgid "Text HOME to 741741"
+msgstr ""
+
+#: templates/consultation.html:167
+msgid "Counsellors"
+msgstr ""
+
+#: templates/consultation.html:167
+msgid "Licensed Therapists"
+msgstr ""
+
+#: templates/consultation.html:169
+msgid ""
+"Connect with licensed mental health professionals who specialize in "
+"student counseling and therapy."
+msgstr ""
+
+#: templates/consultation.html:172
+msgid "Licensed & Certified"
+msgstr ""
+
+#: templates/consultation.html:173
+msgid "Student-focused"
+msgstr ""
+
+#: templates/consultation.html:174
+msgid "Confidential sessions"
+msgstr ""
+
+#: templates/consultation.html:186
+msgid "Psychiatrists"
+msgstr ""
+
+#: templates/consultation.html:188
+msgid ""
+"Consult with psychiatrists for medication management and comprehensive "
+"mental health treatment."
+msgstr ""
+
+#: templates/consultation.html:191
+msgid "Medical doctors"
+msgstr ""
+
+#: templates/consultation.html:192
+#, fuzzy
+msgid "Medication expertise"
+msgstr "ध्यान"
+
+#: templates/consultation.html:193
+msgid "Comprehensive care"
+msgstr ""
+
+#: templates/consultation.html:205
+msgid "Peer Counselors"
+msgstr ""
+
+#: templates/consultation.html:207
+msgid ""
+"Talk with trained peer counselors who understand the unique challenges of"
+" student life."
+msgstr ""
+
+#: templates/consultation.html:210
+msgid "Student peers"
+msgstr ""
+
+#: templates/consultation.html:211
+msgid "Relatable experience"
+msgstr ""
+
+#: templates/consultation.html:212
+msgid "Immediate availability"
+msgstr ""
+
+#: templates/consultation.html:224
+msgid "Your Consultation Requests"
+msgstr "आपके परामर्श अनुरोध"
+
+#: templates/consultation.html:233
+msgid "Date Requested"
+msgstr ""
+
+#: templates/consultation.html:234
+msgid "Urgency"
+msgstr ""
+
+#: templates/consultation.html:235 templates/consultation.html:455
+msgid "Preferred Time"
+msgstr ""
+
+#: templates/consultation.html:236
+msgid "Contact Method"
+msgstr ""
+
+#: templates/consultation.html:237
+#, fuzzy
+msgid "Status"
+msgstr "शुरू करें"
+
+#: templates/consultation.html:238
+#, fuzzy
+msgid "Session Date/Time"
+msgstr "इस सप्ताह के सत्र"
+
+#: templates/consultation.html:251
+msgid "Join Session"
+msgstr ""
+
+#: templates/consultation.html:276
+msgid "Not scheduled"
+msgstr ""
+
+#: templates/consultation.html:282
+msgid "Rate Your Session:"
+msgstr ""
+
+#: templates/consultation.html:284
+msgid "Select rating..."
+msgstr ""
+
+#: templates/consultation.html:286
+#, fuzzy
+msgid "Star"
+msgstr "शुरू करें"
+
+#: templates/consultation.html:289
+msgid "Share your feedback..."
+msgstr ""
+
+#: templates/consultation.html:290
+msgid "Submit Feedback"
+msgstr ""
+
+#: templates/consultation.html:293
+msgid "Your Rating:"
+msgstr ""
+
+#: templates/consultation.html:293
+msgid "Feedback:"
+msgstr ""
+
+#: templates/consultation.html:304
+msgid "No Consultation Requests Yet"
+msgstr ""
+
+#: templates/consultation.html:306
+msgid ""
+"Request your first consultation to start getting professional mental "
+"health support."
+msgstr ""
+
+#: templates/consultation.html:309
+msgid "Request Your First Consultation"
+msgstr ""
+
+#: templates/consultation.html:323
+msgid "What to Expect"
+msgstr ""
+
+#: templates/consultation.html:330
+msgid "Response within 24-48 hours for standard requests"
+msgstr ""
+
+#: templates/consultation.html:334
+msgid "Immediate response for high-urgency requests"
+msgstr ""
+
+#: templates/consultation.html:338
+msgid "Complete confidentiality and privacy protection"
+msgstr ""
+
+#: templates/consultation.html:342
+msgid "Specialized in student mental health issues"
+msgstr ""
+
+#: templates/consultation.html:353
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: templates/consultation.html:361
+msgid "Is this service free for students?"
+msgstr ""
+
+#: templates/consultation.html:366
+msgid ""
+"Yes, all consultation services are provided free of charge to registered "
+"students as part of our mental health support program."
+msgstr ""
+
+#: templates/consultation.html:373
+msgid "Will my information be kept confidential?"
+msgstr ""
+
+#: templates/consultation.html:378
+msgid ""
+"Absolutely. All consultations are strictly confidential and protected by "
+"professional ethics and privacy laws. Information is only shared in "
+"emergency situations or with your explicit consent."
+msgstr ""
+
+#: templates/consultation.html:385
+msgid "How quickly can I get an appointment?"
+msgstr ""
+
+#: templates/consultation.html:390
+msgid ""
+"For high-urgency requests, we aim to connect you within a few hours. "
+"Standard requests are typically scheduled within 24-48 hours, depending "
+"on availability and your preferences."
+msgstr ""
+
+#: templates/consultation.html:405
+msgid "Request Professional Consultation"
+msgstr ""
+
+#: templates/consultation.html:427
+msgid "Urgency Level"
+msgstr ""
+
+#: templates/consultation.html:430
+msgid "Select urgency..."
+msgstr ""
+
+#: templates/consultation.html:431
+msgid "Low - General support"
+msgstr ""
+
+#: templates/consultation.html:432
+msgid "Medium - Moderate distress"
+msgstr ""
+
+#: templates/consultation.html:433
+msgid "High - Severe distress"
+msgstr ""
+
+#: templates/consultation.html:436
+msgid "High urgency requests receive immediate attention"
+msgstr ""
+
+#: templates/consultation.html:442
+msgid "Preferred Contact Method"
+msgstr ""
+
+#: templates/consultation.html:445
+msgid "Select method..."
+msgstr ""
+
+#: templates/consultation.html:446
+msgid "Phone call"
+msgstr ""
+
+#: templates/consultation.html:447
+#, fuzzy
+msgid "Video call"
+msgstr "सभी देखें"
+
+#: templates/consultation.html:448 templates/register.html:33
+msgid "Email"
+msgstr "ईमेल"
+
+#: templates/consultation.html:455 templates/consultation.html:466
+#: templates/consultation.html:482
+msgid "Optional"
+msgstr ""
+
+#: templates/consultation.html:460
+msgid "Help us schedule at a convenient time for you"
+msgstr ""
+
+#: templates/consultation.html:466
+msgid "Or pick an available slot"
+msgstr ""
+
+#: templates/consultation.html:470
+msgid "All counsellors"
+msgstr ""
+
+#: templates/consultation.html:475
+msgid "Refresh"
+msgstr ""
+
+#: templates/consultation.html:477
+msgid "Loading slots..."
+msgstr ""
+
+#: templates/consultation.html:482
+msgid "Additional Notes"
+msgstr ""
+
+#: templates/consultation.html:485
+msgid ""
+"Share any specific concerns, topics you'd like to discuss, or other "
+"relevant information..."
+msgstr ""
+
+#: templates/consultation.html:487
+msgid "This information helps us match you with the most appropriate professional"
+msgstr ""
+
+#: templates/consultation.html:492
+msgid "Before Your Session"
+msgstr ""
+
+#: templates/consultation.html:495
+msgid "You'll receive a confirmation with session details"
+msgstr ""
+
+#: templates/consultation.html:496
+msgid "Prepare any questions or topics you'd like to discuss"
+msgstr ""
+
+#: templates/consultation.html:497
+msgid "Find a private, comfortable space for your session"
+msgstr ""
+
+#: templates/consultation.html:498
+msgid "Have a notebook ready if you'd like to take notes"
+msgstr ""
+
+#: templates/consultation.html:503
+#, fuzzy
+msgid "Crisis Situations"
+msgstr "बधाई हो!"
+
+#: templates/consultation.html:506
+msgid ""
+"If you're having thoughts of suicide or self-harm, please don't wait for "
+"a consultation."
+msgstr ""
+
+#: templates/consultation.html:507
+msgid ""
+"Call 988 (Suicide & Crisis Lifeline) or text HOME to 741741 for immediate"
+" support."
+msgstr ""
+
+#: templates/consultation.html:513
+msgid "Cancel"
+msgstr ""
+
+#: templates/consultation.html:515
+msgid "Submit Request"
+msgstr ""
+
+#: templates/consultation.html:527
+#, fuzzy
+msgid "Consultation Details"
+msgstr "बधाई हो!"
+
+#: templates/dashboard.html:13
+msgid "Welcome back"
+msgstr "वापस स्वागत है"
+
+#: templates/dashboard.html:23
+msgid "Daily Inspiration"
+msgstr "दैनिक प्रेरणा"
+
+#: templates/dashboard.html:24
+msgid "Every small step you take today brings you closer to a brighter tomorrow."
+msgstr "आज आपका हर छोटा कदम आपको एक उज्जवल कल के करीब लाता है।"
+
+#: templates/dashboard.html:34
+msgid "min"
+msgstr "मिनट"
+
+#: templates/dashboard.html:35
+msgid "Sessions this week"
+msgstr "इस सप्ताह के सत्र"
+
+#: templates/dashboard.html:42
+msgid "Tasks"
+msgstr "कार्य"
+
+#: templates/dashboard.html:44
+msgid "Completed today"
+msgstr "आज पूरे किए गए"
+
+#: templates/dashboard.html:54
+msgid "How are you feeling?"
+msgstr "आप कैसा महसूस कर रहे हैं?"
+
+#: templates/dashboard.html:62
+msgid "Tap an emoji to quickly log your mood (stored locally)"
+msgstr ""
+"अपना मूड जल्दी लॉग करने के लिए एक इमोजी पर टैप करें (स्थानीय रूप से "
+"संग्रहीत)"
+
+#: templates/dashboard.html:72
+msgid "Start Meditation"
+msgstr "ध्यान शुरू करें"
+
+#: templates/dashboard.html:73
+msgid "Take a calm 5–10 minute session."
+msgstr "एक शांत 5-10 मिनट का सत्र लें।"
+
+#: templates/dashboard.html:74
+msgid "Start"
+msgstr "शुरू करें"
+
+#: templates/dashboard.html:80
+msgid "Plan Your Day"
+msgstr "अपने दिन की योजना बनाएं"
+
+#: templates/dashboard.html:81
+msgid "Organize tasks and keep focus."
+msgstr "कार्यों को व्यवस्थित करें और फोकस बनाए रखें।"
+
+#: templates/dashboard.html:82
+msgid "Plan"
+msgstr "योजना"
+
+#: templates/dashboard.html:89
+msgid "Immediate help when you need it."
+msgstr "जब आपको इसकी आवश्यकता हो तो तत्काल सहायता।"
+
+#: templates/dashboard.html:90
+msgid "Chat"
+msgstr "चैट"
+
+#: templates/dashboard.html:100
+msgid "Assessment History"
+msgstr "मूल्यांकन इतिहास"
+
+#: templates/dashboard.html:101
+msgid "View all"
+msgstr "सभी देखें"
+
+#: templates/dashboard.html:110
+msgid "Type"
+msgstr "प्रकार"
+
+#: templates/dashboard.html:113
+msgid "Action"
+msgstr "कार्रवाई"
+
+#: templates/dashboard.html:127
+msgid "View"
+msgstr "देखें"
+
+#: templates/dashboard.html:134
+msgid "No assessments found. Try completing one to track progress."
+msgstr ""
+"कोई मूल्यांकन नहीं मिला। प्रगति ट्रैक करने के लिए एक पूरा करने का प्रयास "
+"करें।"
+
+#: templates/login.html:11
+msgid "Welcome Back"
+msgstr "वापस स्वागत है"
+
+#: templates/login.html:17 templates/register.html:25
+msgid "Username"
+msgstr "उपयोगकर्ता नाम"
+
+#: templates/login.html:24 templates/register.html:40
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: templates/login.html:38
+msgid "Don't have an account?"
+msgstr "क्या आपका कोई खाता नहीं है?"
+
+#: templates/login.html:39
+msgid "Create one here"
+msgstr "यहाँ एक बनाएं"
+
+#: templates/login.html:46
+msgid ""
+"Your privacy and security are our top priority. All data is encrypted and"
+" handled securely."
+msgstr ""
+"आपकी गोपनीयता और सुरक्षा हमारी सर्वोच्च प्राथमिकता है। सभी डेटा "
+"एन्क्रिप्टेड और सुरक्षित रूप से संभाला जाता है।"
+
+#: templates/meditation.html:274
+msgid "Congratulations!"
+msgstr "बधाई हो!"
+
+#: templates/meditation.html:275
+msgid "You've completed your meditation session."
+msgstr "आपने अपना ध्यान सत्र पूरा कर लिया है।"
+
+#: templates/meditation.html:280
+msgid "Your Meditation Progress"
+msgstr "आपकी ध्यान प्रगति"
+
+#: templates/meditation.html:283
+msgid "Sessions Completed This Week:"
+msgstr "इस सप्ताह पूरे किए गए सत्र:"
+
+#: templates/meditation.html:287
+msgid "Total Minutes Meditated:"
+msgstr "कुल ध्यान मिनट:"
+
+#: templates/meditation.html:294
+msgid "Guided Meditation"
+msgstr "निर्देशित ध्यान"
+
+#: templates/meditation.html:298
+msgid "Choose your meditation journey:"
+msgstr "अपनी ध्यान यात्रा चुनें:"
+
+#: templates/register.html:11
+msgid "Join MindCare"
+msgstr "माइंडकेयर से जुड़ें"
+
+#: templates/register.html:18
+msgid "Full Name"
+msgstr "पूरा नाम"
+
+#: templates/register.html:48
+msgid "Role"
+msgstr "भूमिका"
+
+#: templates/register.html:51
+msgid "Student"
+msgstr "छात्र"
+
+#: templates/register.html:52
+msgid "Teacher/Mentor"
+msgstr "शिक्षक/गुरु"
+
+#: templates/register.html:53
+msgid "Counsellor"
+msgstr "परामर्शदाता"
+
+#: templates/register.html:54
+msgid "Administrator"
+msgstr "प्रशासक"
+
+#: templates/register.html:60
+msgid "Student ID"
+msgstr "छात्र आईडी"
+
+#: templates/register.html:63
+msgid "Will be encrypted for privacy"
+msgstr "गोपनीयता के लिए एन्क्रिप्ट किया जाएगा"
+
+#: templates/register.html:69
+msgid "Accommodation Type"
+msgstr "आवास प्रकार"
+
+#: templates/register.html:72
+msgid "Select..."
+msgstr "चुनें..."
+
+#: templates/register.html:73
+msgid "Hostel"
+msgstr "हॉस्टल"
+
+#: templates/register.html:74
+msgid "Local"
+msgstr "स्थानीय"
+
+#: templates/register.html:80
+#, fuzzy
+msgid "Create Account"
+msgstr "यहाँ एक बनाएं"
+
+#: templates/register.html:87
+#, fuzzy
+msgid "Already have an account?"
+msgstr "क्या आपका कोई खाता नहीं है?"
+
+#: templates/register.html:88
+#, fuzzy
+msgid "Login here"
+msgstr "लॉग इन"
+
+#: templates/register.html:95
+msgid ""
+"Your personal information is encrypted and secure. Student IDs are hashed"
+" for privacy protection."
+msgstr ""
+
+#: templates/routine.html:48
+msgid "Daily Routine"
+msgstr "दैनिक दिनचर्या"
+
+#: templates/routine.html:49
+msgid "Plan your day and track your progress"
+msgstr "अपने दिन की योजना बनाएं और अपनी प्रगति को ट्रैक करें"
+
+#: templates/routine.html:58
+msgid "Today's Progress"
+msgstr "आज की प्रगति"
+
+#: templates/routine.html:61
+msgid "of"
+msgstr "का"
+
+#: templates/routine.html:61
+#, fuzzy
+msgid "tasks completed"
+msgstr "आज पूरे किए गए"
+
+#: templates/routine.html:80
+msgid "Add New Task"
+msgstr "नया कार्य जोड़ें"
+
+#: templates/routine.html:81
+msgid "Schedule a new activity for your day"
+msgstr "अपने दिन के लिए एक नई गतिविधि शेड्यूल करें"
+
+#: templates/routine.html:86
+msgid "Task Title"
+msgstr "कार्य शीर्षक"
+
+#: templates/routine.html:87
+msgid "What do you want to do?"
+msgstr "आप क्या करना चाहते हैं?"
+
+#: templates/routine.html:91
+#, fuzzy
+msgid "Start Time"
+msgstr "शुरू करें"
+
+#: templates/routine.html:95
+msgid "End Time"
+msgstr "समाप्ति का समय"
+
+#: templates/routine.html:100
+msgid "Notes (Optional)"
+msgstr "नोट्स (वैकल्पिक)"
+
+#: templates/routine.html:101
+msgid "Any additional details..."
+msgstr "कोई अतिरिक्त विवरण..."
+
+#: templates/routine.html:105
+#, fuzzy
+msgid "Add Task"
+msgstr "कार्य"
+
+#: templates/routine.html:116
+msgid "Today's Schedule"
+msgstr "आज का कार्यक्रम"
+
+#: templates/routine.html:117
+msgid "Check off tasks as you complete them"
+msgstr "जैसे ही आप उन्हें पूरा करते हैं, कार्यों को चेक करें"
+
+#: templates/routine.html:123
+msgid "No tasks scheduled yet. Add your first task!"
+msgstr "अभी तक कोई कार्य निर्धारित नहीं है। अपना पहला कार्य जोड़ें!"
+
+#: templates/venting_hall.html:222
+msgid "A safe space to share your thoughts and connect with others"
+msgstr "अपने विचार साझा करने और दूसरों से जुड़ने के लिए एक सुरक्षित स्थान"
+
+#: templates/venting_hall.html:225
+msgid "Share Your Thoughts"
+msgstr "अपने विचार साझा करें"
+
+#: templates/venting_hall.html:237
+msgid "Remember: You Are Not Alone"
+msgstr "याद रखें: आप अकेले नहीं हैं"
+
+#: templates/venting_hall.html:240
+msgid ""
+"This is a supportive community where everyone is valued. Please be kind, "
+"respectful, and remember that sharing can be healing."
+msgstr ""
+msgid "Login Streak"
+msgstr "लॉगिन स्ट्रीक"
+msgid "days"
+msgstr "दिन"
+msgid "Meditation Sessions"
+msgstr "मेडिटेशन सत्र"
+msgid "this week"
+msgstr "इस सप्ताह"
+msgid "Counsellor Dashboard"
+msgstr "काउंसलर डैशबोर्ड"
+msgid "Manage Availability"
+msgstr "उपलब्धता का प्रबंधन"
+msgid "User"
+msgstr "उपयोगकर्ता"
+msgid "Urgency"
+msgstr "तात्कालिकता"
+msgid "Time Slot"
+msgstr "समय स्लॉट"
+msgid "Contact"
+msgstr "संपर्क"
+msgid "Actions & Details"
+msgstr "कार्य और विवरण"
+msgid "View Assessment"
+msgstr "मूल्यांकन देखें"
+msgid "Accept"
+msgstr "स्वीकार करें"
+msgid "Reject"
+msgstr "अस्वीकार करें"
+msgid "Schedule Follow-up"
+msgstr "फॉलो-अप शेड्यूल करें"
+msgid "Set Follow-up"
+msgstr "फॉलो-अप सेट करें"
+msgid "Follow-up"
+msgstr "फॉलो-अप"
+msgid "Chat/Video Link"
+msgstr "चैट/वीडियो लिंक"
+msgid "Paste secure link here"
+msgstr "यहां सुरक्षित लिंक पेस्ट करें"
+msgid "Set Link"
+msgstr "लिंक सेट करें"
+msgid "Join Session"
+msgstr "सत्र में शामिल हों"
+msgid "Session Notes"
+msgstr "सत्र नोट्स"
+msgid "Save Notes"
+msgstr "नोट्स सेव करें"
+msgid "Download PDF"
+msgstr "पीडीएफ डाउनलोड करें"
+msgid "Schedule Session"
+msgstr "सत्र शेड्यूल करें"
+msgid "Set Session"
+msgstr "सत्र सेट करें"
+msgid "Cancel Booking"
+msgstr "बुकिंग रद्द करें"
+msgid "Scheduled"
+msgstr "शेड्यूल किया गया"
+msgid "Recent Assessments"
+msgstr "हाल के मूल्यांकन"
+msgid "No test results"
+msgstr "कोई परीक्षण परिणाम नहीं"
+msgid "No consultation requests yet."
+msgstr "अभी तक कोई परामर्श अनुरोध नहीं।"
+msgid "Back"
+msgstr "वापस"
+msgid "End"
+msgstr "अंत"
+msgid "Add Slot"
+msgstr "स्लॉट जोड़ें"
+msgid "Your Slots"
+msgstr "आपके स्लॉट्स"
+msgid "Back to Dashboard"
+msgstr "डैशबोर्ड पर वापस जाएं"
+msgid "Open"
+msgstr "खुला"
+msgid "No slots yet. Add your first availability above."
+msgstr "अभी तक कोई स्लॉट नहीं। ऊपर अपनी पहली उपलब्धता जोड़ें।"
+msgid "Urgency"
+msgstr "तात्कालिकता"
+msgid "Join Session"
+msgstr "सत्र में शामिल हों"
+msgid "Results"
+msgstr "परिणाम"
+msgid "Completed"
+msgstr "पूर्ण"
+msgid "Level"
+msgstr "स्तर"
+msgid "Coping Strategies"
+msgstr "सामना करने की रणनीतियाँ"
+msgid "Mental Health Assessment Results"
+msgstr "मानसिक स्वास्थ्य मूल्यांकन परिणाम"
+msgid "I recently completed a"
+msgstr "मैंने हाल ही में एक"
+msgid "assessment. Please find my results summary attached."
+msgstr "मूल्यांकन पूरा किया है। कृपया संलग्न मेरे परिणाम सारांश को देखें।"
+msgid "Email to Healthcare Provider"
+msgstr "स्वास्थ्य सेवा प्रदाता को ईमेल करें"
+msgid "You can share these results with:"
+msgstr "आप इन परिणामों को इनके साथ साझा कर सकते हैं:"
+msgid "Choose counsellor..."
+msgstr "काउंसलर चुनें..."
+msgid "Select Counsellor"
+msgstr "काउंसलर चुनें"
+msgid "Start Session"
+msgstr "सत्र शुरू करें"
+msgid "Play"
+msgstr "चलाएं"
+msgid "Pause"
+msgstr "रोकें"
+msgid "Stop"
+msgstr "बंद करें"
+msgid "Loading..."
+msgstr "लोड हो रहा है..."
+msgid "Submit"
+msgstr "जमा करें"
+msgid "Cancel"
+msgstr "रद्द करें"
+msgid "Confirm"
+msgstr "पुष्टि करें"
+msgid "Edit"
+msgstr "संपादित करें"
+msgid "Delete"
+msgstr "हटाएं"
+msgid "Search"
+msgstr "खोजें"
+msgid "Filter"
+msgstr "फ़िल्टर"
+msgid "Sort"
+msgstr "क्रमबद्ध करें"
+msgid "Export"
+msgstr "निर्यात करें"
+msgid "Import"
+msgstr "आयात करें"
+msgid "Settings"
+msgstr "सेटिंग्स"
+msgid "Profile"
+msgstr "प्रोफ़ाइल"
+msgid "Account"
+msgstr "खाता"
+msgid "Help"
+msgstr "सहायता"
+msgid "About"
+msgstr "के बारे में"
+msgid "Terms"
+msgstr "शर्तें"
+msgid "Privacy"
+msgstr "गोपनीयता"
+msgid "Support"
+msgstr "सहायता"
+msgid "Today"
+msgstr "आज"
+msgid "Yesterday"
+msgstr "कल"
+msgid "Tomorrow"
+msgstr "कल"
+msgid "This Week"
+msgstr "इस सप्ताह"
+msgid "Last Week"
+msgstr "पिछला सप्ताह"
+msgid "Next Week"
+msgstr "अगला सप्ताह"
+msgid "This Month"
+msgstr "इस महीने"
+msgid "Last Month"
+msgstr "पिछला महीना"
+msgid "Next Month"
+msgstr "अगला महीना"
+msgid "January"
+msgstr "जनवरी"
+msgid "February"
+msgstr "फरवरी"
+msgid "March"
+msgstr "मार्च"
+msgid "April"
+msgstr "अप्रैल"
+msgid "May"
+msgstr "मई"
+msgid "June"
+msgstr "जून"
+msgid "July"
+msgstr "जुलाई"
+msgid "August"
+msgstr "अगस्त"
+msgid "September"
+msgstr "सितंबर"
+msgid "October"
+msgstr "अक्टूबर"
+msgid "November"
+msgstr "नवंबर"
+msgid "December"
+msgstr "दिसंबर"
+msgid "Success"
+msgstr "सफलता"
+msgid "Error"
+msgstr "त्रुटि"
+msgid "Warning"
+msgstr "चेतावनी"
+msgid "Information"
+msgstr "जानकारी"
+msgid "Complete"
+msgstr "पूर्ण"
+msgid "Incomplete"
+msgstr "अपूर्ण"
+msgid "In Progress"
+msgstr "प्रगति में"
+msgid "Pending"
+msgstr "लंबित"
+msgid "Approved"
+msgstr "अनुमोदित"
+msgid "Denied"
+msgstr "अस्वीकृत"
+msgid "Active"
+msgstr "सक्रिय"
+msgid "Inactive"
+msgstr "निष्क्रिय"
+msgid "Online"
+msgstr "ऑनलाइन"
+msgid "Offline"
+msgstr "ऑफलाइन"
+msgid "First Name"
+msgstr "पहला नाम"
+msgid "Last Name"
+msgstr "अंतिम नाम"
+msgid "Date of Birth"
+msgstr "जन्म तिथि"
+msgid "Age"
+msgstr "उम्र"
+msgid "Gender"
+msgstr "लिंग"
+msgid "Male"
+msgstr "पुरुष"
+msgid "Female"
+msgstr "महिला"
+msgid "Other"
+msgstr "अन्य"
+msgid "Phone"
+msgstr "फोन"
+msgid "Address"
+msgstr "पता"
+msgid "City"
+msgstr "शहर"
+msgid "State"
+msgstr "राज्य"
+msgid "Country"
+msgstr "देश"
+msgid "Zip Code"
+msgstr "पिन कोड"
+msgid "Question"
+msgstr "प्रश्न"
+msgid "Answer"
+msgstr "उत्तर"
+msgid "Never"
+msgstr "कभी नहीं"
+msgid "Rarely"
+msgstr "शायद ही कभी"
+msgid "Sometimes"
+msgstr "कभी कभी"
+msgid "Often"
+msgstr "अक्सर"
+msgid "Always"
+msgstr "हमेशा"
+msgid "Not at all"
+msgstr "बिल्कुल नहीं"
+msgid "Several days"
+msgstr "कई दिन"
+msgid "More than half the days"
+msgstr "आधे से अधिक दिन"
+msgid "Nearly every day"
+msgstr "लगभग हर दिन"
+msgid "Depression"
+msgstr "अवसाद"
+msgid "Anxiety"
+msgstr "चिंता"
+msgid "Stress"
+msgstr "तनाव"
+msgid "Mood"
+msgstr "मूड"
+msgid "Therapy"
+msgstr "थेरेपी"
+msgid "Counseling"
+msgstr "परामर्श"
+msgid "Treatment"
+msgstr "उपचार"
+msgid "Recovery"
+msgstr "रिकवरी"
+msgid "Wellness"
+msgstr "कल्याण"
+msgid "Mental Health"
+msgstr "मानसिक स्वास्थ्य"
+msgid "Self Care"
+msgstr "स्वयं की देखभाल"
+msgid "Mindfulness"
+msgstr "सचेतता"
+msgid "Breathing"
+msgstr "सांस लेना"
+msgid "Relaxation"
+msgstr "विश्राम"
+msgid "Home"
+msgstr "होम"
+msgid "Back to Home"
+msgstr "होम पर वापस जाएं"
+msgid "Previous"
+msgstr "पिछला"
+msgid "Next"
+msgstr "अगला"
+msgid "First"
+msgstr "पहला"
+msgid "Last"
+msgstr "अंतिम"
+msgid "Go Back"
+msgstr "वापस जाएं"
+msgid "Continue"
+msgstr "जारी रखें"
+msgid "Skip"
+msgstr "छोड़ें"
+msgid "Finish"
+msgstr "समाप्त करें"
+msgid "Notification"
+msgstr "सूचना"
+msgid "Alert"
+msgstr "अलर्ट"
+msgid "Message"
+msgstr "संदेश"
+msgid "Update"
+msgstr "अपडेट"
+msgid "Reminder"
+msgstr "रिमाइंडर"
+msgid "New"
+msgstr "नया"
+msgid "Unread"
+msgstr "अपठित"
+msgid "Read"
+msgstr "पढ़ा गया"
+msgid "Mark as Read"
+msgstr "पढ़ा गया चिह्नित करें"
+msgid "Clear All"
+msgstr "सभी साफ़ करें"
+msgid "Write your worries on a sticky note, then burn them away to let go"
+msgstr "अपनी चिंताओं को स्टिकी नोट पर लिखें, फिर उन्हें जलाकर छोड़ दें"
+msgid "How it works"
+msgstr "यह कैसे काम करता है"
+msgid "Click "New Note" to create a sticky note"
+msgstr ""नया नोट" पर क्लिक करके स्टिकी नोट बनाएं"
+msgid "Write down what's bothering you"
+msgstr "लिखें कि आपको क्या परेशान कर रहा है"
+msgid "Drag the note to the fire zone to burn it"
+msgstr "नोट को जलाने के लिए फायर जोन में खींचें"
+msgid "Watch your worries turn to ash and disappear"
+msgstr "देखें कि आपकी चिंताएं राख में बदल जाती हैं और गायब हो जाती हैं"
+msgid "Drop to Burn"
+msgstr "जलाने के लिए यहाँ छोड़ें"
+msgid "New Note"
+msgstr "नया नोट"
+msgid "Your worries have been released"
+msgstr "आपकी चिंताएं मुक्त हो गई हैं"
+msgid "Sometimes letting go is the first step toward healing."
+msgstr "कभी-कभी छोड़ना उपचार की दिशा में पहला कदम होता है।"
+msgid "Loading"
+msgstr "लोड हो रहा है"
+msgid "Please wait"
+msgstr "कृपया प्रतीक्षा करें"
+msgid "Processing"
+msgstr "प्रसंस्करण"
+msgid "Saving"
+msgstr "सेव हो रहा है"
+msgid "Saved"
+msgstr "सेव हो गया"
+msgid "Failed"
+msgstr "असफल"
+msgid "Try again"
+msgstr "फिर से कोशिश करें"
+msgid "Refresh"
+msgstr "रिफ्रेश"
+msgid "Reload"
+msgstr "फिर से लोड करें"
+msgid "Quick Actions"
+msgstr "त्वरित क्रियाएं"
+msgid "Recent Activity"
+msgstr "हाल की गतिविधि"
+msgid "Statistics"
+msgstr "आंकड़े"
+msgid "Overview"
+msgstr "अवलोकन"
+msgid "Summary"
+msgstr "सारांश"
+msgid "Reports"
+msgstr "रिपोर्ट्स"
+msgid "Session Duration"
+msgstr "सत्र अवधि"
+msgid "Background Music"
+msgstr "बैकग्राउंड संगीत"
+msgid "Guided Instructions"
+msgstr "गाइडेड निर्देश"
+msgid "Timer"
+msgstr "टाइमर"
+msgid "Breathing Exercise"
+msgstr "सांस की एक्सरसाइज"
+msgid "Inner Peace"
+msgstr "आंतरिक शांति"
+msgid "Assessment Type"
+msgstr "मूल्यांकन प्रकार"
+msgid "Assessment Score"
+msgstr "मूल्यांकन स्कोर"
+msgid "Severity Level"
+msgstr "गंभीरता स्तर"
+msgid "Appointment"
+msgstr "नियुक्ति"
+msgid "Schedule"
+msgstr "कार्यक्रम"
+msgid "Available"
+msgstr "उपलब्ध"
+msgid "Unavailable"
+msgstr "अनुपलब्ध"
+msgid "Book Now"
+msgstr "अभी बुक करें"
+msgid "Confirm Appointment"
+msgstr "नियुक्ति की पुष्टि करें"
+msgid "Cancel Appointment"
+msgstr "नियुक्ति रद्द करें"
+msgid "Reschedule"
+msgstr "पुनर्निर्धारण"
+msgid "Duration"
+msgstr "अवधि"
+msgid "Date"
+msgstr "दिनांक"
+msgid "Time"
+msgstr "समय"
+msgid "Minutes"
+msgstr "मिनट"
+msgid "Hours"
+msgstr "घंटे"
+msgid "Seconds"
+msgstr "सेकंड"
+msgid "Completed Successfully"
+msgstr "सफलतापूर्वक पूरा"
+msgid "In Process"
+msgstr "प्रक्रिया में"
+msgid "Waiting"
+msgstr "प्रतीक्षा में"
+msgid "Ready"
+msgstr "तैयार"
+msgid "Not Ready"
+msgstr "तैयार नहीं"
+msgid "Available Now"
+msgstr "अभी उपलब्ध"
+msgid "Required Field"
+msgstr "आवश्यक फ़ील्ड"
+msgid "Invalid Input"
+msgstr "अमान्य इनपुट"
+msgid "Please fill all fields"
+msgstr "कृपया सभी फ़ील्ड भरें"
+msgid "Form submitted successfully"
+msgstr "फॉर्म सफलतापूर्वक जमा किया गया"
+msgid "Emergency Contact"
+msgstr "आपातकालीन संपर्क"
+msgid "Crisis Hotline"
+msgstr "क्राइसिस हॉटलाइन"
+msgid "Immediate Help"
+msgstr "तत्काल सहायता"
+msgid "Urgent"
+msgstr "तत्काल"
+msgid "Critical"
+msgstr "गंभीर"
+msgid "Write what's bothering you..."
+msgstr "लिखें कि आपको क्या परेशान कर रहा है..."
+msgid "Then let it go."
+msgstr "फिर इसे छोड़ दें।"
+msgid "Welcome to your private space!"
+msgstr "अपने प्राइवेट स्पेस में आपका स्वागत है!"
+msgid "Write anything that's weighing on your mind..."
+msgstr "अपने मन में जो भी बोझ है वो लिखें..."
+msgid "Then drag this note to the fire to let it go."
+msgstr "फिर इस नोट को आग में खींचकर छोड़ दें।"
+msgid "Monitor student mental health and wellness trends"
+msgstr "छात्र मानसिक स्वास्थ्य और कल्याण के रुझान की निगरानी करें"
+msgid "Export Data"
+msgstr "डेटा एक्सपोर्ट करें"
+msgid "Generate Report"
+msgstr "रिपोर्ट तैयार करें"
+msgid "Total Students"
+msgstr "कुल छात्र"
+msgid "Registered users"
+msgstr "पंजीकृत उपयोगकर्ता"
+msgid "Active This Week"
+msgstr "इस सप्ताह सक्रिय"
+msgid "Regular engagement"
+msgstr "नियमित सहभागिता"
+msgid "Crisis Alerts"
+msgstr "संकट अलर्ट"
+msgid "Last 30 days"
+msgstr "पिछले 30 दिन"
+msgid "Assessments Taken"
+msgstr "किए गए मूल्यांकन"
+msgid "This month"
+msgstr "इस महीने"
+msgid "Mental Health Trends"
+msgstr "मानसिक स्वास्थ्य के रुझान"
+msgid "Assessment Distribution"
+msgstr "मूल्यांकन वितरण"
+msgid "Daily Activity"
+msgstr "दैनिक गतिविधि"
+msgid "Crisis Management"
+msgstr "संकट प्रबंधन"
+msgid "High Priority"
+msgstr "उच्च प्राथमिकता"
+msgid "Medium Priority"
+msgstr "मध्यम प्राथमिकता"
+msgid "Low Priority"
+msgstr "कम प्राथमिकता"
+msgid "Recent High-Risk Students"
+msgstr "हाल के उच्च जोखिम वाले छात्र"
+msgid "Last Assessment"
+msgstr "अंतिम मूल्यांकन"
+msgid "Risk Level"
+msgstr "जोखिम स्तर"
+msgid "Action Taken"
+msgstr "की गई कार्रवाई"
+msgid "View Profile"
+msgstr "प्रोफ़ाइल देखें"
+msgid "Contact Now"
+msgstr "अभी संपर्क करें"
+msgid "Student Well-being Insights"
+msgstr "छात्र कल्याण अंतर्दृष्टि"
+msgid "Weekly Meditation Minutes"
+msgstr "साप्ताहिक ध्यान मिनट"
+msgid "Active Consultation Requests"
+msgstr "सक्रिय परामर्श अनुरोध"
+msgid "Peer Support Sessions"
+msgstr "साथी सहायता सत्र"
+msgid "Students with improving scores"
+msgstr "सुधार के अंक वाले छात्र"
+msgid "Need immediate attention"
+msgstr "तत्काल ध्यान देने की जरूरत"
+msgid "Show positive progress"
+msgstr "सकारात्मक प्रगति दिखाते हैं"
+msgid "Regularly using platform"
+msgstr "नियमित रूप से प्लेटफ़ॉर्म का उपयोग"
+msgid "Schedule group wellness workshops"
+msgstr "सामूहिक कल्याण कार्यशालाओं का शेड्यूल करें"
+msgid "Increase outreach to at-risk students"
+msgstr "जोखिम में छात्रों के लिए आउटरीच बढ़ाएं"
+msgid "Expand peer mentorship program"
+msgstr "साथी मेंटरशिप कार्यक्रम का विस्तार करें"
+msgid "Schedule Workshop"
+msgstr "कार्यशाला शेड्यूल करें"
+msgid "View Detailed Report"
+msgstr "विस्तृत रिपोर्ट देखें"
+msgid "High"
+msgstr "उच्च"
+msgid "Medium"
+msgstr "मध्यम"
+msgid "Low"
+msgstr "कम"
+msgid "Moderate"
+msgstr "मध्यम"
+msgid "Mild"
+msgstr "हल्का"
+msgid "Normal"
+msgstr "सामान्य"
+msgid "Details"
+msgstr "विवरण"
+msgid "Video Call"
+msgstr "वीडियो कॉल"
+msgid "Send"
+msgstr "भेजें"
+msgid "Reply"
+msgstr "उत्तर दें"
+msgid "Forward"
+msgstr "आगे भेजें"
+msgid "Archive"
+msgstr "संग्रहीत करें"
+msgid "Unarchive"
+msgstr "संग्रह से हटाएं"
+msgid "Mark as Unread"
+msgstr "अपठित चिन्हित करें"
+msgid "Priority"
+msgstr "प्राथमिकता"
+msgid "Important"
+msgstr "महत्वपूर्ण"
+msgid "Regular"
+msgstr "नियमित"
+msgid "Filters"
+msgstr "फ़िल्टर"
+msgid "Sort by"
+msgstr "इसके द्वारा क्रमबद्ध करें"
+msgid "Filter by"
+msgstr "इसके द्वारा फ़िल्टर करें"
+msgid "All"
+msgstr "सभी"
+msgid "None"
+msgstr "कोई नहीं"
+msgid "Select All"
+msgstr "सभी चुनें"
+msgid "Deselect All"
+msgstr "सभी का चयन रद्द करें"
+msgid "Print"
+msgstr "प्रिंट"
+msgid "Stress Level Comparison"
+msgstr "तनाव स्तर की तुलना"
+msgid "Hostel Students"
+msgstr "छात्रावास के छात्र"
+msgid "Local Students"
+msgstr "स्थानीय छात्र"
+msgid "students"
+msgstr "छात्र"
+msgid "Key Insights"
+msgstr "मुख्य अंतर्दृष्टि"
+msgid "Engagement Patterns"
+msgstr "सहभागिता पैटर्न"
+msgid "Risk Factors"
+msgstr "जोखिम कारक"
+msgid "Recent Assessment Activity"
+msgstr "हाल की मूल्यांकन गतिविधि"
+msgid "Send Wellness Reminder"
+msgstr "कल्याण रिमाइंडर भेजें"
+msgid "Detailed Reports"
+msgstr "विस्तृत रिपोर्ट"
+msgid "Review Crisis Flags"
+msgstr "संकट फ्लैग की समीक्षा करें"
+msgid "weekly engagement rate"
+msgstr "साप्ताहिक सहभागिता दर"
+msgid "Peak usage: Evening hours (6-9 PM)"
+msgstr "पीक उपयोग: शाम के घंटे (6-9 बजे)"
+msgid "crisis intervention(s) this month"
+msgstr "इस महीने संकट हस्तक्षेप"
+msgid "Assessment completion trending up"
+msgstr "मूल्यांकन पूर्णता में वृद्धि का रुझान"
+msgid "Consider targeted support for hostel students"
+msgstr "छात्रावास के छात्रों के लिए लक्षित सहायता पर विचार करें"
+msgid "Increase peer support programs"
+msgstr "साथी सहायता कार्यक्रम बढ़ाएं"
+msgid "Schedule wellness workshops"
+msgstr "कल्याण कार्यशाला शेड्यूल करें"
+msgid "Hostel students show"
+msgstr "छात्रावास के छात्र दिखाते हैं"
+msgid "points higher stress levels"
+msgstr "अंक उच्च तनाव स्तर"
+msgid "Local students show"
+msgstr "स्थानीय छात्र दिखाते हैं"
+msgid "Stress levels are relatively balanced between groups"
+msgstr "समूहों के बीच तनाव का स्तर अपेक्षाकृत संतुलित है"
+msgid "Connect with qualified counsellors."
+msgstr "योग्य परामर्शदाताओं से जुड़ें।"
+msgid "Professional Consultation"
+msgstr "पेशेवर परामर्श"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#~ msgid "Please log in to access this page."
+#~ msgstr "कृपया इस पेज को एक्सेस करने के लिए लॉग इन करें।"
+
+# Navigation labels
+#~ msgid "Dashboard"
+#~ msgstr "डैशबोर्ड"
+
+#~ msgid "Chat Support"
+#~ msgstr "चैट सहायता"
+
+#~ msgid "Assessments"
+#~ msgstr "मूल्यांकन"
+
+#~ msgid "Meditation"
+#~ msgstr "ध्यान"
+
+#~ msgid "Private Venting Room"
+#~ msgstr "निजी वेंटिंग रूम"
+
+#~ msgid "Community Support"
+#~ msgstr "सामुदायिक सहायता"
+
+#~ msgid "Consultation"
+#~ msgstr "परामर्श"
+
+#~ msgid "Routine"
+#~ msgstr "दिनचर्या"
+
+#~ msgid "Mentor Dashboard"
+#~ msgstr "मेंटर डैशबोर्ड"
+
+#~ msgid "Login"
+#~ msgstr "लॉग इन"
+
+#~ msgid "Register"
+#~ msgstr "रजिस्टर करें"
+
+#~ msgid "Logout"
+#~ msgstr "लॉग आउट"
+
+#~ msgid "Username already exists"
+#~ msgstr "उपयोगकर्ता नाम पहले से मौजूद है"
+
+#~ msgid "Email already registered"
+#~ msgstr "ईमेल पहले से पंजीकृत है"
+
+#~ msgid "Registration successful! Please log in."
+#~ msgstr "पंजीकरण सफल! कृपया लॉग इन करें।"
+
+#~ msgid "Welcome back! Your login streak: {} days"
+#~ msgstr "वापसी पर स्वागत है! आपकी लॉगिन स्ट्रीक: {} दिन"
+
+#~ msgid "Invalid username or password"
+#~ msgstr "गलत उपयोगकर्ता नाम या पासवर्ड"
+
+#~ msgid "You have been logged out successfully"
+#~ msgstr "आप सफलतापूर्वक लॉग आउट हो गए हैं।"
+
+#~ msgid "Mental Health Assessments"
+#~ msgstr "मूल्यांकन"
+
+#~ msgid "About Assessments"
+#~ msgstr "मूल्यांकन"
+
+#~ msgid "Inkblot Test"
+#~ msgstr "इंकब्लॉट टेस्ट"
+
+#~ msgid "Projective Personality Assessment"
+#~ msgstr "प्रक्षेपी व्यक्तित्व मूल्यांकन"
+
+#~ msgid ""
+#~ "The Inkblot Test is a projective "
+#~ "psychological test to analyze personality "
+#~ "and emotional functioning."
+#~ msgstr ""
+
+#~ msgid "Takes 5-10 minutes"
+#~ msgstr "5-10 मिनट लगते हैं"
+
+#~ msgid "10 inkblots"
+#~ msgstr "10 इंकब्लॉट"
+
+#~ msgid "Share results with mentor/counsellor"
+#~ msgstr "परिणाम मेंटर/परामर्शदाता के साथ साझा करें"
+
+#~ msgid "Start Inkblot Test"
+#~ msgstr "इंकब्लॉट टेस्ट शुरू करें"
+
+#~ msgid "Depression Screening"
+#~ msgstr "अवसाद स्क्रीनिंग"
+
+#~ msgid ""
+#~ "The PHQ-9 is a reliable tool for"
+#~ " screening, diagnosing, monitoring and "
+#~ "measuring the severity of depression."
+#~ msgstr ""
+
+#~ msgid "Takes 2-3 minutes"
+#~ msgstr "2-3 मिनट लगते हैं"
+
+#~ msgid "9 questions"
+#~ msgstr "9 प्रश्न"
+
+#~ msgid "Severity scoring"
+#~ msgstr "गंभीरता स्कोरिंग"
+
+#~ msgid "Start PHQ-9"
+#~ msgstr "PHQ-9 शुरू करें"
+
+#~ msgid "Anxiety Screening"
+#~ msgstr "चिंता स्क्रीनिंग"
+
+#~ msgid ""
+#~ "The GAD-7 is a validated tool for"
+#~ " screening and measuring the severity "
+#~ "of generalized anxiety disorder."
+#~ msgstr ""
+
+#~ msgid "7 questions"
+#~ msgstr "7 प्रश्न"
+
+#~ msgid "Anxiety levels"
+#~ msgstr "चिंता के स्तर"
+
+#~ msgid "Start GAD-7"
+#~ msgstr "GAD-7 शुरू करें"
+
+#~ msgid "Clear Chat"
+#~ msgstr "चैट साफ़ करें"
+
+#~ msgid "Voice Mode"
+#~ msgstr "वॉयस मोड"
+
+#~ msgid "Crisis Support Available"
+#~ msgstr "संकट सहायता उपलब्ध"
+
+#~ msgid ""
+#~ "We noticed you might be going "
+#~ "through a difficult time. Please "
+#~ "consider reaching out for immediate "
+#~ "help:"
+#~ msgstr ""
+
+#~ msgid "Call 988"
+#~ msgstr "988 पर कॉल करें"
+
+#~ msgid "Get Help"
+#~ msgstr "मदद लें"
+
+#~ msgid "Assessment Recommended"
+#~ msgstr "मूल्यांकन"
+
+#~ msgid "Take Assessment"
+#~ msgstr "मूल्यांकन"
+
+#~ msgid "Welcome to Chat Support"
+#~ msgstr "सामुदायिक सहायता"
+
+#~ msgid ""
+#~ "I'm here to listen and provide "
+#~ "support. Feel free to share what's "
+#~ "on your mind."
+#~ msgstr ""
+
+#~ msgid "Type your message here..."
+#~ msgstr "यहाँ अपना संदेश टाइप करें..."
+
+#~ msgid "Your conversations are private and secure"
+#~ msgstr "आपकी बातचीत निजी और सुरक्षित है"
+
+#~ msgstr "लोड हो रहा है..."
+
+#~ msgid "Thinking..."
+#~ msgstr "सोच रहा है..."
+
+#~ msgid "Professional Consultation"
+#~ msgstr "परामर्श"
+
+#~ msgid "Connect with qualified mental health professionals"
+#~ msgstr "योग्य मानसिक स्वास्थ्य पेशेवरों से जुड़ें"
+
+#~ msgid "Request Consultation"
+#~ msgstr "परामर्श"
+
+#~ msgid "Need Immediate Support?"
+#~ msgstr "सामुदायिक सहायता"
+
+#~ msgid "Crisis support is available 24/7"
+#~ msgstr "संकट सहायता उपलब्ध"
+
+#~ msgid "Text HOME to 741741"
+#~ msgstr "741741 पर HOME टेक्स्ट करें"
+
+#~ msgid "Stay Positive, Stay Strong"
+#~ msgstr "सकारात्मक रहें, मजबूत रहें"
+
+#~ msgid ""
+#~ "Every small step you take today "
+#~ "brings you closer to a brighter "
+#~ "tomorrow."
+#~ msgstr "आज आप जो भी छोटा कदम उठाते हैं, वह आपको एक बेहतर कल के करीब लाता है।"
+
+#~ msgid "Welcome back"
+#~ msgstr "वापसी पर स्वागत है"
+
+#~ msgid "How are you feeling today? Remember, every step counts."
+#~ msgstr "आज आप कैसा महसूस कर रहे हैं? याद रखें, हर कदम मायने रखता है।"
+
+#~ msgstr "लॉगिन स्ट्रीक"
+
+#~ msgid "day"
+#~ msgstr "दिन"
+
+#~ msgstr "दिन"
+
+#~ msgid "Tasks"
+#~ msgstr "कार्य"
+
+#~ msgid "Completed today"
+#~ msgstr "आज पूरे किए"
+
+#~ msgid "Daily Inspiration"
+#~ msgstr "दैनिक प्रेरणा"
+
+#~ msgid "Every small step forward is progress worth celebrating."
+#~ msgstr "आगे बढ़ता हर छोटा कदम मनाने योग्य प्रगति है।"
+
+#~ msgid "Start Meditation"
+#~ msgstr "ध्यान शुरू करें"
+
+#~ msgid "Take a moment to breathe and center yourself"
+#~ msgstr "सांस लेने और खुद को केंद्रित करने के लिए एक पल लें"
+
+#~ msgid "Welcome Back"
+#~ msgstr "वापसी पर स्वागत है"
+
+#~ msgid "Username"
+#~ msgstr "उपयोगकर्ता नाम"
+
+#~ msgid "Password"
+#~ msgstr "पासवर्ड"
+
+#~ msgid "Your Meditation Progress"
+#~ msgstr "आपकी ध्यान प्रगति"
+
+#~ msgid "Sessions Completed This Week:"
+#~ msgstr "इस सप्ताह पूरे किए गए सत्र:"
+
+#~ msgid "Total Minutes Meditated:"
+#~ msgstr "कुल ध्यान मिनट:"
+
+#~ msgid "Guided Meditation"
+#~ msgstr "निर्देशित ध्यान"
+
+#~ msgid "Choose your meditation journey:"
+#~ msgstr "अपनी ध्यान यात्रा चुनें:"
+
+#~ msgstr "सत्र शुरू करें"
+
+#~ msgstr "चलाएं"
+
+#~ msgstr "रोकें"
+
+#~ msgstr "बंद करें"
+
+#~ msgid "Join MindCare"
+#~ msgstr "MindCare में शामिल हों"
+
+#~ msgid "Full Name"
+#~ msgstr "पूरा नाम"
+
+#~ msgid "Email"
+#~ msgstr "ईमेल"
+
+#~ msgid "Role"
+#~ msgstr "भूमिका"
+
+#~ msgid "Student"
+#~ msgstr "छात्र"
+
+#~ msgid "Teacher/Mentor"
+#~ msgstr "शिक्षक/मेंटर"
+
+#~ msgid "Counsellor"
+#~ msgstr "परामर्शदाता"
+
+#~ msgid "Administrator"
+#~ msgstr "प्रशासक"
+
+#~ msgid "Student ID"
+#~ msgstr "छात्र आईडी"
+
+#~ msgid "Will be encrypted for privacy"
+#~ msgstr "गोपनीयता के लिए एन्क्रिप्ट किया जाएगा"
+
+#~ msgid "Accommodation Type"
+#~ msgstr "आवास का प्रकार"
+
+#~ msgid "Select..."
+#~ msgstr "चुनें..."
+
+#~ msgid "Hostel"
+#~ msgstr "हॉस्टल"
+
+#~ msgid "Local"
+#~ msgstr "स्थानीय"
+
+#~ msgid "Create Account"
+#~ msgstr "खाता बनाएं"
+
+#~ msgid "Already have an account?"
+#~ msgstr "क्या पहले से खाता है?"
+
+#~ msgid "Login here"
+#~ msgstr "यहाँ लॉग इन करें"
+
+#~ msgid ""
+#~ "Your personal information is encrypted "
+#~ "and secure. Student IDs are hashed "
+#~ "for privacy protection."
+#~ msgstr ""
+#~ "आपकी व्यक्तिगत जानकारी एन्क्रिप्टेड और "
+#~ "सुरक्षित है। छात्र आईडी गोपनीयता सुरक्षा"
+#~ " के लिए हैश की गई हैं।"
+
+#~ msgid "Daily Routine"
+#~ msgstr "दिनचर्या"
+
+#~ msgid "Plan your day and track your progress"
+#~ msgstr "अपने दिन की योजना बनाएं और अपनी प्रगति को ट्रैक करें"
+
+#~ msgid "Today's Progress"
+#~ msgstr "आज की प्रगति"
+
+#~ msgid "of"
+#~ msgstr "में से"
+
+#~ msgid "tasks completed"
+#~ msgstr "आज पूरे किए"
+
+#~ msgid "Add New Task"
+#~ msgstr "नया कार्य जोड़ें"
+
+#~ msgid "Schedule a new activity for your day"
+#~ msgstr "अपने दिन के लिए एक नई गतिविधि निर्धारित करें"
+
+#~ msgid "Task Title"
+#~ msgstr "कार्य का शीर्षक"
+
+#~ msgid "What do you want to do?"
+#~ msgstr "आप क्या करना चाहते हैं?"
+
+#~ msgid "Start Time"
+#~ msgstr "ध्यान शुरू करें"
+
+#~ msgid "End Time"
+#~ msgstr "समाप्ति का समय"
+
+#~ msgid "Notes (Optional)"
+#~ msgstr "नोट्स (वैकल्पिक)"
+
+#~ msgid "Any additional details..."
+#~ msgstr "कोई अतिरिक्त विवरण..."
+
+#~ msgid "Add Task"
+#~ msgstr "कार्य"
+
+#~ msgid "Remember: You Are Not Alone"
+#~ msgstr "याद रखें: आप अकेले नहीं हैं"
+
+#~ msgid ""
+#~ "This is a supportive community where "
+#~ "everyone is valued. Please be kind, "
+#~ "respectful, and remember that sharing "
+#~ "can be healing."
+#~ msgstr ""
+
+#~ msgid "Crisis Support: 988"
+#~ msgstr "संकट सहायता उपलब्ध"
+
+#~ msgid "Venting Hall"
+#~ msgstr "वेंटिंग हॉल"
+
+#~ msgid "A safe space to share your thoughts and connect with others"
+#~ msgstr "अपने विचार साझा करने और दूसरों से जुड़ने के लिए एक सुरक्षित स्थान"
+
+#~ msgid "Share Your Thoughts"
+#~ msgstr "अपने विचार साझा करें"
+
+
+
+msgid "MindWell - Student Mental Health Support"
+msgstr "मानसिक स्वास्थ्य सहायता - मिंडवेल"
+
+msgid "MindWell"
+msgstr "मिंडवेल"
+
+msgid "Features"
+msgstr "सुविधाएं"
+
+msgid "Impact"
+msgstr "प्रभाव"
+
+msgid "Stories"
+msgstr "कहानियां"
+
+msgid "Sign In"
+msgstr "साइन इन"
+
+msgid "Your Journey to"
+msgstr "आपकी यात्रा"
+
+msgid "Mental Wellness"
+msgstr "मानसिक स्वास्थ्य"
+
+msgid "Starts Here"
+msgstr "यहां शुरू होती है"
+
+msgid "A comprehensive platform designed specifically for high school students, providing professional mental health support, assessments, and counseling in a safe, confidential environment."
+msgstr "हाई स्कूल के छात्रों के लिए विशेष रूप से डिज़ाइन किया गया एक व्यापक प्लेटफॉर्म, जो एक सुरक्षित, गोपनीय वातावरण में पेशेवर मानसिक स्वास्थ्य सहायता, मूल्यांकन और परामर्श प्रदान करता है।"
+
+msgid "Comprehensive Wellness Support"
+msgstr "व्यापक कल्याण सहायता"
+
+msgid "Everything you need for mental wellness, designed with students in mind"
+msgstr "मानसिक कल्याण के लिए आपको जो कुछ भी चाहिए, छात्रों को ध्यान में रखकर डिज़ाइन किया गया"
+
+msgid "Professional PHQ-9, GAD-7, and GHQ assessments to understand your mental health."
+msgstr "आपके मानसिक स्वास्थ्य को समझने के लिए पेशेवर PHQ-9, GAD-7, और GHQ मूल्यांकन।"
+
+msgid "AI Wellness Companion"
+msgstr "एआई स्वास्थ्य साथी"
+
+msgid "24/7 chatbot with crisis detection for immediate help and guidance."
+msgstr "तत्काल सहायता और मार्गदर्शन के लिए संकट पहचान के साथ 24/7 चैटबॉट।"
+
+msgid "Professional Counselors"
+msgstr "पेशेवर परामर्शदाता"
+
+msgid "Connect with qualified mental health professionals for personalized support."
+msgstr "व्यक्तिगत सहायता के लिए योग्य मानसिक स्वास्थ्य पेशेवरों से जुड़ें।"
+
+msgid "Mental Health: A Global Priority"
+msgstr "मानसिक स्वास्थ्य: एक वैश्विक प्राथमिकता"
+
+msgid "Students experience mental health issues"
+msgstr "छात्र मानसिक स्वास्थ्य समस्याओं का अनुभव करते हैं"
+
+msgid "Don't receive adequate support"
+msgstr "पर्याप्त सहायता नहीं मिलती"
+
+msgid "Conditions start by age 14"
+msgstr "14 वर्ष की आयु तक स्थितियां शुरू हो जाती हैं"
+
+msgid "Improve with proper support"
+msgstr "उचित सहायता के साथ सुधार होता है"
+
+msgid "Stories of Transformation"
+msgstr "परिवर्तन की कहानियां"
+
+msgid "MindWell helped me manage my anxiety with real tools."
+msgstr "मिंडवेल ने वास्तविक टूल्स के साथ मेरी चिंता को संभालने में मदद की।"
+
+msgid "Alex M."
+msgstr "एलेक्स एम."
+
+msgid "The AI companion was like a friend during hard times."
+msgstr "एआई साथी कठिन समय में एक दोस्त की तरह था।"
+
+msgid "Sarah K."
+msgstr "सारा के."
+
+msgid "Assessments helped me understand what I was facing."
+msgstr "मूल्यांकन ने मुझे समझने में मदद की कि मैं किस चीज़ का सामना कर रहा था।"
+
+msgid "Michael R."
+msgstr "माइकल आर."
+
+msgid "Ready to Start Your Wellness Journey?"
+msgstr "अपनी कल्याण यात्रा शुरू करने के लिए तैयार हैं?"
+
+msgid "Join thousands of students who have found support, understanding, and tools for better mental health."
+msgstr "हजारों छात्रों के साथ जुड़ें जिन्होंने बेहतर मानसिक स्वास्थ्य के लिए सहायता, समझ और उपकरण पाए हैं।"
+
+msgid "Contact Support"
+msgstr "सहायता से संपर्क करें"
+
+msgid "Supporting student mental health with professional, accessible, and confidential care."
+msgstr "पेशेवर, सुलभ और गोपनीय देखभाल के साथ छात्र मानसिक स्वास्थ्य का समर्थन करना।"
+
+msgid "Platform"
+msgstr "प्लेटफॉर्म"
+
+msgid "AI Support"
+msgstr "एआई सहायता"
+
+msgid "Counselors"
+msgstr "परामर्शदाता"
+
+msgid "Wellness Tools"
+msgstr "कल्याण उपकरण"
+
+msgid "Help Center"
+msgstr "सहायता केंद्र"
+
+msgid "Privacy Policy"
+msgstr "गोपनीयता नीति"
+
+msgid "Terms of Service"
+msgstr "सेवा की शर्तें"
+
+msgid "Crisis Resources"
+msgstr "संकट संसाधन"
+
+msgid "Emergency"
+msgstr "आपातकाल"
+
+msgid "If you're in crisis, please reach out:"
+msgstr "यदि आप संकट में हैं, तो कृपया संपर्क करें:"
+
+msgid "National Suicide Prevention Lifeline"
+msgstr "राष्ट्रीय आत्महत्या रोकथाम लाइफलाइन"
+
+msgid "Crisis Text Line"
+msgstr "संकट टेक्स्ट लाइन"
+
+msgid "MindWell. All rights reserved."
+msgstr "मिंडवेल। सर्वाधिकार सुरक्षित।"
