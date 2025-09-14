@@ -117,6 +117,60 @@
     color: #fff !important;
 }
 
+.card {
+    background-color: transparent !important; /* remove grey background */
+    border: none !important; /* optional: remove card border */
+    box-shadow: none !important; /* optional: remove card shadow */
+}
+.card-body {
+    background-color: transparent !important;
+}
+
+.card {
+    background-color: #fff !important; /* clean white */
+}
+.card-body {
+    background-color: #fff !important;
+}
+
+/* make card/chat area neutral so only bubbles show color */
+.card, .card-body, .chat-container {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* make sure the message wrapper itself doesn't have a background */
+.chat-container .message {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 1rem;
+  border-radius: 0 !important;
+}
+
+/* bubble defaults (high specificity) */
+.chat-container .message-bubble {
+  display: inline-block;
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  word-wrap: break-word;
+  border-radius: 1rem;
+}
+
+/* bot and user bubble colors (force override) */
+.chat-container .message.bot .message-bubble {
+  background: #b8e0d2 !important; /* bot bubble */
+  color: #374151 !important;
+}
+
+.chat-container .message.user .message-bubble {
+  background: #809bce !important; /* user bubble */
+  color: #fff !important;
+}
+
+/* avatar spacing */
+.chat-container .message.bot .bot-avatar { margin-right: 10px; flex-shrink:0; }
+
 </style>
 {% endblock %}
 
