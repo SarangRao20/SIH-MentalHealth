@@ -12,7 +12,6 @@
     border-bottom: none; /* optional for cleaner look */
 }
 
-
 .stats-card {
     transition: all 0.3s ease;
     border: none;
@@ -64,43 +63,58 @@
 }
 
 .btn-workshop-outline {
-    border-color: #28a745; /* Your original success color */
+    border-color: #28a745;
     color: #28a745;
     background-color: transparent;
 }
 
 .btn-workshop-outline:hover {
-    background-color: #B8E0D2; /* The new hover background color */
-    color: #374151; /* A dark text color for readability */
+    background-color: #B8E0D2;
+    color: #374151;
     border-color: #B8E0D2;
 }
 
 .btn-report-outline {
-    border-color: #95b8d1; /* Your original success color */
+    border-color: #95b8d1;
     color: #95b8d1;
     background-color: transparent;
 }
 
 .btn-report-outline:hover {
-    background-color: #95B8D1; /* The new hover background color */
-    color: #374151; /* A dark text color for readability */
+    background-color: #95B8D1;
+    color: #374151;
     border-color: #95B8D1;
 }
 
 .btn-outline-flag{
-    border-color: #f6d656; /* Your original success color */
+    border-color: #f6d656;
     color: #f7d44a;
     background-color: transparent;
 }
 
 .btn-outline-flag:hover {
-    background-color: #faf0ca; /* The new hover background color */
-    color: #374151; /* A dark text color for readability */
+    background-color: #faf0ca;
+    color: #374151;
     border-color: #faf0ca;
 }
+
+/* ✅ Special styles for Active This Week & Crisis Alerts */
+.stats-card.active,
+.stats-card.crisis {
+    background-color: #809bce !important;  /* Periwinkle */
+    color: #ffffff !important;             /* White text */
+    border-radius: 0.5rem;
+}
+
+.stats-card.active:hover,
+.stats-card.crisis:hover {
+    background-color: #9aaee2 !important;  /* Lighter periwinkle on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
 </style>
 {% endblock %}
-
 {% block content %}
 <div class="container-fluid">
     <div class="row">
@@ -125,78 +139,82 @@
     </div>
 
     <!-- Key Metrics -->
-    <div class="row g-4 mb-4">
-        <div class="col-lg-3 col-md-6">
-            <div class="card stats-card bg-periwinkle text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h6 class="card-title">{{ _('Total Students') }}</h6>
-                            <div class="metric-value">{{ stats.total_students }}</div>
-                            <small>{{ _('Registered users') }}</small>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-users fa-2x opacity-100"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-lg-3 col-md-6">
-            <div class="card stats-card bg-success text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h6 class="card-title">{{ _('Active This Week') }}</h6>
-                            <div class="metric-value">{{ stats.active_users }}</div>
-                            <small>{{ _('Regular engagement') }}</small>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-chart-line fa-2x opacity-75"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-lg-3 col-md-6">
-            <div class="card stats-card {% if stats.crisis_sessions > 0 %}bg-warning{% else %}bg-info{% endif %} text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h6 class="card-title">{{ _('Crisis Alerts') }}</h6>
-                            <div class="metric-value">{{ stats.crisis_sessions }}</div>
-                            <small>{{ _('Last 30 days') }}</small>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
-                            {% if stats.crisis_sessions > 0 %}
-                            <div class="alert-indicator alert-high"></div>
-                            {% endif %}
-                        </div>
+<div class="row g-4 mb-4">
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card bg-periwinkle text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">{{ _('Total Students') }}</h6>
+                        <div class="metric-value">{{ stats.total_students }}</div>
+                        <small>{{ _('Registered users') }}</small>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <div class="card stats-card bg-secondary text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h6 class="card-title">{{ _('Assessments Taken') }}</h6>
-                            <div class="metric-value">{{ stats.recent_assessments|length }}</div>
-                            <small>{{ _('This month') }}</small>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-clipboard-list fa-2x opacity-75"></i>
-                        </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x opacity-100"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- ✅ Active This Week (Periwinkle) -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card bg-periwinkle text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">{{ _('Active This Week') }}</h6>
+                        <div class="metric-value">{{ stats.active_users }}</div>
+                        <small>{{ _('Regular engagement') }}</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-line fa-2x opacity-100"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Crisis Alerts (Periwinkle) -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card bg-periwinkle text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">{{ _('Crisis Alerts') }}</h6>
+                        <div class="metric-value">{{ stats.crisis_sessions }}</div>
+                        <small>{{ _('Last 30 days') }}</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-exclamation-triangle fa-2x opacity-100"></i>
+                        {% if stats.crisis_sessions > 0 %}
+                        <div class="alert-indicator alert-high"></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card bg-secondary text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">{{ _('Assessments Taken') }}</h6>
+                        <div class="metric-value">{{ stats.recent_assessments|length }}</div>
+                        <small>{{ _('This month') }}</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-clipboard-list fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Accommodation Comparison -->
     <div class="row g-4 mb-4">
