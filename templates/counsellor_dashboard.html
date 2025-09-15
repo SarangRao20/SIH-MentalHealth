@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Counsellor Dashboard') }}{% endblock %}
+
+{% block content %}
+
+<style>
+/* ===== Global Background & Typography ===== */
+body {
+    background-color: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #293241;
+}
+
+/* ===== Table Styling ===== */
+.table {
+    background-color: #e9ebf2 !important;
+    border: 1px solid #809bce !important;
+    border-radius: 8px;
+}
+.table th {
+    background-color: #809bce !important;
+    color: #ffffff !important;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 600;
+    border: 1px solid #809bce !important;
+}
+.table td {
+    border: 1px solid #809bce !important;
+    vertical-align: middle;
+    color: #333333;
+}
+
+/* ===== Status Badges ===== */
+.badge-pending {
+    background-color: #faf0ca;
+    color: #293241;
+}
+.badge-booked {
+    background-color: #b8e0d2;
+    color: #293241;
+}
+.badge-rejected {
+    background-color: #bc4b51;
+    color: white;
+}
+.badge-followup {
+    background-color: #d6eadf;
+    color: #293241;
+}
+
+/* ===== Buttons ===== */
+.btn-custom-primary {
+    background-color: #809bce;
+    border-color: #809bce;
+    color: #fff;
+}
+.btn-custom-primary:hover {
+    background-color: #6a84b0;
+    border-color: #6a84b0;
+}
+.btn-custom-secondary {
+    background-color: #809bce;
+    border-color: #809bce;
+    color: #fff;
+}
+.btn-custom-secondary:hover {
+    background-color: #6a84b0;
+    border-color: #6a84b0;
+}
+.btn-custom-pending {
+    background-color: #faf0ca;
+    border-color: #faf0ca;
+    color: #293241;
+}
+.btn-custom-pending:hover {
+    background-color: #e4dab0;
+    border-color: #e4dab0;
+}
+.btn-custom-rejected {
+    background-color: #bc4b51;
+    border-color: #bc4b51;
+    color: #fff;
+}
+.btn-custom-rejected:hover {
+    background-color: #9f3e45;
+    border-color: #9f3e45;
+}
+
+/* ===== Form Inputs ===== */
+.form-control {
+    border-radius: 0.5rem;
+    border: 1px solid #b8e0d2;
+}
+.form-control:focus {
+    border-color: #809bce;
+    box-shadow: 0 0 0 0.2rem rgba(128, 155, 206, 0.25);
+}
+
+/* ===== Cards & Containers ===== */
+.container {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ===== Headings ===== */
+h2 {
+    color: #293241;
+    font-weight: 700;
+}
+
+/* ✅ Match hover with table background */
+.table-hover > tbody > tr:hover > * {
+    --bs-table-accent-bg: #e9ebf2 !important;
+    background-color: #e9ebf2 !important;
+    color: inherit !important;
+}
+
+/* ===== Notifications ===== */
+.notification-red {
+  background-color: #d9534f; /* Same as Rejected */
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.notification-green {
+  background-color: #5cb85c; /* Same as Booked */
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* ===== Customised Highlight ===== */
+.customised-date {
+    background-color: #d6eadf !important;
+}
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">{{ _('Your Consultation Requests') }}</h2>
+        <a class="btn btn-custom-primary btn-sm" href="{{ url_for('counsellor_availability') }}">{{ _('Manage Availability') }}</a>
+    </div>
+    {% if requests %}
+    <div class="mb-3">
+        <span class="badge badge-pending me-2">{{ _('Pending') }}</span>
+        <span class="badge badge-booked me-2">{{ _('Booked') }}</span>
+        <span class="badge badge-rejected">{{ _('Rejected') }}</span>
+    </div>
+    <table class="table table-bordered align-middle">
+        <thead>
+            <tr>
+                <th>{{ _('User') }}</th>
+                <th>{{ _('Urgency') }}</th>
+                <th>{{ _('Time Slot') }}</th>
+                <th>{{ _('Contact') }}</th>
+                <th>{{ _('Status') }}</th>
+                <th>{{ _('Notes') }}</th>
+                <th>{{ _('Actions & Details') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in requests %}
+            <tr>
+                <td>{{ req.user.full_name }} ({{ req.user.username }})<br>{{ _('Email') }}: {{ req.user.email }}</td>
+                <td>{{ req.urgency_level }}</td>
+                <td>{{ req.time_slot }}</td>
+                <td>{{ req.contact_preference|title }}</td>
+                <td>
+                    {% if req.status == 'pending' %}
+                        <span class="badge badge-pending">{{ _('Pending') }}</span>
+                    {% elif req.status == 'booked' %}
+                        <span class="badge badge-booked">{{ _('Booked') }}</span>
+                    {% elif req.status == 'rejected' %}
+                        <span class="badge badge-rejected">{{ _('Rejected') }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ req.status|title }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ req.additional_notes }}</td>
+                <td>
+                    {% if req.additional_notes and 'Assessment (' in req.additional_notes %}
+                        <form method="GET" action="{{ url_for('view_user_assessment', user_id=req.user.id) }}" class="mb-2">
+                            <button type="submit" class="btn btn-custom-primary btn-sm">{{ _('View Assessment') }}</button>
+                        </form>
+                    {% endif %}
+                    {% if req.status == 'pending' %}
+                        <form method="POST" action="{{ url_for('accept_consultation', request_id=req.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-custom-pending btn-sm">{{ _('Accept') }}</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('reject_consultation', request_id=req.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-custom-rejected btn-sm">{{ _('Reject') }}</button>
+                        </form>
+                    {% endif %}
+                    {% if req.status == 'booked' %}
+                        <form method="POST" action="{{ url_for('schedule_follow_up', request_id=req.id) }}" class="mb-2">
+                            <label for="follow_up_datetime_{{ req.id }}" class="form-label">{{ _('Schedule Follow-up') }}:</label>
+                            <input type="datetime-local" name="follow_up_datetime" id="follow_up_datetime_{{ req.id }}" class="form-control mb-2" value="{{ req.follow_up_datetime|default('', true) }}">
+                            <button type="submit" class="btn btn-custom-secondary btn-sm">{{ _('Set Follow-up') }}</button>
+                        </form>
+                        {% if req.follow_up_datetime %}
+                            <span class="badge badge-followup">{{ _('Follow-up') }}: {{ req.follow_up_datetime.strftime('%d %b %Y, %I:%M %p') }}</span>
+                        {% endif %}
+                    {% endif %}
+                    {% if req.status == 'booked' %}
+                        <form method="POST" action="{{ url_for('set_chat_video_link', request_id=req.id) }}" class="mb-2">
+                            <label for="chat_video_link_{{ req.id }}" class="form-label">{{ _('Chat/Video Link') }}:</label>
+                            <input type="url" name="chat_video_link" id="chat_video_link_{{ req.id }}" class="form-control mb-2" value="{{ req.chat_video_link or '' }}" placeholder="{{ _('Paste secure link here') }}">
+                            <button type="submit" class="btn btn-custom-warning btn-sm">{{ _('Set Link') }}</button>
+                        </form>
+                        {% if req.chat_video_link %}
+                            <a href="{{ req.chat_video_link }}" target="_blank" class="btn btn-custom-primary btn-sm">{{ _('Join Session') }}</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if req.status == 'booked' and req.session_datetime and req.session_datetime < now %}
+                        <form method="POST" action="{{ url_for('add_session_notes', request_id=req.id) }}" class="mt-2">
+                            <label for="session_notes_{{ req.id }}" class="form-label">{{ _('Session Notes') }}:</label>
+                            <textarea name="session_notes" id="session_notes_{{ req.id }}" class="form-control mb-2" rows="2" required>{{ req.session_notes or '' }}</textarea>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-custom-secondary btn-sm">{{ _('Save Notes') }}</button>
+                                <a href="{{ url_for('download_session_notes', request_id=req.id) }}" class="btn btn-custom-primary btn-sm">{{ _('Download PDF') }}</a>
+                            </div>
+                        </form>
+                    {% elif req.session_notes %}
+                        <div class="mt-2"><strong>{{ _('Session Notes') }}:</strong> {{ req.session_notes }}</div>
+                        <a href="{{ url_for('download_session_notes', request_id=req.id) }}" class="btn btn-custom-primary btn-sm mt-1">{{ _('Download PDF') }}</a>
+                    {% endif %}
+                    {% if req.status == 'booked' %}
+                        <form method="POST" action="{{ url_for('schedule_session', request_id=req.id) }}" class="mb-2">
+                            <label for="session_datetime_{{ req.id }}" class="form-label">{{ _('Schedule Session') }}:</label>
+                            <input type="datetime-local" name="session_datetime" id="session_datetime_{{ req.id }}" class="form-control mb-2" required>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-custom-primary btn-sm">{{ _('Set Session') }}</button>
+                                <!-- Use formaction to avoid nested forms and bypass required field validation -->
+                                <button type="submit"
+                                        class="btn btn-outline-danger btn-sm"
+                                        formmethod="POST"
+                                        formaction="{{ url_for('cancel_booking', request_id=req.id) }}"
+                                        formnovalidate>
+                                    {{ _('Cancel Booking') }}
+                                </button>
+                            </div>
+                        </form>
+                        {% if req.session_datetime %}
+                            <span class="badge badge-followup">{{ _('Scheduled') }}: {{ req.session_datetime.strftime('%d %b %Y, %I:%M %p') }}</span>
+                        {% endif %}
+                    {% endif %}
+                    <hr>
+                    <div>
+                        <strong>{{ _('Recent Assessments') }}:</strong>
+                        {% if req.user.assessments %}
+                            <ul>
+                            {% for assessment in req.user.assessments[:3] %}
+                                <li>{{ assessment.assessment_type }}: {{ assessment.score }} ({{ assessment.severity_level }})</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <span class="text-muted">{{ _('No test results') }}</span>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info">{{ _('No consultation requests yet.') }}</div>
+    {% endif %}
+</div>
+
+<!-- ✅ Script to detect custom date & chat link changes -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Handle datetime-local fields
+    document.querySelectorAll('input[type="datetime-local"]').forEach(input => {
+        const defaultValue = input.value; // store initial default value
+        input.addEventListener("change", function () {
+            if (input.value !== defaultValue && input.value !== "") {
+                input.classList.add("customised-date");
+            } else {
+                input.classList.remove("customised-date");
+            }
+        });
+    });
+
+    // Handle Chat/Video Link field
+    document.querySelectorAll('input[type="url"]').forEach(input => {
+        const defaultValue = input.value; // store initial value (blank or prefilled)
+        input.addEventListener("input", function () {
+            if (input.value.trim() !== "" && input.value !== defaultValue) {
+                input.classList.add("customised-date");
+            } else {
+                input.classList.remove("customised-date");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

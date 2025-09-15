@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5 text-center">
+    <!-- Periwinkle heading -->
+    <h2 class="mb-4 fw-light" style="color: #809bce;">Inkblot Test</h2>
+
+    <form method="post" 
+          class="d-inline-block text-start bg-white p-4 rounded-4" 
+          style="max-width: 700px; width: 100%; 
+                 box-shadow: 0 4px 12px rgba(0,0,0,0.12), 
+                             0 8px 24px rgba(0,0,0,0.08);">
+        {% set blot_num = blot_num if blot_num is defined else 1 %}
+        
+        <div class="mb-4 text-center">
+            <img src="{{ url_for('static', filename='img/blot' ~ blot_num ~ '.jpg') }}" 
+                 alt="Inkblot {{ blot_num }}" 
+                 class="img-fluid rounded shadow-sm mb-3" 
+                 style="max-width: 300px; height: auto;">
+        </div>
+
+        <div class="mb-3">
+            <label for="response" class="form-label fw-semibold">Your response:</label>
+            <input type="text" id="response" name="response" 
+                   class="form-control w-100" 
+                   placeholder="Type what you see...">
+        </div>
+
+        <input type="hidden" name="blot_num" value="{{ blot_num }}">
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">
+                Next &nbsp; &#8594;
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

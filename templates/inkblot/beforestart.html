@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h2 class="card-title text-center text-primary mb-4">Inkblot Test Instructions</h2>
+                    <ol class="mb-4">
+                        <li>Read the blots in sequence and note your answers.</li>
+                        <li>There is no correct answer; choose the one that first comes to mind.</li>
+                        <li>This test is meant for self-understanding, not diagnosis.</li>
+                    </ol>
+                    <div class="text-center">
+                        <a href="{{ url_for('inkblot_test') }}" class="btn btn-primary">
+                            Start Analysis &nbsp; &#8594;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

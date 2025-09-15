@@ -1,0 +1,492 @@
+{% extends "base.html" %}
+
+{% block title %}Chat Support - MindCare{% endblock %}
+
+{% block extra_head %}
+<style>
+:root {
+    --periwinkle: #809BCE;
+    --periwinkle-light: #95B8D1;
+    --bot-color: #b8e0d2;
+    --user-color: #809bce;
+    --chat-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.chat-container {
+    height: 70vh;
+    overflow-y: auto;
+    border: none;
+    border-radius: 1rem;
+    background: var(--chat-bg);
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.message {
+    margin-bottom: 1.5rem;
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* User message alignment and styling */
+.message.user {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+/* Bot message alignment and styling with avatar */
+.message.bot {
+    text-align: left;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/* Enhanced chatbot avatar styling */
+.bot-avatar {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.bot-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 3px solid var(--periwinkle);
+    box-shadow: 0 4px 12px rgba(128, 155, 206, 0.3);
+}
+
+.message-bubble {
+    display: inline-block;
+    max-width: 75%;
+    padding: 1rem 1.25rem;
+    border-radius: 1.5rem;
+    word-wrap: break-word;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+/* Enhanced user message bubble */
+.user .message-bubble {
+    background: linear-gradient(135deg, var(--user-color) 0%, #6366f1 100%);
+    color: white;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.user .message-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid var(--user-color);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+/* Enhanced bot message bubble */
+.bot .message-bubble {
+    background: linear-gradient(135deg, var(--bot-color) 0%, #d1fae5 100%);
+    color: #1f2937;
+    border-bottom-left-radius: 0.5rem;
+    border: 1px solid rgba(184, 224, 210, 0.3);
+}
+
+.bot .message-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-right: 8px solid var(--bot-color);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+.crisis-alert {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.voice-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.voice-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.voice-btn:hover {
+    transform: scale(1.1);
+}
+
+.voice-btn.listening {
+    animation: pulse 1s infinite;
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+.btn-voice {
+    background-color: #fff !important;
+    border-color: #95B8D1 !important;
+    color: #95B8D1 !important;
+}
+
+.btn-voice:hover {
+    background-color: #7fa4bd !important; /* slightly darker for hover */
+    border-color: #7fa4bd !important;
+    color: #fff !important;
+}
+
+.card {
+    background-color: transparent !important; /* remove grey background */
+    border: none !important; /* optional: remove card border */
+    box-shadow: none !important; /* optional: remove card shadow */
+}
+.card-body {
+    background-color: transparent !important;
+}
+
+.card {
+    background-color: #fff !important; /* clean white */
+}
+.card-body {
+    background-color: #fff !important;
+}
+
+/* make card/chat area neutral so only bubbles show color */
+.card, .card-body, .chat-container {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* make sure the message wrapper itself doesn't have a background */
+.chat-container .message {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 1rem;
+  border-radius: 0 !important;
+}
+
+/* bubble defaults (high specificity) */
+.chat-container .message-bubble {
+  display: inline-block;
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  word-wrap: break-word;
+  border-radius: 1rem;
+}
+
+/* bot and user bubble colors (force override) */
+.chat-container .message.bot .message-bubble {
+  background: #b8e0d2 !important; /* bot bubble */
+  color: #374151 !important;
+}
+
+.chat-container .message.user .message-bubble {
+  background: #809bce !important; /* user bubble */
+  color: #fff !important;
+}
+
+/* avatar spacing */
+.chat-container .message.bot .bot-avatar { margin-right: 10px; flex-shrink:0; }
+
+/* Welcome message enhancements */
+.welcome-message {
+    background: rgba(255,255,255,0.8);
+    border-radius: 1.5rem;
+    margin: 2rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.floating-bot-icon {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.suggested-starters button {
+    transition: all 0.3s ease;
+}
+
+.suggested-starters button:hover {
+    background: var(--periwinkle) !important;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+/* Enhanced input styling */
+#message-input:focus {
+    box-shadow: 0 0 0 3px rgba(128, 155, 206, 0.2);
+    outline: none;
+}
+
+#send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(128, 155, 206, 0.4);
+}
+
+/* Message time styling */
+.message-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Enhanced voice button */
+.voice-btn {
+    background: linear-gradient(135deg, var(--periwinkle) 0%, #667eea 100%) !important;
+    border: none !important;
+    transition: all 0.3s ease;
+}
+
+.voice-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(128, 155, 206, 0.4);
+}
+
+/* Card enhancements */
+.card {
+    border: none !important;
+    border-radius: 1.5rem !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    overflow: hidden;
+}
+
+/* Smooth scrolling for chat container */
+.chat-container {
+    scroll-behavior: smooth;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="chat-header rounded-4 p-4 mb-4" style="background: linear-gradient(135deg, var(--periwinkle) 0%, #667eea 100%); color: white; box-shadow: 0 6px 20px rgba(128, 155, 206, 0.3);">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="chat-icon-wrapper">
+                            <i class="fas fa-robot fa-2x"></i>
+                        </div>
+                        <div>
+                            <h1 class="h3 mb-1">{{ _('AI Mental Health Assistant') }}</h1>
+                            <p class="mb-0 opacity-75 small">{{ _('Your caring companion for mental wellness') }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light btn-sm rounded-pill px-3" onclick="clearChat()">
+                            <i class="fas fa-broom me-1"></i> {{ _('Clear') }}
+                        </button>
+                        <button class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="toggleVoice()">
+                            <i class="fas fa-microphone me-1"></i> {{ _('Voice') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="crisis-alert" class="alert alert-danger crisis-alert d-none" role="alert">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h5 class="alert-heading">
+                    <i class="fas fa-exclamation-triangle"></i> {{ _('Immediate Support Available') }}
+                </h5>
+                <p class="mb-0">{{ _('Crisis Support Available') }}</p>
+                <p class="mb-0">
+                    {{ _('We noticed you might be going through a difficult time. Please consider reaching out for immediate help:') }}
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="tel:988" class="btn btn-danger me-2">
+                    <i class="fas fa-phone"></i> {{ _('Call 988') }}
+                </a>
+                <a href="{{ url_for('consultation') }}" class="btn btn-outline-danger">
+                    <i class="fas fa-user-md"></i> {{ _('Get Help') }}
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="assessment-suggestion" class="alert alert-info d-none" role="alert">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h6 class="alert-heading">
+                    <i class="fas fa-clipboard-list"></i> {{ _('Assessment Recommended') }}
+                </h6>
+                <p class="mb-0" id="assessment-reason"></p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="#" id="take-assessment-btn" class="btn btn-info">
+                    <i class="fas fa-clipboard-check"></i> {{ _('Take Assessment') }}
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div id="chat-messages" class="chat-container p-3">
+                        {% for message in messages %}
+                        <div class="message {{ message.message_type }}">
+                            {% if message.message_type == 'bot' %}
+                            <div class="bot-avatar">
+                                <img src="{{ url_for('static', filename='img/chatbot_pfp.jpg') }}" alt="Chatbot Profile Picture" class="rounded-circle">
+                            </div>
+                            {% endif %}
+                            <div class="message-bubble">
+                                <div class="message-content">{{ message.content }}</div>
+                                <small class="message-time text-muted d-block mt-1">
+                                    {{ message.timestamp.strftime('%I:%M %p') }}
+                                </small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        {% if not messages %}
+                        <div class="welcome-message text-center py-5">
+                            <div class="welcome-icon mb-4">
+                                <div class="floating-bot-icon">
+                                    <i class="fas fa-heart fa-3x text-success"></i>
+                                </div>
+                            </div>
+                            <h4 class="text-dark fw-bold mb-3">{{ _('Hello! I\'m here to help') }} 🌟</h4>
+                            <p class="text-muted lead mb-4">
+                                {{ _('I\'m your AI mental health companion. Share whatever is on your mind - I\'m here to listen, support, and guide you.') }}
+                            </p>
+                            <div class="suggested-starters">
+                                <p class="small text-muted mb-2">{{ _('Try starting with:') }}</p>
+                                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" onclick="sendSuggestedMessage('I\'m feeling anxious today')">
+                                        {{ _('I\'m feeling anxious') }}
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" onclick="sendSuggestedMessage('I need someone to talk to')">
+                                        {{ _('Need to talk') }}
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" onclick="sendSuggestedMessage('How can I manage stress?')">
+                                        {{ _('Stress management') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="chat-input-area p-4" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(128, 155, 206, 0.2);">
+                        <form id="chat-form" onsubmit="sendMessage(event)">
+                            <div class="input-group shadow-sm">
+                                <input type="hidden" name="session_id" value="{{ session_id }}">
+                                <input type="text" id="message-input" name="message" 
+                                       class="form-control form-control-lg rounded-start-pill border-0" 
+                                       style="background: #f8fafc; padding-left: 1.5rem; font-size: 1rem;"
+                                       placeholder="{{ _('Share what\'s on your mind...') }}" required>
+                                <button type="submit" class="btn btn-lg rounded-end-pill border-0" id="send-btn"
+                                        style="background: linear-gradient(135deg, var(--periwinkle) 0%, #667eea 100%); color: white; padding: 0 1.5rem;">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                            <small class="text-muted d-flex align-items-center gap-1">
+                                <i class="fas fa-lock"></i>
+                                {{ _('End-to-end encrypted & confidential') }}
+                            </small>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="voice-status" id="voice-status"></div>
+                                <small class="text-muted">{{ _('Press Enter to send') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="voice-controls">
+    <button id="voice-btn" class="voice-btn btn btn-primary d-none" onclick="toggleListening()">
+        <i class="fas fa-microphone"></i>
+    </button>
+</div>
+
+<div id="loading" class="d-none text-center py-3">
+    <div class="spinner-border text-periwinkle" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <small class="text-muted d-block mt-2">Thinking...</small>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+<script>
+// Function for suggested message buttons
+function sendSuggestedMessage(message) {
+    document.getElementById('message-input').value = message;
+    document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+}
+
+// Enhanced send button hover effects
+document.addEventListener('DOMContentLoaded', function() {
+    const sendBtn = document.getElementById('send-btn');
+    const messageInput = document.getElementById('message-input');
+    
+    // Auto-focus input
+    messageInput.focus();
+    
+    // Add loading state to send button
+    sendBtn.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-paper-plane"></i>';
+        }, 1000);
+    });
+    
+    // Auto-scroll to bottom when new messages arrive
+    const chatContainer = document.getElementById('chat-messages');
+    const observer = new MutationObserver(() => {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+    observer.observe(chatContainer, { childList: true });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ _('MindWell - Student Mental Health Support') }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8f9fc] text-[#333] font-sans antialiased">
+
+  <!-- Navbar -->
+  <header class="bg-white/90 backdrop-blur-md shadow-sm fixed top-0 w-full z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="{{ url_for('index') }}" class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-[#809bce] rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 21C12 21 4 13.5 4 8a4 4 0 0 1 8 0 4 4 0 0 1 8 0c0 5.5-8 13-8 13z"/>
+          </svg>
+        </div>
+        <span class="text-xl font-serif font-semibold text-[#809bce]">{{ _('MindWell') }}</span>
+      </a>
+
+      <!-- Nav links -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="#features" class="text-[#666] hover:text-[#809bce] transition-colors">{{ _('Features') }}</a>
+        <a href="#statistics" class="text-[#666] hover:text-[#809bce] transition-colors">{{ _('Impact') }}</a>
+        <a href="#testimonials" class="text-[#666] hover:text-[#809bce] transition-colors">{{ _('Stories') }}</a>
+        <a href="#contact" class="text-[#666] hover:text-[#809bce] transition-colors">{{ _('Contact') }}</a>
+      </nav>
+
+      <!-- Language Switch -->
+      <div class="hidden md:flex items-center space-x-2 mr-4">
+        <a href="{{ url_for('index', language='en') }}" 
+           class="px-2 py-1 text-sm rounded {{ 'bg-[#809bce] text-white' if get_locale() == 'en' else 'text-[#666] hover:text-[#809bce]' }}">
+          EN
+        </a>
+        <a href="{{ url_for('index', language='hi') }}" 
+           class="px-2 py-1 text-sm rounded {{ 'bg-[#809bce] text-white' if get_locale() == 'hi' else 'text-[#666] hover:text-[#809bce]' }}">
+          हिं
+        </a>
+      </div>
+
+      <!-- Auth buttons -->
+      <div class="flex items-center space-x-4">
+        <a href="{{ url_for('register') }}"
+           class="px-4 py-2 rounded-lg bg-[#809bce] text-white hover:bg-[#95b8d1] transition-colors">
+          {{ _('Register') }}
+        </a>
+        <a href="{{ url_for('login') }}"
+           class="px-4 py-2 rounded-lg border border-[#809bce] text-[#809bce] hover:bg-[#809bce]/10 transition-colors">
+          {{ _('Sign In') }}
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-24 bg-[#eac4d5]/10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-[#333] mb-6">
+        {{ _('Your Journey to') }} <span class="text-[#809bce]">{{ _('Mental Wellness') }}</span> {{ _('Starts Here') }}
+      </h1>
+      <p class="text-lg text-[#555] mb-8">
+        {{ _('A comprehensive platform designed specifically for high school students, providing professional mental health support, assessments, and counseling in a safe, confidential environment.') }}
+      </p>
+      <a href="{{ url_for('register') }}"
+         class="px-8 py-4 rounded-lg bg-[#809bce] text-lg text-white hover:bg-[#95b8d1] transition-colors">
+        {{ _('Register') }}
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-[#333] mb-4">{{ _('Comprehensive Wellness Support') }}</h2>
+        <p class="text-xl text-[#555] max-w-2xl mx-auto">
+          {{ _('Everything you need for mental wellness, designed with students in mind') }}
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="p-8 bg-white rounded-xl shadow-lg border border-[#809bce]/20 hover:shadow-xl transition-shadow">
+          <h3 class="text-xl font-semibold text-[#809bce] mb-3">{{ _('Mental Health Assessments') }}</h3>
+          <p class="text-[#555]">{{ _('Professional PHQ-9, GAD-7, and GHQ assessments to understand your mental health.') }}</p>
+        </div>
+        <div class="p-8 bg-white rounded-xl shadow-lg border border-[#95b8d1]/20 hover:shadow-xl transition-shadow">
+          <h3 class="text-xl font-semibold text-[#809bce] mb-3">{{ _('AI Wellness Companion') }}</h3>
+          <p class="text-[#555]">{{ _('24/7 chatbot with crisis detection for immediate help and guidance.') }}</p>
+        </div>
+        <div class="p-8 bg-white rounded-xl shadow-lg border border-[#b8e0d2]/20 hover:shadow-xl transition-shadow">
+          <h3 class="text-xl font-semibold text-[#809bce] mb-3">{{ _('Professional Counselors') }}</h3>
+          <p class="text-[#555]">{{ _('Connect with qualified mental health professionals for personalized support.') }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section id="statistics" class="py-24 bg-[#b8e0d2]/10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-[#333] mb-12">{{ _('Mental Health: A Global Priority') }}</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div>
+          <h3 class="text-3xl font-bold text-[#809bce]">1 in 4</h3>
+          <p class="text-[#555] mt-2">{{ _('Students experience mental health issues') }}</p>
+        </div>
+        <div>
+          <h3 class="text-3xl font-bold text-[#95b8d1]">70%</h3>
+          <p class="text-[#555] mt-2">{{ _('Don\'t receive adequate support') }}</p>
+        </div>
+        <div>
+          <h3 class="text-3xl font-bold text-[#809bce]">50%</h3>
+          <p class="text-[#555] mt-2">{{ _('Conditions start by age 14') }}</p>
+        </div>
+        <div>
+          <h3 class="text-3xl font-bold" style="color:#7bbfa7;">85%</h3>
+          <p class="text-[#555] mt-2">{{ _('Improve with proper support') }}</p>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-center text-[#333] mb-12">{{ _('Stories of Transformation') }}</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="p-8 bg-white rounded-xl shadow-lg border border-[#eac4d5]/40 hover:shadow-xl transition-shadow">
+          <p class="text-[#555] mb-4">“MindWell helped me manage my anxiety with real tools.”</p>
+          <p class="font-semibold text-[#809bce]">— Alex M.</p>
+        </div>
+        <div class="p-8 bg-white rounded-xl shadow-lg border border-[#95b8d1]/40 hover:shadow-xl transition-shadow">
+          <p class="text-[#555] mb-4">“The AI companion was like a friend during hard times.”</p>
+          <p class="font-semibold text-[#809bce]">— Sarah K.</p>
+        </div>
+        <div class="p-8 bg-white rounded-xl shadow-lg border border-[#b8e0d2]/40 hover:shadow-xl transition-shadow">
+          <p class="text-[#555] mb-4">“Assessments helped me understand what I was facing.”</p>
+          <p class="font-semibold text-[#809bce]">— Michael R.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call To Action Section -->
+  <section class="py-24 bg-[#faf0ca]/20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-[#333]">{{ _('Ready to Start Your Wellness Journey?') }}</h2>
+      <p class="text-xl text-[#555] mb-8">{{ _('Join thousands of students who have found support, understanding, and tools for better mental health.') }}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{{ url_for('register') }}"
+           class="px-8 py-4 text-lg rounded-lg bg-[#809bce] text-white hover:bg-[#95b8d1] transition-colors">
+          {{ _('Register') }}
+        </a>
+        <a href="#contact"
+           class="px-8 py-4 text-lg rounded-lg border border-[#809bce] text-[#809bce] hover:bg-[#809bce]/10 transition-colors">
+          {{ _('Contact Support') }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer id="contact" class="bg-white border-t border-[#eac4d5]/50 py-16">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-8 h-8 bg-[#809bce] rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 21C12 21 4 13.5 4 8a4 4 0 0 1 8 0 4 4 0 0 1 8 0c0 5.5-8 13-8 13z"/>
+              </svg>
+            </div>
+            <span class="text-xl font-serif font-semibold text-[#809bce]">{{ _('MindWell') }}</span>
+          </div>
+          <p class="text-[#555]">{{ _('Supporting student mental health with professional, accessible, and confidential care.') }}</p>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-4 text-[#333]">{{ _('Platform') }}</h3>
+          <ul class="space-y-2 text-[#555]">
+            <li><a href="{{ url_for('assessments') }}" class="hover:text-[#809bce]">{{ _('Assessments') }}</a></li>
+            <li><a href="{{ url_for('chatbot') }}" class="hover:text-[#809bce]">{{ _('AI Support') }}</a></li>
+            <li><a href="{{ url_for('consultation') }}" class="hover:text-[#809bce]">{{ _('Counselors') }}</a></li>
+            <li><a href="{{ url_for('meditation') }}" class="hover:text-[#809bce]">{{ _('Wellness Tools') }}</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-4 text-[#333]">{{ _('Support') }}</h3>
+          <ul class="space-y-2 text-[#555]">
+            <li><a href="#" class="hover:text-[#809bce]">{{ _('Help Center') }}</a></li>
+            <li><a href="#" class="hover:text-[#809bce]">{{ _('Privacy Policy') }}</a></li>
+            <li><a href="#" class="hover:text-[#809bce]">{{ _('Terms of Service') }}</a></li>
+            <li><a href="#" class="hover:text-[#809bce]">{{ _('Crisis Resources') }}</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-4 text-[#333]">{{ _('Emergency') }}</h3>
+          <p class="text-[#555] mb-2">{{ _('If you\'re in crisis, please reach out:') }}</p>
+          <p class="font-semibold text-[#ad2831]">{{ _('National Suicide Prevention Lifeline') }}</p>
+          <p>988 (US) | 1-800-273-8255</p>
+          <p class="font-semibold text-[#ad2831] mt-2">{{ _('Crisis Text Line') }}</p>
+          <p>Text HOME to 741741</p>
+        </div>
+      </div>
+      <div class="border-t border-[#eac4d5]/50 mt-12 pt-8 text-center text-[#555]">
+        <p>&copy; 2024 {{ _('MindWell. All rights reserved.') }}</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

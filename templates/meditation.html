@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Meditation') }} - MindCare{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Custom styles for meditation page */
+    /* Enhanced Breathing Circle */
+    .breathing-circle {
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle at 60% 40%, #a8dadc 0%, #457b9d 100%);
+        border-radius: 50%;
+        margin: 2rem auto;
+        animation: breathe 8s infinite ease-in-out;
+        box-shadow: 0 0 40px 10px #a8dadc, 0 0 80px 20px #457b9d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .breathing-circle span {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.7rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textGlow 2s infinite alternate;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    @keyframes textGlow {
+        0% { text-shadow: 0 0 10px #fbc2eb, 0 0 20px #a6c1ee; }
+        100% { text-shadow: 0 0 20px #fbc2eb, 0 0 40px #a6c1ee; }
+    }
+    .meditation-container {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .meditation-card-custom {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        padding: 3rem;
+        max-width: 800px; /* Increased max-width for better layout */
+        width: 100%;
+        transition: all 0.5s ease-in-out;
+        transform: translateY(0);
+    }
+
+    .meditation-card-custom.active {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .duration-selection-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted minmax for larger cards */
+        gap: 1.5rem; /* Increased gap */
+        margin-top: 2rem;
+    }
+
+    .duration-card-item {
+        background-color: var(--light-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .duration-card-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        border-color: var(--primary-color);
+    }
+
+    .duration-card-item.selected {
+        background: var(--primary-gradient);
+        color: white;
+        border-color: var(--primary-color);
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .duration-card-item h5 {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: inherit; /* Inherit color from parent (white if selected) */
+    }
+
+    .duration-card-item p {
+        font-size: 0.9rem;
+        color: inherit; /* Inherit color from parent */
+        margin-bottom: 0;
+    }
+
+    .duration-card-item i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color); /* Default icon color */
+    }
+
+    .duration-card-item.selected i {
+        color: white; /* White icon if selected */
+    }
+
+    #timer-display-area {
+        margin-top: 2rem;
+        display: none; /* Hidden by default */
+    }
+
+    #timer {
+        font-size: 5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .control-buttons-group .btn {
+        border-radius: 30px;
+        padding: 0.8rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0 0.5rem;
+    }
+
+    /* Breathing animation */
+    .breathing-circle {
+        width: 200px;
+        height: 200px;
+        background: var(--calm-blue);
+        border-radius: 50%;
+        margin: 2rem auto;
+        animation: breathe 8s infinite ease-in-out;
+        box-shadow: 0 0 30px rgba(168, 218, 220, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        opacity: 0.8;
+    }
+
+    @keyframes breathe {
+        0%, 100% { transform: scale(1); opacity: 0.8; background: var(--calm-blue); }
+        50% { transform: scale(1.1); opacity: 1; background: var(--peaceful-teal); }
+    }
+
+    /* Background subtle animation */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        animation: backgroundShift 60s infinite alternate ease-in-out;
+    }
+
+    @keyframes backgroundShift {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+    }
+
+    /* Even more prominent and animated notification */
+.meditation-completion-overlay {
+    position: fixed;           /* relative to viewport */
+    top: 50%;                  /* vertical center of visible area */
+    right: 20px;               /* near the right edge */
+    transform: translateY(-50%); /* center vertically */
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1070;
+    padding: 1rem;
+    border-radius: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.meditation-completion-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(-10px); /* small slide effect */
+}
+
+/* Notification card inside overlay */
+.meditation-completion-card {
+    background: linear-gradient(135deg, #d9f0e7 0%, #e0f0f8 100%); /* dimmed colors */
+    color: #222; /* darker text for readability */
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: none; /* remove shadow */
+}
+
+.meditation-completion-card i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #fff; /* subtle icon color */
+}
+
+
+    .meditation-stats-container {
+        background: #ffffff; /* White background */
+        border-radius: 20px; /* More rounded */
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Stronger shadow */
+        padding: 2.5rem;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        max-width: 800px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .meditation-stats-container .col-md-6 {
+        flex: 1;
+        min-width: 250px;
+        padding: 1rem;
+    }
+
+    .meditation-stats-container h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .meditation-stats-container p {
+        font-size: 1.1rem;
+        color: #6c757d;
+    }
+
+    .meditation-stats-container h4 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-top: 0.5rem;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="meditation-notification" class="meditation-completion-overlay">
+    <div class="meditation-completion-card">
+        <i class="fas fa-star"></i> <!-- Changed icon to star for celebration -->
+        <p>{{ _('Congratulations!') }}</p>
+        <p>{{ _("You've completed your meditation session.") }}</p>
+    </div>
+</div>
+<div class="meditation-container">
+    <div class="meditation-stats-container mt-5 p-4 bg-light rounded shadow-sm text-center">
+        <h3 class="text-periwinkle mb-3">{{ _('Your Meditation Progress') }}</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="lead mb-0">{{ _('Sessions Completed This Week:') }}</p>
+                <h4 class="display-4 text-success">{{ weekly_sessions_count }}</h4>
+            </div>
+            <div class="col-md-6">
+                <p class="lead mb-0">{{ _('Total Minutes Meditated:') }}</p>
+                <h4 class="display-4 text-info">{{ total_minutes_meditated }}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="meditation-card-custom" id="meditation-main-card">
+        <h1 class="h2 text-periwinkle mb-4">
+            <i class="fas fa-leaf"></i> {{ _('Guided Meditation') }}
+        </h1>
+
+        <div id="duration-selection-area">
+            <p class="lead text-muted mb-4">{{ _('Choose your meditation journey:') }}</p>
+            <div class="duration-selection-grid">
+                {% for item in meditation_content.meditation %}
+                <div class="duration-card-item" data-duration="{{ item.duration }}" data-audio="{{ item.audio_url }}">
+                    <i class="fas fa-brain"></i> {# Using a static icon for meditation #}
+                    <h5>{{ item.title }}</h5>
+                    <p>{{ item.description }}</p>
+                    <button class="btn btn-primary start-session-btn mt-2">{{ _('Start Session') }}</button>
+                </div>
+                {% endfor %}
+                {% for item in meditation_content.music %}
+                <div class="duration-card-item" data-duration="{{ item.duration }}" data-audio="{{ item.audio_url }}">
+                    <i class="fas fa-music"></i> {# Using a static icon for music #}
+                    <h5>{{ item.title }}</h5>
+                    <p>{{ item.description }}</p>
+                    <button class="btn btn-primary start-session-btn mt-2">{{ _('Start Session') }}</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="timer-display-area">
+            {% include 'lottie_breathing.html' %}
+            <div id="timer">00:00</div>
+            <div class="control-buttons-group">
+                <button id="startBtn" class="btn btn-success"><i class="fas fa-play"></i> {{ _('Play') }}</button>
+                <button id="pauseBtn" class="btn btn-warning" disabled><i class="fas fa-pause"></i> {{ _('Pause') }}</button>
+                <button id="stopBtn" class="btn btn-danger" disabled><i class="fas fa-stop"></i> {{ _('Stop') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/meditation.js') }}"></script>
+{% endblock %}

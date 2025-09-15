@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Mental Health Assessments - MindCare{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center py-4">
+                <h1 class="h2 text-periwinkle">
+                    <i class="fas fa-clipboard-list" style="color: #809bce;"></i> Mental Health Assessments
+                </h1>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#assessmentInfoModal">
+                    <i class="fas fa-info-circle"></i> {{ _('About Assessments') }}
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #e74c3c !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-paint-brush"></i> {{ _('Inkblot Test') }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('Projective Personality Assessment') }}</h6>
+                    <p class="card-text">
+                        {{ _('The Inkblot Test is a projective psychological test to analyze personality and emotional functioning.') }}
+                    </p>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-clock" style="color: #e74c3c;"></i> {{ _('Takes 5-10 minutes') }}</li>
+                        <li><i class="fas fa-paint-brush" style="color: #e74c3c;"></i> {{ _('10 inkblots') }}</li>
+                        <li><i class="fas fa-share" style="color: #e74c3c;"></i> {{ _('Share results with mentor/counsellor') }}</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="/inkblot" class="btn w-100 text-white" style="background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);">
+                        <i class="fas fa-play"></i> {{ _('Start Inkblot Test') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #3498db !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-brain"></i> PHQ-9
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('Depression Screening') }}</h6>
+                    <p class="card-text">
+                        {{ _('The PHQ-9 is a reliable tool for screening, diagnosing, monitoring and measuring the severity of depression.') }}
+                    </p>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-clock" style="color: #3498db;"></i> {{ _('Takes 2-3 minutes') }}</li>
+                        <li><i class="fas fa-question" style="color: #3498db;"></i> {{ _('9 questions') }}</li>
+                        <li><i class="fas fa-chart-line" style="color: #3498db;"></i> {{ _('Severity scoring') }}</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ url_for('assessment_form', assessment_type='PHQ-9') }}" class="btn w-100 text-white" style="background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);">
+                        <i class="fas fa-play"></i> {{ _('Start PHQ-9') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #27ae60 !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #27ae60, #229954);">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-heart-rate"></i> {{ _('GAD-7') }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('Anxiety Screening') }}</h6>
+                    <p class="card-text">
+                        {{ _('The GAD-7 is a validated tool for screening and measuring the severity of generalized anxiety disorder.') }}
+                    </p>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-clock" style="color: #27ae60;"></i> {{ _('Takes 2-3 minutes') }}</li>
+                        <li><i class="fas fa-question" style="color: #27ae60;"></i> {{ _('7 questions') }}</li>
+                        <li><i class="fas fa-chart-line" style="color: #27ae60;"></i> {{ _('Anxiety levels') }}</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ url_for('assessment_form', assessment_type='GAD-7') }}" class="btn w-100 text-white" style="background: linear-gradient(135deg, #27ae60, #229954); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);">
+                        <i class="fas fa-play"></i> {{ _('Start GAD-7') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #9b59b6 !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-user-check"></i> {{ _('GHQ') }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ _('General Health Questionnaire') }}</h6>
+                    <p class="card-text">
+                        {{ _('The GHQ is designed to detect psychiatric disorders in community settings and general medical practice.') }}
+                    </p>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-clock" style="color: #9b59b6;"></i> {{ _('Takes 3-4 minutes') }}</li>
+                        <li><i class="fas fa-question" style="color: #9b59b6;"></i> {{ _('12 questions') }}</li>
+                        <li><i class="fas fa-chart-line" style="color: #9b59b6;"></i> {{ _('Overall wellbeing') }}</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ url_for('assessment_form', assessment_type='GHQ') }}" class="btn w-100 text-white" style="background: linear-gradient(135deg, #9b59b6, #8e44ad); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);">
+                        <i class="fas fa-play"></i> {{ _('Start GHQ') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header text-white"style="background-color: #809bce;">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-history"></i> {{ _('Your Assessment History') }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if assessments %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('Assessment') }}</th>
+                                        <th>{{ _('Date') }}</th>
+                                        <th>{{ _('Score') }}</th>
+                                        <th>{{ _('Severity') }}</th>
+                                        <th>{{ _('Actions') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for assessment in assessments %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ assessment.assessment_type }}</strong>
+                                            <br>
+                                            <small class="text-muted">
+                                                {% if assessment.assessment_type == 'PHQ-9' %}{{ _('Depression Screening') }}
+                                                {% elif assessment.assessment_type == 'GAD-7' %}{{ _('Anxiety Screening') }}
+                                                {% elif assessment.assessment_type == 'GHQ' %}{{ _('General Health') }}
+                                                {% endif %}
+                                            </small>
+                                        </td>
+                                        <td>{{ assessment.completed_at.strftime('%m/%d/%Y at %I:%M %p') }}</td>
+                                        <td>
+                                            <span class="badge bg-secondary">{{ assessment.score }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge 
+                                                {% if assessment.severity_level in ['Minimal', 'Good'] %}bg-success
+                                                {% elif assessment.severity_level in ['Mild', 'Fair'] %}bg-warning
+                                                {% else %}bg-danger{% endif %}">
+                                                {{ assessment.severity_level }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary" 
+                                                    onclick="viewResults('{{ assessment.id }}')">
+                                                <i class="fas fa-eye"></i> {{ _('View Results') }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-clipboard text-muted fa-3x mb-3"></i>
+                            <h5 class="text-muted">{{ _('No Assessments Yet') }}</h5>
+                            <p class="text-muted">
+                                {{ _('Take your first assessment to start tracking your mental health journey.') }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="assessmentInfoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle text-periwinkle"></i>
+                        {{ _('About Mental Health Assessments') }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="text-periwinkle">{{ _('Why Take These Assessments?') }}</h6>
+                            <p>
+                                {{ _('These standardized tools help identify symptoms and track your mental health over time.') }}
+                                {{ _('They are used by healthcare professionals worldwide and provide valuable insights into your wellbeing.') }}
+                            </p>
+
+                            <h6 class="text-periwinkle mt-4">{{ _('Important Notes:') }}</h6>
+                            <ul>
+                                <li>{{ _('These assessments are') }} <strong>{{ _('not') }}</strong> {{ _('a substitute for professional diagnosis') }}</li>
+                                <li>{{ _('Results are confidential and encrypted for your privacy') }}</li>
+                                <li>{{ _('Regular monitoring can help track progress and identify concerning patterns') }}</li>
+                                <li>{{ _('Consider sharing results with a mental health professional') }}</li>
+                            </ul>
+                            
+                            <div class="alert alert-warning mt-4">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>{{ _('Remember:') }}</strong> {{ _('If you\'re experiencing thoughts of self-harm or suicide,') }}
+                                {{ _('please seek immediate help by calling 988 or visiting your nearest emergency room.') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function viewResults(assessmentId) {
+    window.location.href = `/assessment/results/${assessmentId}`;
+}
+</script>
+<script src="{{ url_for('static', filename='js/assessment.js') }}"></script>
+<style>
+.hover-lift {
+    transition: all 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+</style>
+{% endblock %}

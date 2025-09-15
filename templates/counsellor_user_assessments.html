@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}User Assessments - MindCare{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Assessments for {{ user.full_name }} ({{ user.username }})</h2>
+        <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('counsellor_dashboard') }}">Back</a>
+    </div>
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Meditations (Week)</h6>
+                    <h3 class="mb-0">{{ weekly_sessions_count }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Total Minutes</h6>
+                    <h3 class="mb-0">{{ total_minutes_meditated }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Login Streak</h6>
+                    <h3 class="mb-0">{{ login_streak }} days</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Recent Assessments (30d)</h6>
+                    {% if recent_by_type %}
+                        <ul class="mb-0 small">
+                            {% for k, v in recent_by_type.items() %}
+                                <li>{{ k }}: {{ v.count }} entries</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="mb-0 text-muted">No recent entries</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if assessments %}
+    <table class="table table-bordered table-hover">
+        <thead class="table-info">
+            <tr>
+                <th>Type</th>
+                <th>Score</th>
+                <th>Severity</th>
+                <th>Completed At</th>
+                <th>Recommendations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in assessments %}
+            <tr>
+                <td>{{ a.assessment_type }}</td>
+                <td>{{ a.score }}</td>
+                <td>{{ a.severity_level }}</td>
+                <td>{{ a.completed_at.strftime('%d %b %Y, %I:%M %p') }}</td>
+                <td>{{ a.recommendations }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="row g-3 mt-3">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header">Meditation (last 14 days)</div>
+                <div class="card-body">
+                    <canvas id="meditationChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header">Assessment Severity Trend (last 10)</div>
+                <div class="card-body">
+                    <canvas id="severityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <h6>Last 3 Assessments</h6>
+        <ul class="small">
+            {% for a in last_three %}
+                <li>{{ a.assessment_type }} — {{ a.score }} ({{ a.severity_level }}) on {{ a.completed_at.strftime('%d %b %Y') }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No assessments found for this user.</div>
+    {% endif %}
+</div>
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+try {
+    const meditationSeries = JSON.parse('{{ meditation_series | tojson | safe }}');
+    const severitySeries = JSON.parse('{{ severity_series | tojson | safe }}');
+
+    new Chart(document.getElementById('meditationChart'), {
+        type: 'bar',
+        data: {
+            labels: meditationSeries.labels,
+            datasets: [{
+                label: 'Minutes',
+                data: meditationSeries.values,
+                backgroundColor: '#86b7fe'
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+
+    new Chart(document.getElementById('severityChart'), {
+        type: 'line',
+        data: {
+            labels: severitySeries.labels,
+            datasets: [{
+                label: 'Severity (1-5)',
+                data: severitySeries.values,
+                borderColor: '#dc3545',
+                backgroundColor: 'rgba(220,53,69,0.2)',
+                tension: .3,
+                fill: true
+            }]
+        },
+        options: { responsive: true, scales: { y: { suggestedMin: 0, suggestedMax: 5, ticks: { stepSize: 1 } } } }
+    });
+} catch (e) {
+    console.error('Chart data error:', e);
+}
+</script>
+{% endblock %}
+

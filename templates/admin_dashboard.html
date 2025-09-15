@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Admin Analytics Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">{{ _('Admin Analytics Dashboard') }}</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center mb-4">
+                <div class="card-header bg-periwinkle text-white">{{ _('Total Users') }}</div>
+                <div class="card-body">
+                    <h3>{{ total_users }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center mb-4">
+                <div class="card-header bg-success text-white">{{ _('Total Counsellors') }}</div>
+                <div class="card-body">
+                    <h3>{{ total_counsellors }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center mb-4">
+                <div class="card-header bg-info text-white">{{ _('Total Bookings') }}</div>
+                <div class="card-body">
+                    <h3>{{ total_bookings }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">Recent Feedback</div>
+                <div class="card-body">
+                    {% if recent_feedback %}
+                        <ul>
+                        {% for fb in recent_feedback %}
+                            <li><strong>{{ fb.user.full_name }}</strong> {{ _('rated') }} <strong>{{ fb.feedback_rating }}/5</strong>: {{ fb.feedback_text }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span class="text-muted">{{ _('No feedback yet.') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">{{ _('Top Counsellors') }}</div>
+                <div class="card-body">
+                    {% if top_counsellors %}
+                        <ul>
+                        {% for c in top_counsellors %}
+                            <li>{{ c.full_name }} ({{ c.username }}) - {{ c.bookings }} bookings, Avg. Rating: {{ c.avg_rating|round(2) }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span class="text-muted">{{ _('No counsellor data yet.') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

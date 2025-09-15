@@ -1,0 +1,649 @@
+{% extends "base.html" %}
+
+{% block title %} {{ _('Professional Consultation - MindCare') }} {% endblock %}
+
+{% block extra_head %}
+<style>
+.consultation-card {
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.consultation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.urgency-high { border-left: 4px solid #dc3545; }
+.urgency-medium { border-left: 4px solid #ffc107; }
+.urgency-low { border-left: 4px solid #28a745; }
+
+.request-form {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+}
+
+.professional-card {
+    background: linear-gradient(135deg, #283e51 0%, #485563 100%); /* dark blue-gray tone */
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.professional-card .card-title i {
+    color: #a3c4f3; /* soft blue for icons */
+}
+
+.status-pending { color: #ffc107; }
+.status-scheduled { color: #007bff; }
+.status-completed { color: #28a745; }
+/* Status badge helpers */
+.badge-status { font-weight: 600; letter-spacing: .2px; }
+.badge-pending { background: #faf0ca; color: #293241; }
+.badge-booked { background: #d4edda; color: #155724; }
+.badge-rejected { background: #f8d7da; color: #721c24; }
+
+/* RE-DESIGNED CRISIS BANNER STYLES */
+.crisis-banner {
+    background: #f9e9f3; /* A light, soft background */
+    border: 1px solid #f2e1e7; /* Subtle border matching the soft tone */
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(225, 215, 220, 0.5);
+    transition: all 0.3s ease;
+}
+
+.crisis-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(225, 215, 220, 0.7);
+}
+
+.crisis-banner .crisis-title {
+    color: #e62a2a; /* Soft pink for the main icon and text */
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.crisis-banner .crisis-title i {
+    margin-right: 0.5rem;
+}
+
+.crisis-banner .crisis-text {
+    color: #6b7280; /* Muted gray for body text */
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.crisis-banner .btn {
+    border-radius: 2rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.crisis-banner .btn-outline {
+    border: 3.5px solid #d2e6db;
+    color: #6b7280;
+}
+
+.crisis-banner .btn-outline:hover {
+    background-color: #d6eadf;
+    color: #374151;
+}
+
+@keyframes sosPulse {
+    0% { box-shadow: 0 0 10px rgba(255,0,0,0.6); }
+    50% { box-shadow: 0 0 25px rgba(255,0,0,1); }
+    100% { box-shadow: 0 0 10px rgba(255,0,0,0.6); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.badge-pending { 
+  background: #faf0ca;  /* soft yellow background */
+  color: #293241;       /* dark readable text */
+}
+
+.card-body {
+    min-height: 100px; /* Adjust this value as needed for your content */
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center py-4">
+                <div>
+                    <h1 class="h2 text-periwinkle">
+                        <i class="fas fa-user-md"></i> {{ _('Professional Consultation') }}
+                    </h1>
+                    <p class="text-muted">{{ _('Connect with qualified mental health professionals') }}</p>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestModal">
+                    <i class="fas fa-calendar-plus"></i> {{ _('Request Consultation') }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="crisis-banner">
+                <div class="crisis-title">
+                    <i class="fas fa-bell"></i> {{ _('Need Immediate Support?') }}
+                </div>
+                <p class="crisis-text">{{ _('Crisis support is available 24/7') }}</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="tel:988" class="btn btn-outline">{{ _('Call 988') }}</a>
+                    <a href="sms:741741" class="btn btn-outline">{{ _('Text HOME to 741741') }}</a>
+                    <a href="{{ url_for('chatbot') }}" class="btn btn-outline">{{ _('Chat Support') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-4">
+            <div class="card consultation-card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-user-md fa-3x text-periwinkle"></i>
+                    </div>
+                    <h5 class="card-title">{{ _('Counsellors') }} - {{ _('Licensed Therapists') }}</h5>
+                    <p class="card-text">
+                        {{ _('Connect with licensed mental health professionals who specialize in student counseling and therapy.') }}
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success"></i> {{ _('Licensed & Certified') }}</li>
+                        <li><i class="fas fa-check text-success"></i> {{ _('Student-focused') }}</li>
+                        <li><i class="fas fa-check text-success"></i> {{ _('Confidential sessions') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card consultation-card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-brain fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">{{ _('Psychiatrists') }}</h5>
+                    <p class="card-text">
+                        {{ _('Consult with psychiatrists for medication management and comprehensive mental health treatment.') }}
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success"></i> {{ _('Medical doctors') }}</li>
+                        <li><i class="fas fa-check text-success"></i> {{ _('Medication expertise') }}</li>
+                        <li><i class="fas fa-check text-success"></i> {{ _('Comprehensive care') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card consultation-card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-users fa-3x text-info"></i>
+                    </div>
+                    <h5 class="card-title">{{ _('Peer Counselors') }}</h5>
+                    <p class="card-text">
+                        {{ _('Talk with trained peer counselors who understand the unique challenges of student life.') }}
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success"></i> {{ _('Student peers') }}</li>
+                        <li><i class="fas fa-check text-success"></i> {{ _('Relatable experience') }}</li>
+                        <li><i class="fas fa-check text-success"></i> {{ _('Immediate availability') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-history"></i> {{ _('Your Consultation Requests') }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if requests %}
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('Date Requested') }}</th>
+                                        <th>{{ _('Urgency') }}</th>
+                                        <th>{{ _('Preferred Time') }}</th>
+                                        <th>{{ _('Contact Method') }}</th>
+                                        <th>{{ _('Status') }}</th>
+                                        <th>{{ _('Session Date/Time') }}</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for request in requests %}
+                                    <tr class="urgency-{{ request.urgency_level }}">
+                                        <td>{{ request.created_at.strftime('%m/%d/%Y at %I:%M %p') }}</td>
+                                        <td>
+                                            {% if request.follow_up_datetime %}
+                                                <span class="badge bg-warning">Follow-up: {{ request.follow_up_datetime.strftime('%d %b %Y, %I:%M %p') }}</span>
+                                            {% endif %}
+                                            {% if request.chat_video_link %}
+                                                <a href="{{ request.chat_video_link }}" target="_blank" class="btn btn-outline-info btn-sm">{{ _('Join Session') }}</a>
+                                            {% endif %}
+                                            <span class="badge 
+                                                {% if request.urgency_level == 'high' %}bg-danger
+                                                {% elif request.urgency_level == 'medium' %}bg-urgency-medium
+                                                {% else %}bg-success{% endif %}">
+                                                {{ request.urgency_level|title }}
+                                            </span>
+                                        </td>
+                                        <td>{{ request.time_slot or 'Any time' }}</td>
+                                        <td>
+                                            <i class="fas fa-{{ 'phone' if request.contact_preference == 'phone' else 'envelope' if request.contact_preference == 'email' else 'video' }}"></i>
+                                            {{ request.contact_preference|title }}
+                                        </td>
+                                        <td>
+                                            {% set st = request.status %}
+                                            <span class="badge badge-status {{ 'badge-pending' if st=='pending' else 'badge-booked' if st in ['booked','scheduled'] else 'badge-rejected' if st=='rejected' else 'text-bg-secondary' }}">
+                                                <i class="fas fa-{{ 'clock' if st == 'pending' else 'calendar-check' if st in ['scheduled','booked'] else 'times-circle' if st=='rejected' else 'circle' }} me-1"></i>
+                                                {{ st|title }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {% if request.session_datetime %}
+                                                <span class="badge bg-info">{{ request.session_datetime.strftime('%d %b %Y, %I:%M %p') }}</span>
+                                            {% else %}
+                                                <span class="text-muted">{{ _('Not scheduled') }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.status == 'booked' and request.session_datetime and request.session_datetime < now and not request.feedback_rating %}
+                                                <form method="POST" action="{{ url_for('submit_feedback', request_id=request.id) }}" class="mt-2">
+                                                    <label for="feedback_rating_{{ request.id }}" class="form-label">{{ _('Rate Your Session:') }}</label>
+                                                    <select name="feedback_rating" id="feedback_rating_{{ request.id }}" class="form-select mb-2" required>
+                                                        <option value="">{{ _('Select rating...') }}</option>
+                                                        {% for i in range(1,6) %}
+                                                            <option value="{{ i }}">{{ i }} {{ _('Star') }}{{ '' if i == 1 else 's' }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <textarea name="feedback_text" class="form-control mb-2" rows="2" placeholder="{{ _('Share your feedback...') }}"></textarea>
+                                                    <button type="submit" class="btn btn-info btn-sm">{{ _('Submit Feedback') }}</button>
+                                                </form>
+                                            {% elif request.feedback_rating %}
+                                                <div class="mt-2"><strong>{{ _('Your Rating:') }}</strong> {{ request.feedback_rating }} / 5<br><strong>{{ _('Feedback:') }}</strong> {{ request.feedback_text }}</div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-calendar-alt fa-3x text-muted mb-4"></i>
+                            <h5 class="text-muted">{{ _('No Consultation Requests Yet') }}</h5>
+                            <p class="text-muted">
+                                {{ _('Request your first consultation to start getting professional mental health support.') }}
+                            </p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestModal">
+                                <i class="fas fa-calendar-plus"></i> {{ _('Request Your First Consultation') }}
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row mt-5 g-4">
+    <div class="col-md-6">
+        <div class="card w-100">
+            <div class="card-header">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-shield-alt text-periwinkle"></i> {{ _('What to Expect') }}
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-clock text-info me-2"></i>
+                        <span class="text-black">{{ _('Response within 24-48 hours for standard requests') }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-tachometer-alt text-info me-2"></i>
+                        <span class="text-black">{{ _('Immediate response for high-urgency requests') }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-lock text-info me-2"></i>
+                        <span class="text-black">{{ _('Complete confidentiality and privacy protection') }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-user-graduate text-info me-2"></i>
+                        <span class="text-black">{{ _('Specialized in student mental health issues') }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card w-100">
+            <div class="card-header">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-question-circle text-info"></i> {{ _('Frequently Asked Questions') }}
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                {{ _('Is this service free for students?') }}
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                {{ _('Yes, all consultation services are provided free of charge to registered students as part of our mental health support program.') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                {{ _('Will my information be kept confidential?') }}
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                {{ _('Absolutely. All consultations are strictly confidential and protected by professional ethics and privacy laws. Information is only shared in emergency situations or with your explicit consent.') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                {{ _('How quickly can I get an appointment?') }}
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                {{ _('For high-urgency requests, we aim to connect you within a few hours. Standard requests are typically scheduled within 24-48 hours, depending on availability and your preferences.') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="requestModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header request-form">
+                <h5 class="modal-title">
+                    <i class="fas fa-calendar-plus"></i> {{ _('Request Professional Consultation') }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('request_consultation') }}" id="consultationForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="counsellor_id" class="form-label">
+                                <i class="fas fa-user-md text-periwinkle"></i>
+                                {{ _('Select Counsellor') }} <span class="text-danger">*</span>
+                            </label>
+                            <select name="counsellor_id" id="counsellor_id" class="form-select" required>
+                                <option value="">{{ _('Choose counsellor...') }}</option>
+                                {% for counsellor in counsellors %}
+                                <option value="{{ counsellor.id }}">{{ counsellor.full_name }} ({{ counsellor.username }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="urgency" class="form-label">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                                {{ _('Urgency Level') }} <span class="text-danger">*</span>
+                            </label>
+                            <select name="urgency" id="urgency" class="form-select" required>
+                                <option value="">{{ _('Select urgency...') }}</option>
+                                <option value="low">{{ _('Low - General support') }}</option>
+                                <option value="medium">{{ _('Medium - Moderate distress') }}</option>
+                                <option value="high">{{ _('High - Severe distress') }}</option>
+                            </select>
+                            <div class="form-text">
+                                {{ _('High urgency requests receive immediate attention') }}
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="contact_preference" class="form-label">
+                                <i class="fas fa-phone text-periwinkle"></i>
+                                {{ _('Preferred Contact Method') }} <span class="text-danger">*</span>
+                            </label>
+                            <select name="contact_preference" id="contact_preference" class="form-select" required>
+                                <option value="">{{ _('Select method...') }}</option>
+                                <option value="phone">{{ _('Phone call') }}</option>
+                                <option value="video">{{ _('Video call') }}</option>
+                                <option value="email">{{ _('Email') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="preferred_time" class="form-label">
+                            <i class="fas fa-clock text-success"></i>
+                            {{ _('Preferred Time') }} ({{ _('Optional') }})
+                        </label>
+                        <input type="text" name="preferred_time" id="preferred_time" class="form-control" 
+                                placeholder="e.g., Weekday mornings, Any time, Evenings only">
+                        <div class="form-text">
+                            {{ _('Help us schedule at a convenient time for you') }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-calendar text-periwinkle"></i>
+                            {{ _('Or pick an available slot') }} ({{ _('Optional') }})
+                        </label>
+                        <div class="input-group">
+                            <select id="slot_filter_counsellor" class="form-select">
+                                <option value="">{{ _('All counsellors') }}</option>
+                                {% for counsellor in counsellors %}
+                                <option value="{{ counsellor.id }}">{{ counsellor.full_name }} ({{ counsellor.username }})</option>
+                                {% endfor %}
+                            </select>
+                            <button type="button" class="btn btn-outline-primary" id="btnRefreshSlots">{{ _('Refresh') }}</button>
+                        </div>
+                        <div id="slotList" class="mt-2 small text-muted">{{ _('Loading slots...') }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">
+                            <i class="fas fa-sticky-note text-info"></i>
+                            {{ _('Additional Notes') }} ({{ _('Optional') }})
+                        </label>
+                        <textarea name="notes" id="notes" class="form-control" rows="4" 
+                                    placeholder="{{ _('Share any specific concerns, topics you\'d like to discuss, or other relevant information...') }}"></textarea>
+                        <div class="form-text">
+                            {{ _('This information helps us match you with the most appropriate professional') }}
+                        </div>
+                    </div>
+                    <div class="alert alert-info">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-info-circle"></i> {{ _('Before Your Session') }}
+                        </h6>
+                        <ul class="mb-0 small">
+                            <li>{{ _('You\'ll receive a confirmation with session details') }}</li>
+                            <li>{{ _('Prepare any questions or topics you\'d like to discuss') }}</li>
+                            <li>{{ _('Find a private, comfortable space for your session') }}</li>
+                            <li>{{ _('Have a notebook ready if you\'d like to take notes') }}</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-warning">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-exclamation-triangle"></i> {{ _('Crisis Situations') }}
+                        </h6>
+                        <p class="mb-0 small">
+                            {{ _('If you\'re having thoughts of suicide or self-harm, please don\'t wait for a consultation.') }}
+                            {{ _('Call 988 (Suicide & Crisis Lifeline) or text HOME to 741741 for immediate support.') }}
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                <button type="submit" form="consultationForm" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> {{ _('Submit Request') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-info-circle"></i> {{ _('Consultation Details') }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="detailsContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function editRequest(requestId) {
+    // Implement edit functionality
+    alert('Edit functionality would be implemented here');
+}
+
+function viewDetails(requestId) {
+    // Show consultation details
+    document.getElementById('detailsContent').innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Scheduled Consultation</h6>
+                <p class="card-text">
+                    <strong>Date:</strong> March 15, 2024<br>
+                    <strong>Time:</strong> 2:00 PM - 3:00 PM<br>
+                    <strong>Professional:</strong> Dr. Sarah Johnson, Licensed Therapist<br>
+                    <strong>Method:</strong> Video Call<br>
+                    <strong>Meeting Link:</strong> <a href="#" class="text-primary">Join Meeting</a>
+                </p>
+                <div class="alert alert-info">
+                    <small>
+                        <i class="fas fa-clock"></i>
+                        Please join the meeting 5 minutes early. You'll receive an email reminder 1 hour before your session.
+                    </small>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    new bootstrap.Modal(document.getElementById('detailsModal')).show();
+}
+
+function provideFeedback(requestId) {
+    // Implement feedback functionality
+    alert('Feedback form would be implemented here');
+}
+
+// Form validation and enhancement
+document.getElementById('urgency').addEventListener('change', function() {
+    const urgencyInfo = {
+        'low': 'General support and guidance. Response within 24-48 hours.',
+        'medium': 'Moderate distress requiring prompt attention. Response within 12-24 hours.',
+        'high': 'Severe distress requiring immediate attention. Response within 1-4 hours.'
+    };
+    
+    const existingInfo = document.querySelector('.urgency-info');
+    if (existingInfo) existingInfo.remove();
+    
+    if (this.value && urgencyInfo[this.value]) {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'urgency-info alert alert-info mt-2';
+        infoDiv.innerHTML = `<small><i class="fas fa-info-circle"></i> ${urgencyInfo[this.value]}</small>`;
+        this.parentNode.appendChild(infoDiv);
+    }
+});
+
+// Character counter for notes
+document.getElementById('notes').addEventListener('input', function() {
+    const maxLength = 500;
+    const currentLength = this.value.length;
+    
+    let counter = document.getElementById('notes-counter');
+    if (!counter) {
+        counter = document.createElement('div');
+        counter.id = 'notes-counter';
+        counter.className = 'form-text text-end';
+        this.parentNode.appendChild(counter);
+    }
+    
+    counter.textContent = `${currentLength}/${maxLength} characters`;
+    counter.className = currentLength > maxLength * 0.9 ? 'form-text text-end text-warning' : 'form-text text-end text-muted';
+});
+
+// Slots dynamic fetch
+async function loadSlots() {
+    const select = document.getElementById('slot_filter_counsellor');
+    const holder = document.getElementById('slotList');
+    const counsellorId = select.value;
+    holder.textContent = 'Loading slots...';
+    try {
+        const params = counsellorId ? `?counsellor_id=${encodeURIComponent(counsellorId)}` : '';
+        const res = await fetch(`${window.location.origin}/api/open_slots${params}`);
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+            holder.innerHTML = '<span class="text-muted">No open slots right now.</span>';
+            return;
+        }
+        holder.innerHTML = data.map(s => `
+            <div class="d-flex align-items-center justify-content-between border rounded p-2 mb-1">
+                <div>
+                    <strong>${s.counsellor.full_name}</strong> (${s.counsellor.username})<br>
+                    <span>${new Date(s.start).toLocaleString()} - ${new Date(s.end).toLocaleTimeString()}</span>
+                </div>
+                <form method="POST" action="/book_slot/${s.id}">
+                    <button type="submit" class="btn btn-sm btn-primary">Book this slot</button>
+                </form>
+            </div>
+        `).join('');
+    } catch (e) {
+        holder.innerHTML = '<span class="text-danger">Failed to load slots.</span>';
+    }
+}
+
+document.getElementById('btnRefreshSlots').addEventListener('click', loadSlots);
+document.getElementById('slot_filter_counsellor').addEventListener('change', loadSlots);
+document.addEventListener('DOMContentLoaded', loadSlots);
+</script>
+{% endblock %}

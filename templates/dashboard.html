@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - MindCare{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+  <!-- Greeting + Streak -->
+  <!-- Greeting + Streak (Compact, no box) -->
+<div class="row mb-3">
+  <div class="col-12" style="font-family: 'Inter', sans-serif;">
+    <h1 style="font-size:1.6rem; font-weight:700; color:#809BCE; margin-bottom:0.3rem;">
+      👋 {{ _('Welcome back') }}, {{ current_user.full_name }}
+    </h1>
+    <!-- Streak Display -->
+    <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+      <span class="badge bg-primary rounded-pill px-3 py-2">
+        <i class="fas fa-fire me-1"></i>{{ _('Login Streak') }}: {{ login_streak }} {{ _('days') }}
+      </span>
+      <span class="badge bg-success rounded-pill px-3 py-2">
+        <i class="fas fa-leaf me-1"></i>{{ _('Meditation Sessions') }}: {{ meditation_streak }} {{ _('this week') }}
+      </span>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Motivation Banner -->
+  <div class="row mb-5">
+    <div class="col-12 hero-banner rounded-4 text-center py-5 shadow hover-lift">
+      <h2 class="fw-bold mb-3">🌟 {{ _('Daily Inspiration') }} 🌟</h2>
+      <p class="lead mb-0 fst-italic">"{{ _('Every small step you take today brings you closer to a brighter tomorrow.') }}"</p>
+    </div>
+  </div>
+
+  <!-- Metrics Row -->
+  <div class="row g-4 mb-5">
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white">
+        <div class="mb-3"><i class="fas fa-leaf fa-2x text-periwinkle"></i></div>
+        <h6 class="text-muted mb-2">{{ _('Meditation') }}</h6>
+        <div class="fs-3 fw-bold text-periwinkle">{{ total_minutes_meditated|default(0) }} {{ _('min') }}</div>
+        <div class="small text-muted mt-2">{{ _('Sessions this week') }}: <strong>{{ weekly_sessions_count|default(0) }}</strong></div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white">
+        <div class="mb-3"><i class="fas fa-check-circle fa-2x text-success"></i></div>
+        <h6 class="text-muted mb-2">{{ _('Tasks') }}</h6>
+        <div class="fs-3 fw-bold text-success">{{ tasks_completed|default(0) }}/{{ total_tasks|default(0) }}</div>
+        <div class="small text-muted mt-2">{{ _('Completed today') }}</div>
+        <div class="progress mt-3 rounded-pill" style="height:12px;">
+          <div class="progress-bar bg-success" role="progressbar" style="width: {{ tasks_progress|default(0) }}%;" aria-valuenow="{{ tasks_progress|default(0) }}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-12">
+      <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white">
+        <div class="mb-3"><i class="fas fa-chart-line fa-2x text-success"></i></div>
+        <h6 class="text-muted mb-2">{{ _('Assessment Progress') }}</h6>
+        <div class="fs-3 fw-bold text-success">{{ recent_assessments|length }}</div>
+        <div class="small text-muted mt-2">{{ _('Assessments completed') }}</div>
+        <div class="mt-3">
+          <a href="{{ url_for('assessments') }}" class="btn btn-outline-success btn-sm">{{ _('Take Assessment') }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="row g-4 mb-5">
+    <div class="col-lg-4 col-md-6">
+      <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-periwinkle">
+        <div class="mb-3"><i class="fas fa-head-side-medical fa-2x text-periwinkle"></i></div>
+        <h6 class="fw-bold">{{ _('Meditation') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Traditional mindfulness session') }}</p>
+        <a href="{{ url_for('meditation') }}" class="btn btn-outline-periwinkle btn-sm">{{ _('Start') }}</a>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-info">
+        <div class="mb-3"><i class="fas fa-user-md fa-2x text-info"></i></div>
+        <h6 class="fw-bold">{{ _('Consultation') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Connect with counsellors') }}</p>
+        <a href="{{ url_for('consultation') }}" class="btn btn-outline-info btn-sm">{{ _('Book') }}</a>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-12">
+      <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-warning">
+        <div class="mb-3"><i class="fas fa-comments fa-2x text-warning"></i></div>
+        <h6 class="fw-bold">{{ _('AI Support') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Chat with mental health bot') }}</p>
+        <a href="{{ url_for('chatbot') }}" class="btn btn-outline-warning btn-sm">{{ _('Chat') }}</a>
+      </div>
+    </div>
+  </div>  <!-- Immersive Experiences Showcase -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <div class="card-body p-5">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3 class="fw-bold mb-3">🚀 {{ _('Next-Gen Mental Wellness') }}</h3>
+              <p class="lead mb-4">{{ _('Experience cutting-edge VR meditation, AR-guided breathing, and therapeutic soundscapes designed for your mental health journey.') }}</p>
+              <div class="d-flex flex-wrap gap-3">
+                <a href="{{ url_for('vr_meditation') }}" class="btn btn-light btn-lg rounded-pill px-4">
+                  <i class="fas fa-vr-cardboard me-2"></i>{{ _('VR Meditation') }}
+                </a>
+                <a href="{{ url_for('ar_breathing') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                  <i class="fas fa-expand-arrows-alt me-2"></i>{{ _('AR Breathing') }}
+                </a>
+                <a href="{{ url_for('sound_venting') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                  <i class="fas fa-music me-2"></i>{{ _('Sound Therapy') }}
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="position-relative">
+                <div class="floating-icon" style="font-size: 6rem; opacity: 0.3;">🎧</div>
+                <div class="floating-icon" style="font-size: 4rem; position: absolute; top: -20px; left: 60px; animation-delay: 0.5s;">🥽</div>
+                <div class="floating-icon" style="font-size: 3rem; position: absolute; bottom: 20px; right: 40px; animation-delay: 1s;">🌟</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assessment History -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm hover-lift rounded-4">
+        <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-bold"><i class="fas fa-history me-2 text-secondary"></i>{{ _('Assessment History') }}</h5>
+          <a href="{{ url_for('assessments') }}" class="small text-periwinkle">{{ _('View all') }}</a>
+        </div>
+        <div class="card-body p-0">
+          {% if recent_assessments %}
+            <div class="table-responsive">
+              <table class="table mb-0 align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Type') }}</th>
+                    <th>{{ _('Score') }}</th>
+                    <th>{{ _('Severity') }}</th>
+                    <th>{{ _('Action') }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for a in recent_assessments %}
+                  <tr>
+                    <td>{{ a.completed_at.strftime('%d-%b-%Y %I:%M %p') }}</td>
+                    <td>{{ a.assessment_type }}</td>
+                    <td>{{ a.score }}</td>
+                    <td>
+                      <span class="badge {% if a.severity_level=='High' %}bg-danger{% elif a.severity_level=='Moderate' %}bg-warning{% else %}bg-success{% endif %}">
+                        {{ a.severity_level }}
+                      </span>
+                    </td>
+                    <td><a href="{{ url_for('assessment_results', assessment_id=a.id) }}" class="btn btn-sm btn-outline-periwinkle">{{ _('View') }}</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="p-3 text-muted">{{ _('No assessments found. Try completing one to track progress.') }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+:root {
+  --periwinkle: #809BCE;
+  --periwinkle-2: #9fa8ff;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, var(--periwinkle), var(--periwinkle-2));
+  color: #fff;
+}
+.text-periwinkle { color: var(--periwinkle); }
+.btn-outline-periwinkle {
+  color: var(--periwinkle);
+  border: 1px solid rgba(128,155,206,0.5);
+}
+.btn-outline-periwinkle:hover { background: var(--periwinkle); color: #fff; }
+.btn-outline-success { border-color: var(--success); color: var(--success); }
+.btn-outline-success:hover { background: var(--success); color:#fff; }
+.btn-outline-warning { border-color: var(--warning); color: var(--warning); }
+.btn-outline-warning:hover { background: var(--warning); color:#fff; }
+
+.shadow { box-shadow:0 6px 14px rgba(0,0,0,0.08)!important; }
+.shadow-sm { box-shadow:0 3px 8px rgba(0,0,0,0.05)!important; }
+.hover-lift { 
+  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.hover-lift:hover { 
+  transform: translateY(-8px) scale(1.02); 
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15)!important; 
+}
+
+/* VR/AR Specific Styles */
+.quick-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.quick-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.quick-card:hover::before {
+  left: 100%;
+}
+
+/* Immersive Technology Buttons */
+.btn[href*="vr_meditation"]:hover,
+.btn[href*="ar_breathing"]:hover,
+.btn[href*="sound_venting"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Floating Animation for Icons */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.floating-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Enhanced Button Styles */
+.btn-lg.rounded-pill {
+  border-radius: 50px !important;
+  padding: 12px 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.btn-outline-light:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.8);
+  transform: translateY(-3px);
+}
+</style>
+
+<script>
+// Enhanced dashboard interactions
+document.addEventListener('DOMContentLoaded', () => {
+  // Add ripple effect to cards
+  const cards = document.querySelectorAll('.quick-card, .card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-5px) scale(1.02)';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+  
+  // Progressive enhancement for VR/AR buttons
+  const vrBtn = document.querySelector('a[href*="vr_meditation"]');
+  const arBtn = document.querySelector('a[href*="ar_breathing"]');
+  
+  if (vrBtn) {
+    vrBtn.addEventListener('click', function(e) {
+      if (!navigator.xr) {
+        e.preventDefault();
+        alert('{{ _("VR not supported on this device. Redirecting to regular meditation...") }}');
+        window.location.href = "{{ url_for('meditation') }}";
+      }
+    });
+  }
+});
+</script>
+{% endblock %}
+
+/* Card Backgrounds */
+.card, .quick-card, .hero-banner, .hover-lift {
+  background-color: #f8f9fa; /* soft grey instead of white */
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, var(--periwinkle), var(--periwinkle-2));
+  color: #fff;
+}
+
+/* Removed mood button styles - no longer needed */
+
