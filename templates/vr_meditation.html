@@ -102,18 +102,23 @@
     <div class="vr-controls">
         <h4><i class="fas fa-palette"></i> Choose Your Environment</h4>
         <div class="environment-selector">
-            <button class="env-btn active" onclick="changeEnvironment('forest')" data-env="forest">
-                🌲 Peaceful Forest
+            <button class="env-btn active" onclick="changeEnvironment('forest')" data-env="forest" title="Immerse yourself in a peaceful forest with fireflies and gentle sounds">
+                🌲 Ancient Forest
             </button>
-            <button class="env-btn" onclick="changeEnvironment('beach')" data-env="beach">
-                🏖️ Calm Beach
+            <button class="env-btn" onclick="changeEnvironment('beach')" data-env="beach" title="Relax on a serene beach with gentle waves and golden sand">
+                🏖️ Tropical Beach
             </button>
-            <button class="env-btn" onclick="changeEnvironment('space')" data-env="space">
-                🌌 Cosmic Space
+            <button class="env-btn" onclick="changeEnvironment('space')" data-env="space" title="Float in the cosmic void with stars and celestial beauty">
+                🌌 Cosmic Void
             </button>
-            <button class="env-btn" onclick="changeEnvironment('mountain')" data-env="mountain">
-                🏔️ Mountain Valley
+            <button class="env-btn" onclick="changeEnvironment('mountain')" data-env="mountain" title="Breathe the pure air of high mountain peaks">
+                🏔️ Alpine Peaks
             </button>
+        </div>
+        
+        <!-- Environment Info Display -->
+        <div id="environmentInfo" style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+            <span id="currentEnvironment">🌲 Ancient Forest</span> - <span id="environmentDescription">Find peace among ancient trees with gentle fireflies</span>
         </div>
         
         <!-- Meditation Timer -->
@@ -140,28 +145,59 @@
             
             <!-- Assets -->
             <a-assets>
-                <!-- 360 Environment Images (you can replace these with actual 360° photos) -->
-                <img id="forestSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
-                <img id="beachSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/cubes.jpg">
-                <img id="spaceSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
-                <img id="mountainSky" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/lake.jpg">
+                <!-- High-Quality 360° Nature Environment Images -->
+                <img id="forestSky" src="https://cdn.jsdelivr.net/gh/aframevr/sample-assets@master/assets/360-images/kandao3.jpg" crossorigin="anonymous">
+                <img id="beachSky" src="https://cdn.jsdelivr.net/gh/aframevr/sample-assets@master/assets/360-images/beach.jpg" crossorigin="anonymous">
+                <img id="spaceSky" src="https://cdn.jsdelivr.net/gh/aframevr/sample-assets@master/assets/360-images/space.jpg" crossorigin="anonymous">
+                <img id="mountainSky" src="https://cdn.jsdelivr.net/gh/aframevr/sample-assets@master/assets/360-images/lake.jpg" crossorigin="anonymous">
                 
-                <!-- Audio Assets -->
+                <!-- Realistic Nature Fallback Images -->
+                <img id="forestFallback" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2048&h=1024&fit=crop&q=80" crossorigin="anonymous">
+                <img id="beachFallback" src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=2048&h=1024&fit=crop&q=80" crossorigin="anonymous">
+                <img id="mountainFallback" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2048&h=1024&fit=crop&q=80" crossorigin="anonymous">
+                <img id="spaceFallback" src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=2048&h=1024&fit=crop&q=80" crossorigin="anonymous">
+                
+                <!-- Enhanced Audio Assets -->
                 <audio id="forestAudio" src="/static/audio/nature-documentary-309042.mp3" preload="auto" loop></audio>
                 <audio id="beachAudio" src="/static/audio/waves-382467.mp3" preload="auto" loop></audio>
                 <audio id="relaxAudio" src="/static/audio/nostalgic-piano-396511.mp3" preload="auto" loop></audio>
+                
+                <!-- Additional Nature Sounds -->
+                <audio id="rainAudio" preload="auto" loop>
+                    <source src="https://www.soundjay.com/misc/sounds/rain-and-thunder-1.wav" type="audio/wav">
+                </audio>
+                <audio id="birdAudio" preload="auto" loop>
+                    <source src="https://www.soundjay.com/nature/sounds/forest-birds.wav" type="audio/wav">
+                </audio>
             </a-assets>
 
-            <!-- 360 Degree Background -->
-            <a-sky id="environmentSky" src="#forestSky" animation="property: rotation; to: 0 360 0; loop: true; dur: 120000"></a-sky>
+            <!-- 360 Degree Background with smooth rotation -->
+            <a-sky id="environmentSky" src="#forestSky" 
+                   animation="property: rotation; to: 0 360 0; loop: true; dur: 300000; easing: linear"></a-sky>
 
-            <!-- Breathing Guide Sphere -->
+            <!-- Enhanced Breathing Guide Sphere with glow effect -->
             <a-sphere id="breathingSphere" 
-                     position="0 2 -5" 
-                     radius="0.5" 
+                     position="0 1.5 -4" 
+                     radius="0.6" 
                      color="#4CC3D9" 
-                     opacity="0.7"
-                     animation="property: scale; to: 1.5 1.5 1.5; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                     opacity="0.8"
+                     material="transparent: true; shader: standard; roughness: 0.1; metalness: 0.3; emissive: #1a1a2e; emissiveIntensity: 0.3"
+                     animation="property: scale; to: 1.8 1.8 1.8; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                
+                <!-- Inner breathing light -->
+                <a-sphere radius="0.65" 
+                         color="#ffffff" 
+                         opacity="0.4"
+                         material="transparent: true; shader: standard; emissive: #ffffff; emissiveIntensity: 0.2"
+                         animation="property: opacity; to: 0.8; dir: alternate; dur: 4000; loop: true">
+                    <a-animation attribute="material.emissiveIntensity" 
+                               to="0.6" 
+                               direction="alternate" 
+                               dur="4000" 
+                               repeat="indefinite"></a-animation>
+                </a-sphere>
+                
+                <!-- Color changing animation -->
                 <a-animation attribute="material.color" 
                            to="#EF2D5E" 
                            direction="alternate" 
@@ -169,23 +205,83 @@
                            repeat="indefinite"></a-animation>
             </a-sphere>
 
-            <!-- Floating Particles for Ambiance -->
-            <a-entity id="particles">
-                <a-sphere position="-3 3 -8" radius="0.1" color="#FFC65D" opacity="0.6"
-                         animation="property: position; to: 3 4 -6; dur: 8000; loop: true; dir: alternate"></a-sphere>
-                <a-sphere position="4 4 -10" radius="0.15" color="#7BC8A4" opacity="0.5"
-                         animation="property: position; to: -2 5 -7; dur: 10000; loop: true; dir: alternate"></a-sphere>
-                <a-sphere position="0 5 -12" radius="0.08" color="#CC90E2" opacity="0.7"
-                         animation="property: position; to: 2 3 -9; dur: 6000; loop: true; dir: alternate"></a-sphere>
+            <!-- Realistic Nature Elements (Forest Environment) -->
+            <a-entity id="forestElements">
+                <!-- Virtual Trees -->
+                <a-cylinder position="-8 2 -12" radius="0.5" height="6" color="#8B4513" opacity="0.8"></a-cylinder>
+                <a-sphere position="-8 6 -12" radius="2" color="#228B22" opacity="0.7"></a-sphere>
+                
+                <a-cylinder position="6 2 -10" radius="0.4" height="5" color="#8B4513" opacity="0.8"></a-cylinder>
+                <a-sphere position="6 5.5 -10" radius="1.8" color="#32CD32" opacity="0.7"></a-sphere>
+                
+                <a-cylinder position="-4 1.5 -15" radius="0.6" height="4" color="#8B4513" opacity="0.8"></a-cylinder>
+                <a-sphere position="-4 4.5 -15" radius="2.2" color="#228B22" opacity="0.7"></a-sphere>
+                
+                <!-- Grass patches -->
+                <a-plane position="0 -0.5 -8" rotation="-90 0 0" width="20" height="20" 
+                        color="#32CD32" opacity="0.4" material="transparent: true"></a-plane>
+                
+                <!-- Flowers -->
+                <a-sphere position="2 0.2 -6" radius="0.1" color="#FF69B4" opacity="0.8"></a-sphere>
+                <a-sphere position="-3 0.2 -7" radius="0.1" color="#FFD700" opacity="0.8"></a-sphere>
+                <a-sphere position="4 0.2 -9" radius="0.1" color="#FF4500" opacity="0.8"></a-sphere>
             </a-entity>
 
-            <!-- Ambient Light -->
-            <a-light type="ambient" color="#404040" intensity="0.5"></a-light>
-            <a-light type="directional" position="1 1 1" color="#FFF" intensity="0.3"></a-light>
+            <!-- Beach Elements (initially hidden) -->
+            <a-entity id="beachElements" visible="false">
+                <!-- Sand -->
+                <a-plane position="0 -0.5 -8" rotation="-90 0 0" width="30" height="30" 
+                        color="#F4A460" opacity="0.6"></a-plane>
+                <!-- Palm trees -->
+                <a-cylinder position="-10 3 -15" radius="0.3" height="8" color="#8B4513"></a-cylinder>
+                <a-sphere position="-10 7.5 -15" radius="1.5" color="#228B22"></a-sphere>
+                <!-- Rocks -->
+                <a-sphere position="8 0.5 -12" radius="1" color="#696969" opacity="0.8"></a-sphere>
+                <a-sphere position="12 0.3 -10" radius="0.7" color="#708090" opacity="0.8"></a-sphere>
+            </a-entity>
 
-            <!-- Ground (optional, for some environments) -->
-            <a-plane id="ground" position="0 -1 -4" rotation="-90 0 0" width="20" height="20" 
-                    color="#7BC8A4" opacity="0.3" visible="false"></a-plane>
+            <!-- Mountain Elements (initially hidden) -->
+            <a-entity id="mountainElements" visible="false">
+                <!-- Mountain peaks -->
+                <a-cone position="-15 8 -25" radius-bottom="4" height="10" color="#8B7D6B"></a-cone>
+                <a-cone position="10 6 -20" radius-bottom="3" height="8" color="#A0522D"></a-cone>
+                <a-cone position="0 10 -30" radius-bottom="5" height="12" color="#696969"></a-cone>
+                <!-- Alpine grass -->
+                <a-plane position="0 -0.3 -8" rotation="-90 0 0" width="25" height="25" 
+                        color="#9ACD32" opacity="0.5"></a-plane>
+            </a-entity>
+
+            <!-- Enhanced Floating Particles for Different Environments -->
+            <a-entity id="particles">
+                <!-- Fireflies for forest -->
+                <a-sphere position="-3 3 -8" radius="0.05" color="#FFD700" opacity="0.9"
+                         material="emissive: #FFD700; emissiveIntensity: 0.5"
+                         animation="property: position; to: 3 4 -6; dur: 12000; loop: true; dir: alternate; easing: easeInOutSine"></a-sphere>
+                <a-sphere position="4 4 -10" radius="0.06" color="#FFF8DC" opacity="0.8"
+                         material="emissive: #FFF8DC; emissiveIntensity: 0.4"
+                         animation="property: position; to: -2 5 -7; dur: 15000; loop: true; dir: alternate; easing: easeInOutSine"></a-sphere>
+                <a-sphere position="0 5 -12" radius="0.04" color="#F0E68C" opacity="1.0"
+                         material="emissive: #F0E68C; emissiveIntensity: 0.6"
+                         animation="property: position; to: 2 3 -9; dur: 10000; loop: true; dir: alternate; easing: easeInOutSine"></a-sphere>
+                
+                <!-- Butterflies -->
+                <a-plane position="1 2 -5" rotation="0 45 0" width="0.3" height="0.2" color="#FF69B4" opacity="0.7"
+                        animation="property: position; to: -2 3 -7; dur: 8000; loop: true; dir: alternate"></a-plane>
+                <a-plane position="-2 2.5 -6" rotation="0 -30 0" width="0.25" height="0.18" color="#87CEEB" opacity="0.7"
+                        animation="property: position; to: 3 3.5 -8; dur: 9000; loop: true; dir: alternate"></a-plane>
+            </a-entity>
+
+            <!-- Enhanced Lighting for Realism -->
+            <a-light type="ambient" color="#404040" intensity="0.4"></a-light>
+            <a-light type="directional" position="5 10 2" color="#FFF8DC" intensity="0.6" 
+                    light="castShadow: true"></a-light>
+            <a-light type="point" position="0 4 -4" color="#FFD700" intensity="0.3" distance="10"></a-light>
+
+            <!-- Realistic Ground with texture -->
+            <a-plane id="ground" position="0 -0.5 -8" rotation="-90 0 0" width="40" height="40" 
+                    color="#228B22" opacity="0.6" 
+                    material="transparent: true; roughness: 0.8"
+                    shadow="receive: true"></a-plane>
 
             <!-- Meditation Text -->
             <a-text id="meditationText" 
@@ -245,37 +341,282 @@ let meditationStarted = false;
 let sessionStartTime = null;
 let currentAudio = null;
 
-// Environment configurations
+// Initialize VR meditation when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('VR Meditation page loaded');
+    initializeVRMeditation();
+});
+
+function initializeVRMeditation() {
+    console.log('Initializing VR Meditation...');
+    
+    // Wait for A-Frame to be ready
+    if (window.AFRAME && window.AFRAME.registerComponent) {
+        setupVRScene();
+    } else {
+        setTimeout(setupVRScene, 1000);
+    }
+}
+
+function setupVRScene() {
+    const scene = document.querySelector('#vrScene');
+    if (!scene) {
+        console.error('VR Scene not found');
+        return;
+    }
+    
+    console.log('VR Scene found, setting up...');
+    
+    // Add event listeners for scene ready
+    scene.addEventListener('loaded', function() {
+        console.log('VR Scene loaded successfully');
+        // Initialize default environment
+        changeEnvironment('forest');
+    });
+    
+    // Fallback initialization
+    setTimeout(function() {
+        if (!document.querySelector('#environmentSky')) {
+            console.warn('VR Scene taking too long to load, forcing initialization');
+            changeEnvironment('forest');
+        }
+    }, 3000);
+}
+
+// Enhanced Environment configurations with realistic elements
 const environments = {
     forest: {
         sky: '#forestSky',
+        fallbackSky: '#forestFallback',
         audio: 'forestAudio',
         color: '#228B22',
         ground: true,
-        text: 'Feel the peace of the forest...'
+        text: 'Find peace among the ancient trees...',
+        elements: 'forestElements',
+        lighting: { ambient: '#404040', directional: '#FFF8DC', intensity: 0.6 },
+        particles: 'fireflies'
     },
     beach: {
-        sky: '#beachSky', 
+        sky: '#beachSky',
+        fallbackSky: '#beachFallback',
         audio: 'beachAudio',
         color: '#4169E1',
-        ground: false,
-        text: 'Listen to the calming waves...'
+        ground: true,
+        text: 'Listen to the eternal rhythm of waves...',
+        elements: 'beachElements',
+        lighting: { ambient: '#87CEEB', directional: '#FFFFE0', intensity: 0.8 },
+        particles: 'seaSpray'
     },
     space: {
         sky: '#spaceSky',
+        fallbackSky: '#spaceFallback',
         audio: 'relaxAudio',
         color: '#191970',
         ground: false,
-        text: 'Float in cosmic tranquility...'
+        text: 'Float in infinite cosmic serenity...',
+        elements: null,
+        lighting: { ambient: '#0F0F23', directional: '#E6E6FA', intensity: 0.3 },
+        particles: 'stars'
     },
     mountain: {
         sky: '#mountainSky',
+        fallbackSky: '#mountainFallback',
         audio: 'relaxAudio',
         color: '#8B4513',
         ground: true,
-        text: 'Breathe in the mountain air...'
+        text: 'Breathe in the pure mountain air...',
+        elements: 'mountainElements',
+        lighting: { ambient: '#556B2F', directional: '#F0F8FF', intensity: 0.7 },
+        particles: 'mist'
     }
 };
+
+function changeEnvironment(envName) {
+    console.log(`Switching to ${envName} environment`);
+    const config = environments[envName];
+    if (!config) {
+        console.error(`Environment ${envName} not found`);
+        return;
+    }
+    
+    // Wait for scene to be ready
+    setTimeout(() => {
+        try {
+            // Update sky
+            const sky = document.querySelector('#environmentSky');
+            if (sky) {
+                sky.setAttribute('src', config.sky);
+                console.log(`Sky updated to ${config.sky}`);
+            } else {
+                console.error('Sky element not found');
+            }
+            
+            // Update meditation text with animation
+            const meditationText = document.querySelector('#meditationText');
+            if (meditationText) {
+                meditationText.setAttribute('value', config.text);
+                meditationText.setAttribute('animation', 'property: position; to: 0 4.5 -6; dir: alternate; dur: 3000; loop: true');
+                console.log(`Text updated: ${config.text}`);
+            }
+            
+            // Update breathing sphere with environment-specific color
+            const sphere = document.querySelector('#breathingSphere');
+            if (sphere) {
+        sphere.setAttribute('color', config.color);
+        sphere.setAttribute('material', `color: ${config.color}; transparent: true; shader: standard; roughness: 0.1; metalness: 0.3; emissive: ${config.color}; emissiveIntensity: 0.2`);
+    }
+    
+    // Show/hide environment-specific elements
+    hideAllEnvironmentElements();
+    if (config.elements) {
+        const elements = document.querySelector(`#${config.elements}`);
+        if (elements) {
+            elements.setAttribute('visible', true);
+            console.log(`Showing ${config.elements}`);
+        }
+    }
+    
+    // Update ground visibility and color
+    const ground = document.querySelector('#ground');
+    if (ground) {
+        ground.setAttribute('visible', config.ground);
+        if (envName === 'beach') {
+            ground.setAttribute('color', '#F4A460'); // Sand color
+        } else if (envName === 'forest') {
+            ground.setAttribute('color', '#228B22'); // Grass color
+        } else if (envName === 'mountain') {
+            ground.setAttribute('color', '#9ACD32'); // Alpine grass
+        }
+    }
+    
+    // Update lighting for realism
+    updateEnvironmentLighting(config.lighting);
+    
+    // Change audio with smooth transition
+    changeEnvironmentAudio(config.audio);
+    
+    // Update particles based on environment
+    updateEnvironmentParticles(envName);
+    
+    // Update active button
+    document.querySelectorAll('.env-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.querySelector(`[data-env="${envName}"]`);
+    if (activeBtn) {
+        activeBtn.classList.add('active');
+        
+        // Update environment info display
+        const currentEnvDisplay = document.getElementById('currentEnvironment');
+        const envDescDisplay = document.getElementById('environmentDescription');
+        
+        if (currentEnvDisplay) {
+            currentEnvDisplay.textContent = activeBtn.textContent;
+        }
+        
+        if (envDescDisplay) {
+            const descriptions = {
+                forest: 'Find peace among ancient trees with gentle fireflies',
+                beach: 'Relax with ocean waves and tropical serenity',
+                space: 'Float in cosmic infinity with distant stars',
+                mountain: 'Breathe pure mountain air with alpine tranquility'
+            };
+            envDescDisplay.textContent = descriptions[envName] || config.text;
+        }
+    }
+    
+            console.log(`Successfully switched to ${envName} environment`);
+        } catch (error) {
+            console.error('Error changing environment:', error);
+        }
+    }, 100);
+}
+
+function hideAllEnvironmentElements() {
+    const elementSets = ['forestElements', 'beachElements', 'mountainElements'];
+    elementSets.forEach(id => {
+        const elements = document.querySelector(`#${id}`);
+        if (elements) {
+            elements.setAttribute('visible', false);
+        }
+    });
+}
+
+function updateEnvironmentLighting(lighting) {
+    const ambientLight = document.querySelector('a-light[type="ambient"]');
+    const directionalLight = document.querySelector('a-light[type="directional"]');
+    
+    if (ambientLight) {
+        ambientLight.setAttribute('color', lighting.ambient);
+        ambientLight.setAttribute('intensity', lighting.intensity * 0.4);
+    }
+    
+    if (directionalLight) {
+        directionalLight.setAttribute('color', lighting.directional);
+        directionalLight.setAttribute('intensity', lighting.intensity);
+    }
+}
+
+function changeEnvironmentAudio(audioId) {
+    // Fade out current audio
+    if (currentAudio) {
+        const fadeOut = setInterval(() => {
+            if (currentAudio.volume > 0.1) {
+                currentAudio.volume -= 0.1;
+            } else {
+                currentAudio.pause();
+                currentAudio.volume = 1.0;
+                clearInterval(fadeOut);
+            }
+        }, 100);
+    }
+    
+    // Start new audio
+    currentAudio = document.querySelector('#' + audioId);
+    if (currentAudio && meditationStarted) {
+        currentAudio.volume = 0.1;
+        currentAudio.play().then(() => {
+            // Fade in new audio
+            const fadeIn = setInterval(() => {
+                if (currentAudio.volume < 0.7) {
+                    currentAudio.volume += 0.1;
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, 100);
+        }).catch(e => console.log('Audio play failed:', e));
+    }
+}
+
+function updateEnvironmentParticles(envName) {
+    const particles = document.querySelector('#particles');
+    if (!particles) return;
+    
+    // Reset all particles
+    const spheres = particles.querySelectorAll('a-sphere');
+    const planes = particles.querySelectorAll('a-plane');
+    
+    if (envName === 'forest') {
+        // Make particles look like fireflies
+        spheres.forEach((sphere, index) => {
+            sphere.setAttribute('color', index % 2 === 0 ? '#FFD700' : '#FFF8DC');
+            sphere.setAttribute('material', 'emissive: #FFD700; emissiveIntensity: 0.6');
+            sphere.setAttribute('opacity', '0.9');
+        });
+    } else if (envName === 'beach') {
+        // Make particles look like sea spray
+        spheres.forEach((sphere) => {
+            sphere.setAttribute('color', '#E0FFFF');
+            sphere.setAttribute('material', 'transparent: true');
+            sphere.setAttribute('opacity', '0.6');
+        });
+    } else if (envName === 'space') {
+        // Make particles look like stars
+        spheres.forEach((sphere) => {
+            sphere.setAttribute('color', '#FFFFFF');
+            sphere.setAttribute('material', 'emissive: #FFFFFF; emissiveIntensity: 0.8');
+            sphere.setAttribute('opacity', '1.0');
+        });
+    }
+}
 
 function changeEnvironment(envName) {
     const config = environments[envName];

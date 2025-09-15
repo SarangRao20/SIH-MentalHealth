@@ -19,8 +19,8 @@
     
     <div class="row g-4 mb-5">
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-destructive">
-                <div class="card-header bg-destructive text-white">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #e74c3c !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-paint-brush"></i> {{ _('Inkblot Test') }}
                     </h5>
@@ -31,21 +31,21 @@
                         {{ _('The Inkblot Test is a projective psychological test to analyze personality and emotional functioning.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-destructive"></i> {{ _('Takes 5-10 minutes') }}</li>
-                        <li><i class="fas fa-paint-brush text-destructive"></i> {{ _('10 inkblots') }}</li>
-                        <li><i class="fas fa-share text-destructive"></i> {{ _('Share results with mentor/counsellor') }}</li>
+                        <li><i class="fas fa-clock" style="color: #e74c3c;"></i> {{ _('Takes 5-10 minutes') }}</li>
+                        <li><i class="fas fa-paint-brush" style="color: #e74c3c;"></i> {{ _('10 inkblots') }}</li>
+                        <li><i class="fas fa-share" style="color: #e74c3c;"></i> {{ _('Share results with mentor/counsellor') }}</li>
                     </ul>
                 </div>
-                <div class="card-footer">
-                        <a href="/inkblot" class="btn btn-destructive w-100">
+                <div class="card-footer bg-transparent border-0">
+                    <a href="/inkblot" class="btn w-100 text-white" style="background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);">
                         <i class="fas fa-play"></i> {{ _('Start Inkblot Test') }}
                     </a>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100">
-                <div class="card-header text-white" style="background-color: #809bce">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #3498db !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-brain"></i> PHQ-9
                     </h5>
@@ -56,13 +56,13 @@
                         {{ _('The PHQ-9 is a reliable tool for screening, diagnosing, monitoring and measuring the severity of depression.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-periwinkle"></i> {{ _('Takes 2-3 minutes') }}</li>
-                        <li><i class="fas fa-question text-periwinkle"></i> {{ _('9 questions') }}</li>
-                        <li><i class="fas fa-chart-line text-periwinkle"></i> {{ _('Severity scoring') }}</li>
+                        <li><i class="fas fa-clock" style="color: #3498db;"></i> {{ _('Takes 2-3 minutes') }}</li>
+                        <li><i class="fas fa-question" style="color: #3498db;"></i> {{ _('9 questions') }}</li>
+                        <li><i class="fas fa-chart-line" style="color: #3498db;"></i> {{ _('Severity scoring') }}</li>
                     </ul>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ url_for('assessment_form', assessment_type='PHQ-9') }}" class="btn btn-primary w-100">
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ url_for('assessment_form', assessment_type='PHQ-9') }}" class="btn w-100 text-white" style="background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);">
                         <i class="fas fa-play"></i> {{ _('Start PHQ-9') }}
                     </a>
                 </div>
@@ -70,11 +70,10 @@
         </div>
         
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-accent">
-                <div class="card-header bg-accent text-white">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #27ae60 !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #27ae60, #229954);">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-heart-rate"></i> {{ _('GAD-7') }}
-                    GAD-7
                     </h5>
                 </div>
                 <div class="card-body">
@@ -83,13 +82,13 @@
                         {{ _('The GAD-7 is a validated tool for screening and measuring the severity of generalized anxiety disorder.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-accent"></i> {{ _('Takes 2-3 minutes') }}</li>
-                        <li><i class="fas fa-question text-accent"></i> {{ _('7 questions') }}</li>
-                        <li><i class="fas fa-chart-line text-accent"></i> {{ _('Anxiety levels') }}</li>
+                        <li><i class="fas fa-clock" style="color: #27ae60;"></i> {{ _('Takes 2-3 minutes') }}</li>
+                        <li><i class="fas fa-question" style="color: #27ae60;"></i> {{ _('7 questions') }}</li>
+                        <li><i class="fas fa-chart-line" style="color: #27ae60;"></i> {{ _('Anxiety levels') }}</li>
                     </ul>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ url_for('assessment_form', assessment_type='GAD-7') }}" class="btn btn-accent w-100">
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ url_for('assessment_form', assessment_type='GAD-7') }}" class="btn w-100 text-white" style="background: linear-gradient(135deg, #27ae60, #229954); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);">
                         <i class="fas fa-play"></i> {{ _('Start GAD-7') }}
                     </a>
                 </div>
@@ -97,8 +96,8 @@
         </div>
         
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100">
-                <div class="card-header bg-secondary text-white">
+            <div class="card h-100 border-0 shadow-lg hover-lift" style="border-left: 5px solid #9b59b6 !important;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-user-check"></i> {{ _('GHQ') }}
                     </h5>
@@ -109,13 +108,13 @@
                         {{ _('The GHQ is designed to detect psychiatric disorders in community settings and general medical practice.') }}
                     </p>
                     <ul class="list-unstyled small">
-                        <li><i class="fas fa-clock text-secondary"></i> {{ _('Takes 3-4 minutes') }}</li>
-                        <li><i class="fas fa-question text-secondary"></i> {{ _('12 questions') }}</li>
-                        <li><i class="fas fa-chart-line text-secondary"></i> {{ _('Overall wellbeing') }}</li>
+                        <li><i class="fas fa-clock" style="color: #9b59b6;"></i> {{ _('Takes 3-4 minutes') }}</li>
+                        <li><i class="fas fa-question" style="color: #9b59b6;"></i> {{ _('12 questions') }}</li>
+                        <li><i class="fas fa-chart-line" style="color: #9b59b6;"></i> {{ _('Overall wellbeing') }}</li>
                     </ul>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ url_for('assessment_form', assessment_type='GHQ') }}" class="btn btn-secondary w-100">
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ url_for('assessment_form', assessment_type='GHQ') }}" class="btn w-100 text-white" style="background: linear-gradient(135deg, #9b59b6, #8e44ad); border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);">
                         <i class="fas fa-play"></i> {{ _('Start GHQ') }}
                     </a>
                 </div>
@@ -245,4 +244,24 @@ function viewResults(assessmentId) {
 }
 </script>
 <script src="{{ url_for('static', filename='js/assessment.js') }}"></script>
+<style>
+.hover-lift {
+    transition: all 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+</style>
 {% endblock %}

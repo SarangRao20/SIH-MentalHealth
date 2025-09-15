@@ -153,79 +153,107 @@
             <div id="patternInfo" style="font-size: 0.9rem; opacity: 0.8;">Box Breathing: In-4, Hold-4, Out-4, Hold-4</div>
         </div>
         
-        <!-- AR Scene using device camera -->
+        <!-- Enhanced AR Scene with better camera handling -->
         <a-scene id="arScene" 
                  embedded 
                  style="height: 100%; width: 100%;"
-                 arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+                 arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; trackingMethod: best; maxDetectionRate: 60; canvasWidth: 640; canvasHeight: 480;"
                  vr-mode-ui="enabled: false"
-                 device-orientation-permission-ui="enabled: false">
+                 device-orientation-permission-ui="enabled: false"
+                 renderer="logarithmicDepthBuffer: true; colorManagement: true; sortObjects: true;">
             
-            <!-- AR Marker (you can use any QR code or create a custom marker) -->
+            <!-- Simplified AR Marker (uses standard Hiro marker) -->
             <a-marker id="breathingMarker" 
                       preset="hiro" 
                       smooth="true" 
                       smoothCount="10" 
                       smoothTolerance="0.01" 
-                      smoothThreshold="5">
+                      smoothThreshold="5"
+                      raycaster="objects: .raycastable">
                 
-                <!-- Breathing Guide Sphere -->
+                <!-- Main Breathing Guide Sphere -->
                 <a-sphere id="arBreathingSphere" 
                          position="0 0.5 0" 
-                         radius="0.3" 
+                         radius="0.4" 
                          color="#ff6b6b" 
-                         opacity="0.8"
-                         material="transparent: true; shader: standard"
-                         geometry="primitive: sphere; segmentsWidth: 32; segmentsHeight: 16"
-                         animation="property: scale; to: 2 2 2; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                         opacity="0.9"
+                         material="transparent: true; shader: standard; roughness: 0.3; metalness: 0.1"
+                         class="raycastable"
+                         animation="property: scale; to: 1.8 1.8 1.8; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
                     
                     <!-- Inner glow effect -->
-                    <a-sphere radius="0.35" 
+                    <a-sphere radius="0.45" 
                              color="#ffffff" 
-                             opacity="0.3"
-                             animation="property: opacity; to: 0.7; dir: alternate; dur: 4000; loop: true"></a-sphere>
+                             opacity="0.4"
+                             material="transparent: true; shader: standard"
+                             animation="property: opacity; to: 0.8; dir: alternate; dur: 4000; loop: true"></a-sphere>
+                             
+                    <!-- Pulsing ring effect -->
+                    <a-ring position="0 0 0" 
+                           radius-inner="0.5" 
+                           radius-outer="0.7" 
+                           color="#4ecdc4" 
+                           opacity="0.6"
+                           rotation="90 0 0"
+                           animation="property: scale; to: 1.5 1.5 1.5; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine"></a-ring>
                 </a-sphere>
                 
-                <!-- Breathing Text -->
+                <!-- Breathing Instruction Text -->
                 <a-text id="arBreathingText" 
                        value="Breathe In..." 
-                       position="0 1.5 0" 
+                       position="0 1.8 0" 
                        align="center" 
                        color="#ffffff" 
                        font="kelsonsans"
-                       scale="1.5 1.5 1.5"
+                       scale="2 2 2"
                        geometry="primitive: plane; width: auto; height: auto"
-                       material="color: rgba(0,0,0,0.7); opacity: 0.9"></a-text>
+                       material="color: rgba(0,0,0,0.8); opacity: 0.9; side: double"
+                       animation="property: position; to: 0 2 0; dir: alternate; dur: 2000; loop: true"></a-text>
                 
-                <!-- Particle Ring -->
-                <a-ring id="breathingRing" 
-                       position="0 0 0" 
-                       radius-inner="0.8" 
-                       radius-outer="1" 
-                       color="#4ecdc4" 
-                       opacity="0.6"
-                       rotation="90 0 0"
-                       animation="property: rotation; to: 90 360 0; dur: 8000; loop: true"></a-ring>
+                <!-- Floating particles for ambience -->
+                <a-entity id="particles">
+                    <a-sphere position="-1.5 2 -0.5" radius="0.05" color="#4ecdc4" opacity="0.7"
+                             animation="property: position; to: 1.5 3 0.5; dur: 8000; loop: true; dir: alternate; easing: easeInOutSine"></a-sphere>
+                    <a-sphere position="1.2 2.5 0.3" radius="0.08" color="#ff6b6b" opacity="0.6"
+                             animation="property: position; to: -1.2 3.2 -0.3; dur: 6000; loop: true; dir: alternate; easing: easeInOutSine"></a-sphere>
+                    <a-sphere position="0.8 1.8 -0.8" radius="0.06" color="#ffd93d" opacity="0.8"
+                             animation="property: position; to: -0.8 2.5 0.8; dur: 7000; loop: true; dir: alternate; easing: easeInOutSine"></a-sphere>
+                </a-entity>
                 
             </a-marker>
             
-            <!-- Markerless AR fallback -->
-            <a-entity id="markerlessBreathing" visible="false">
-                <a-sphere position="0 0 -2" 
-                         radius="0.2" 
+            <!-- Markerless AR fallback with better visibility -->
+            <a-entity id="markerlessBreathing" visible="false" position="0 0 -3">
+                <a-sphere id="fallbackSphere"
+                         position="0 0 0" 
+                         radius="0.3" 
                          color="#ff6b6b" 
-                         opacity="0.8"
-                         animation="property: scale; to: 1.5 1.5 1.5; dir: alternate; dur: 4000; loop: true"></a-sphere>
+                         opacity="0.9"
+                         material="transparent: true; shader: standard"
+                         animation="property: scale; to: 1.5 1.5 1.5; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                    <a-ring position="0 0 0" 
+                           radius-inner="0.4" 
+                           radius-outer="0.6" 
+                           color="#4ecdc4" 
+                           opacity="0.6"
+                           rotation="90 0 0"
+                           animation="property: rotation; to: 90 360 0; dur: 8000; loop: true"></a-ring>
+                </a-sphere>
                 
-                <a-text value="Follow the sphere" 
-                       position="0 0.8 -2" 
+                <a-text value="Follow the breathing sphere" 
+                       position="0 1 0" 
                        align="center" 
                        color="#ffffff"
-                       scale="0.8 0.8 0.8"></a-text>
+                       font="kelsonsans"
+                       scale="1.2 1.2 1.2"
+                       material="color: rgba(0,0,0,0.7); opacity: 0.9"></a-text>
             </a-entity>
 
-            <!-- Camera -->
-            <a-entity camera look-controls-enabled="false" wasd-controls-enabled="false"></a-entity>
+            <!-- AR Camera with better settings -->
+            <a-entity camera 
+                     look-controls-enabled="false" 
+                     wasd-controls-enabled="false"
+                     position="0 0 0"></a-entity>
         </a-scene>
     </div>
 
@@ -285,6 +313,87 @@ let breathingInterval = null;
 let currentPattern = { inhale: 4, hold1: 4, exhale: 4, hold2: 4 };
 let currentPhase = 0; // 0: inhale, 1: hold1, 2: exhale, 3: hold2
 let sessionStartTime = null;
+let cameraPermissionGranted = false;
+let arInitialized = false;
+
+// Initialize AR when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeAR();
+});
+
+function initializeAR() {
+    console.log('Initializing AR Breathing...');
+    
+    // Check for camera support
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        console.warn('Camera not supported, falling back to non-AR mode');
+        showFallbackMode();
+        return;
+    }
+    
+    // Request camera permission
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            console.log('Camera permission granted');
+            cameraPermissionGranted = true;
+            stream.getTracks().forEach(track => track.stop()); // Stop the test stream
+            
+            // Wait for A-Frame to be ready
+            if (window.AFRAME && window.AFRAME.registerComponent) {
+                setupARScene();
+            } else {
+                setTimeout(setupARScene, 1000);
+            }
+        })
+        .catch(function(error) {
+            console.error('Camera permission denied or error:', error);
+            showFallbackMode();
+        });
+}
+
+function setupARScene() {
+    const scene = document.querySelector('#arScene');
+    if (!scene) {
+        console.error('AR Scene not found');
+        return;
+    }
+    
+    // Add event listeners for AR.js
+    scene.addEventListener('arjs-video-loaded', function() {
+        console.log('AR.js video loaded successfully');
+        arInitialized = true;
+    });
+    
+    scene.addEventListener('camera-error', function(error) {
+        console.error('Camera error:', error);
+        showFallbackMode();
+    });
+    
+    // Fallback timer - if AR doesn't work in 10 seconds, show fallback
+    setTimeout(function() {
+        if (!arInitialized) {
+            console.warn('AR initialization timeout, showing fallback');
+            showFallbackMode();
+        }
+    }, 10000);
+}
+
+function showFallbackMode() {
+    console.log('Activating fallback mode');
+    const markerlessEntity = document.querySelector('#markerlessBreathing');
+    if (markerlessEntity) {
+        markerlessEntity.setAttribute('visible', true);
+    }
+    
+    // Update instructions
+    const instructions = document.querySelector('.ar-instructions');
+    if (instructions) {
+        instructions.innerHTML = `
+            <h5><i class="fas fa-info-circle text-warning"></i> Using Fallback Mode:</h5>
+            <p class="mb-0">Camera access not available. Using standard 3D breathing guide instead. The breathing sphere will appear in the center of your screen.</p>
+        `;
+    }
+}
 
 // Breathing patterns
 const patterns = {

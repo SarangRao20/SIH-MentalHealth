@@ -57,53 +57,76 @@
     </div>
 
     <div class="col-lg-4 col-md-12">
-      <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white d-flex flex-column align-items-center">
-        <div class="mb-3"><i class="fas fa-smile-beam fa-2x text-warning"></i></div>
-        <h6 class="text-muted mb-3">{{ _('How are you feeling?') }}</h6>
-        <div class="d-flex gap-3 justify-content-center mb-3">
-          <button class="mood-btn" data-mood="Very Happy">😊</button>
-          <button class="mood-btn" data-mood="Happy">🙂</button>
-          <button class="mood-btn" data-mood="Neutral">😐</button>
-          <button class="mood-btn" data-mood="Sad">☹️</button>
-          <button class="mood-btn" data-mood="Very Sad">😢</button>
+      <div class="card h-100 border-0 shadow-sm hover-lift p-4 rounded-4 text-center bg-white">
+        <div class="mb-3"><i class="fas fa-chart-line fa-2x text-success"></i></div>
+        <h6 class="text-muted mb-2">{{ _('Assessment Progress') }}</h6>
+        <div class="fs-3 fw-bold text-success">{{ recent_assessments|length }}</div>
+        <div class="small text-muted mt-2">{{ _('Assessments completed') }}</div>
+        <div class="mt-3">
+          <a href="{{ url_for('assessments') }}" class="btn btn-outline-success btn-sm">{{ _('Take Assessment') }}</a>
         </div>
-        <div id="mood-status" class="small text-muted">{{ _('Tap an emoji to quickly log your mood (stored locally)') }}</div>
       </div>
     </div>
   </div>
 
   <!-- Quick Actions -->
   <div class="row g-4 mb-5">
-    <div class="col-md-3">
+    <div class="col-lg-4 col-md-6">
       <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-periwinkle">
         <div class="mb-3"><i class="fas fa-head-side-medical fa-2x text-periwinkle"></i></div>
-        <h6 class="fw-bold">{{ _('Start Meditation') }}</h6>
-        <p class="text-muted small mb-3">{{ _('Take a calm 5–10 minute session.') }}</p>
+        <h6 class="fw-bold">{{ _('Meditation') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Traditional mindfulness session') }}</p>
         <a href="{{ url_for('meditation') }}" class="btn btn-outline-periwinkle btn-sm">{{ _('Start') }}</a>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-success">
-        <div class="mb-3"><i class="fas fa-calendar-check fa-2x text-success"></i></div>
-        <h6 class="fw-bold">{{ _('Plan Your Day') }}</h6>
-        <p class="text-muted small mb-3">{{ _('Organize tasks and keep focus.') }}</p>
-        <a href="{{ url_for('routine') }}" class="btn btn-outline-success btn-sm">{{ _('Plan') }}</a>
-      </div>
-    </div>
-    <div class="col-md-3">
+    
+    <div class="col-lg-4 col-md-6">
       <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-info">
         <div class="mb-3"><i class="fas fa-user-md fa-2x text-info"></i></div>
-        <h6 class="fw-bold">{{ _('Professional Consultation') }}</h6>
-        <p class="text-muted small mb-3">{{ _('Connect with qualified counsellors.') }}</p>
-        <a href="{{ url_for('consultation') }}" class="btn btn-outline-info btn-sm">{{ _('Book Now') }}</a>
+        <h6 class="fw-bold">{{ _('Consultation') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Connect with counsellors') }}</p>
+        <a href="{{ url_for('consultation') }}" class="btn btn-outline-info btn-sm">{{ _('Book') }}</a>
       </div>
     </div>
-    <div class="col-md-3">
+    
+    <div class="col-lg-4 col-md-12">
       <div class="quick-card p-4 rounded-4 h-100 text-center shadow-sm hover-lift bg-white border-top border-5 border-warning">
         <div class="mb-3"><i class="fas fa-comments fa-2x text-warning"></i></div>
-        <h6 class="fw-bold">{{ _('Chat Support') }}</h6>
-        <p class="text-muted small mb-3">{{ _('Immediate help when you need it.') }}</p>
+        <h6 class="fw-bold">{{ _('AI Support') }}</h6>
+        <p class="text-muted small mb-3">{{ _('Chat with mental health bot') }}</p>
         <a href="{{ url_for('chatbot') }}" class="btn btn-outline-warning btn-sm">{{ _('Chat') }}</a>
+      </div>
+    </div>
+  </div>  <!-- Immersive Experiences Showcase -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <div class="card-body p-5">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3 class="fw-bold mb-3">🚀 {{ _('Next-Gen Mental Wellness') }}</h3>
+              <p class="lead mb-4">{{ _('Experience cutting-edge VR meditation, AR-guided breathing, and therapeutic soundscapes designed for your mental health journey.') }}</p>
+              <div class="d-flex flex-wrap gap-3">
+                <a href="{{ url_for('vr_meditation') }}" class="btn btn-light btn-lg rounded-pill px-4">
+                  <i class="fas fa-vr-cardboard me-2"></i>{{ _('VR Meditation') }}
+                </a>
+                <a href="{{ url_for('ar_breathing') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                  <i class="fas fa-expand-arrows-alt me-2"></i>{{ _('AR Breathing') }}
+                </a>
+                <a href="{{ url_for('sound_venting') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                  <i class="fas fa-music me-2"></i>{{ _('Sound Therapy') }}
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="position-relative">
+                <div class="floating-icon" style="font-size: 6rem; opacity: 0.3;">🎧</div>
+                <div class="floating-icon" style="font-size: 4rem; position: absolute; top: -20px; left: 60px; animation-delay: 0.5s;">🥽</div>
+                <div class="floating-icon" style="font-size: 3rem; position: absolute; bottom: 20px; right: 40px; animation-delay: 1s;">🌟</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -182,30 +205,102 @@
 
 .shadow { box-shadow:0 6px 14px rgba(0,0,0,0.08)!important; }
 .shadow-sm { box-shadow:0 3px 8px rgba(0,0,0,0.05)!important; }
-.hover-lift { transition: all .25s ease; }
-.hover-lift:hover { transform: translateY(-6px); box-shadow: 0 14px 28px rgba(0,0,0,0.12)!important; }
-
-.mood-btn {
-  width:64px;height:64px;border:none;border-radius:14px;font-size:28px;background:#fff;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);cursor:pointer;transition:all .25s ease;
+.hover-lift { 
+  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); 
 }
-.mood-btn:hover { transform:translateY(-4px); box-shadow:0 10px 20px rgba(0,0,0,0.12); }
-.mood-btn.active { background:linear-gradient(135deg,var(--periwinkle),var(--periwinkle-2)); color:#fff; transform:scale(1.08); }
+.hover-lift:hover { 
+  transform: translateY(-8px) scale(1.02); 
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15)!important; 
+}
+
+/* VR/AR Specific Styles */
+.quick-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.quick-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.quick-card:hover::before {
+  left: 100%;
+}
+
+/* Immersive Technology Buttons */
+.btn[href*="vr_meditation"]:hover,
+.btn[href*="ar_breathing"]:hover,
+.btn[href*="sound_venting"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Floating Animation for Icons */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.floating-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Enhanced Button Styles */
+.btn-lg.rounded-pill {
+  border-radius: 50px !important;
+  padding: 12px 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.btn-outline-light:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.8);
+  transform: translateY(-3px);
+}
 </style>
 
 <script>
+// Enhanced dashboard interactions
 document.addEventListener('DOMContentLoaded', () => {
-  const btns=document.querySelectorAll('.mood-btn');
-  const status=document.getElementById('mood-status');
-  function showSaved(saved){ 
-    if(!saved){status.textContent="Tap an emoji to quickly log your mood (stored locally)";return;}
-    const obj=JSON.parse(saved); 
-    status.textContent=`Saved: ${obj.mood} • ${new Date(obj.time).toLocaleString()}`;
+  // Add ripple effect to cards
+  const cards = document.querySelectorAll('.quick-card, .card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-5px) scale(1.02)';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+  
+  // Progressive enhancement for VR/AR buttons
+  const vrBtn = document.querySelector('a[href*="vr_meditation"]');
+  const arBtn = document.querySelector('a[href*="ar_breathing"]');
+  
+  if (vrBtn) {
+    vrBtn.addEventListener('click', function(e) {
+      if (!navigator.xr) {
+        e.preventDefault();
+        alert('{{ _("VR not supported on this device. Redirecting to regular meditation...") }}');
+        window.location.href = "{{ url_for('meditation') }}";
+      }
+    });
   }
-  const saved=localStorage.getItem('mood'); 
-  if(saved){ const obj=JSON.parse(saved); btns.forEach(b=>{if(b.dataset.mood===obj.mood){b.classList.add('active');}}); showSaved(saved);}
-  btns.forEach(b=>b.addEventListener('click',()=>{btns.forEach(x=>x.classList.remove('active'));b.classList.add('active');
-    localStorage.setItem('mood',JSON.stringify({mood:b.dataset.mood,time:new Date().toISOString()}));showSaved(localStorage.getItem('mood'));}));
 });
 </script>
 {% endblock %}
@@ -220,7 +315,5 @@ document.addEventListener('DOMContentLoaded', () => {
   color: #fff;
 }
 
-.mood-btn {
-  background:#f1f2f6; /* subtle grey for mood buttons */
-}
+/* Removed mood button styles - no longer needed */
 

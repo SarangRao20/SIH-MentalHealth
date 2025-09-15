@@ -5,17 +5,20 @@
 {% block extra_head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-
+/* ------------------ Card Headers ------------------ */
 .card-header {
-    background-color: #809bce !important;
+    background-color: #4a90e2 !important; /* Periwinkle */
     color: #fff !important;
-    border-bottom: none; /* optional for cleaner look */
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
 }
 
+/* ------------------ Stats Cards ------------------ */
 .stats-card {
     transition: all 0.3s ease;
     border: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
 }
 
 .stats-card:hover {
@@ -23,16 +26,82 @@
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
+.stats-card.bg-periwinkle {
+    background-color: #4a90e2 !important;
+    color: #ffffff !important;
+}
+
+.stats-card.bg-periwinkle:hover {
+    background-color: #6aa0e8 !important;
+}
+
+/* Secondary stats card */
+.stats-card.bg-secondary {
+    background-color: #6c757d !important;
+    color: #ffffff !important;
+}
+
+.stats-card.bg-secondary:hover {
+    background-color: #5a6268 !important;
+}
+
+/* Metric Value */
 .metric-value {
     font-size: 2.5rem;
     font-weight: bold;
 }
 
-.chart-container {
-    position: relative;
-    height: 400px;
+/* ------------------ Comparison & Insight Cards ------------------ */
+.comparison-card {
+    background: #f8f9fa;
+    color: #374151; /* Dark text for readability */
+    border-radius: 0.5rem;
 }
 
+.insight-card {
+    border-left: 4px solid #4a90e2;
+    color: #374151;
+    border-radius: 0.5rem;
+}
+
+/* ------------------ Quick Action Buttons ------------------ */
+.btn-workshop-outline {
+    border-color: #28a745;
+    color: #28a745;
+    background-color: transparent;
+}
+
+.btn-workshop-outline:hover {
+    background-color: #B8E0D2;
+    color: #374151;
+    border-color: #B8E0D2;
+}
+
+.btn-report-outline {
+    border-color: #17a2b8;
+    color: #17a2b8;
+    background-color: transparent;
+}
+
+.btn-report-outline:hover {
+    background-color: #17a2b8;
+    color: #ffffff;
+    border-color: #17a2b8;
+}
+
+.btn-outline-flag {
+    border-color: #f6d656;
+    color: #f6d656;
+    background-color: transparent;
+}
+
+.btn-outline-flag:hover {
+    background-color: #faf0ca;
+    color: #374151;
+    border-color: #faf0ca;
+}
+
+/* ------------------ Alert Indicators ------------------ */
 .alert-indicator {
     position: absolute;
     top: 10px;
@@ -48,69 +117,18 @@
 .alert-low { background-color: #28a745; }
 
 @keyframes pulse {
-    0% { opacity: 1; }
+    0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
-    100% { opacity: 1; }
 }
 
-.comparison-card {
-    background: #f8f9fa;
-    color:#6b7280 ;
+/* ------------------ Headings ------------------ */
+h1, h2, h3, h4, h5, h6 {
+    color: #374151; /* Dark Slate Gray for readability */
 }
 
-.insight-card {
-    border-left: 4px solid #809bce;
-}
-
-.btn-workshop-outline {
-    border-color: #28a745;
-    color: #28a745;
-    background-color: transparent;
-}
-
-.btn-workshop-outline:hover {
-    background-color: #B8E0D2;
-    color: #374151;
-    border-color: #B8E0D2;
-}
-
-.btn-report-outline {
-    border-color: #95b8d1;
-    color: #95b8d1;
-    background-color: transparent;
-}
-
-.btn-report-outline:hover {
-    background-color: #95B8D1;
-    color: #374151;
-    border-color: #95B8D1;
-}
-
-.btn-outline-flag{
-    border-color: #f6d656;
-    color: #f7d44a;
-    background-color: transparent;
-}
-
-.btn-outline-flag:hover {
-    background-color: #faf0ca;
-    color: #374151;
-    border-color: #faf0ca;
-}
-
-/* ✅ Special styles for Active This Week & Crisis Alerts */
-.stats-card.active,
-.stats-card.crisis {
-    background-color: #809bce !important;  /* Periwinkle */
-    color: #ffffff !important;             /* White text */
-    border-radius: 0.5rem;
-}
-
-.stats-card.active:hover,
-.stats-card.crisis:hover {
-    background-color: #9aaee2 !important;  /* Lighter periwinkle on hover */
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+/* ------------------ Charts ------------------ */
+.doughnut-chart-bg {
+    background-color: #4a90e2; /* PHQ-9 */
 }
 
 </style>

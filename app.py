@@ -10,14 +10,7 @@ from sqlalchemy.orm import DeclarativeBase
 ## Removed inkblot import; will define inkblot routes in routes.py
 from database import db
 
-# Configure logging with reduced noise from comtypes
-logging.basicConfig(level=logging.INFO)
-
-# Suppress verbose debugging from comtypes (Windows Speech API)
-logging.getLogger('comtypes').setLevel(logging.WARNING)
-logging.getLogger('comtypes.client').setLevel(logging.WARNING)
-logging.getLogger('comtypes._post_coinit').setLevel(logging.WARNING)
-logging.getLogger('comtypes._comobject').setLevel(logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 
 class Base(DeclarativeBase):
     pass

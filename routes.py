@@ -390,49 +390,130 @@ def generate_analysis(assessment_type, score):
     if assessment_type == 'PHQ-9':
         if score <= 4:
             return {
-                "interpretation": "Your PHQ-9 score suggests minimal or no depression. This is great news!",
+                "interpretation": "Your PHQ-9 score of {} indicates minimal or no depression symptoms, which is excellent news! This suggests you're currently managing your mental health well and experiencing few or no significant depressive symptoms. This low score reflects good emotional regulation and psychological well-being.".format(score),
                 "recommendations": [
-                    "Continue with healthy lifestyle habits",
-                    "Practice regular self-care activities",
-                    "Maintain social connections"
+                    "Continue maintaining your current healthy lifestyle and mental health practices",
+                    "Keep up with regular self-care activities that bring you joy and relaxation",
+                    "Maintain strong social connections and support networks",
+                    "Practice preventive mental health care through regular check-ins with yourself",
+                    "Consider sharing your successful coping strategies with others who might benefit",
+                    "Stay aware of any changes in your mood or stress levels for early intervention"
                 ],
                 "coping_strategies": [
-                    "Regular exercise and physical activity",
-                    "Maintain a consistent sleep schedule",
-                    "Practice mindfulness and meditation"
+                    "Continue regular physical exercise - aim for at least 30 minutes of activity most days",
+                    "Maintain a consistent sleep schedule with 7-9 hours of quality sleep nightly",
+                    "Practice daily mindfulness, meditation, or deep breathing exercises",
+                    "Engage in hobbies and activities that bring you fulfillment and purpose",
+                    "Keep a gratitude journal to reinforce positive thinking patterns",
+                    "Stay connected with friends and family through regular communication",
+                    "Practice stress management techniques before challenging situations arise",
+                    "Maintain a balanced diet rich in nutrients that support brain health"
                 ],
+                "detailed_breakdown": {
+                    "score_range": "0-4 points",
+                    "severity_category": "Minimal Depression",
+                    "key_insights": [
+                        "You demonstrate strong emotional resilience and coping abilities",
+                        "Your current mental health practices are serving you well",
+                        "You're likely experiencing good quality of life and functioning",
+                        "This score suggests protective factors are working effectively"
+                    ],
+                    "warning_signs": [
+                        "Sudden changes in sleep patterns or appetite",
+                        "Increased irritability or mood swings",
+                        "Loss of interest in previously enjoyable activities",
+                        "Persistent feelings of sadness lasting more than two weeks"
+                    ]
+                },
                 "professional_help_recommended": False,
                 "urgency_level": "low"
             }
         elif score <= 9:
             return {
-                "interpretation": "Your PHQ-9 score suggests mild depression. Consider monitoring your mood and seeking support if symptoms persist.",
+                "interpretation": "Your PHQ-9 score of {} indicates mild depression symptoms. While this suggests some challenges with mood, it's encouraging that you're seeking support and taking steps to understand your mental health. Mild depression is very treatable, and with the right strategies and support, you can feel significantly better.".format(score),
                 "recommendations": [
-                    "Monitor your mood daily",
-                    "Consider counseling or therapy",
-                    "Engage in regular physical activity"
+                    "Track your mood daily using a journal or mood tracking app to identify patterns",
+                    "Consider scheduling a consultation with a licensed mental health counselor or therapist",
+                    "Engage in regular physical activity - even 20-30 minutes of walking can make a difference",
+                    "Establish a consistent daily routine to provide structure and stability",
+                    "Prioritize activities that previously brought you joy, even if they don't feel appealing right now",
+                    "Practice good sleep hygiene and aim for consistent sleep/wake times",
+                    "Consider joining a support group or online community for peer support",
+                    "Limit alcohol consumption and avoid substances that can worsen depression"
                 ],
                 "coping_strategies": [
-                    "Practice stress reduction techniques",
-                    "Maintain regular social activities",
-                    "Focus on healthy eating habits"
+                    "Practice progressive muscle relaxation and deep breathing exercises for stress reduction",
+                    "Maintain regular social activities, even when you don't feel like socializing",
+                    "Focus on nutrient-rich foods including omega-3 fatty acids, complex carbs, and lean proteins",
+                    "Try the '5-4-3-2-1' grounding technique when feeling overwhelmed",
+                    "Engage in creative activities like art, music, or writing for emotional expression",
+                    "Set small, achievable daily goals to build momentum and sense of accomplishment",
+                    "Practice mindful movement like yoga or tai chi",
+                    "Spend time in nature when possible, as outdoor exposure can boost mood"
                 ],
+                "detailed_breakdown": {
+                    "score_range": "5-9 points",
+                    "severity_category": "Mild Depression",
+                    "key_insights": [
+                        "You may experience low mood, reduced energy, or changes in sleep/appetite",
+                        "Symptoms are noticeable but don't severely impair daily functioning",
+                        "Early intervention can prevent progression to more severe depression",
+                        "Many people with mild depression respond well to lifestyle changes and therapy"
+                    ],
+                    "warning_signs": [
+                        "Symptoms persisting for more than 2 weeks without improvement",
+                        "Increasing difficulty with work, school, or relationship responsibilities",
+                        "Thoughts of self-harm or worthlessness",
+                        "Complete loss of interest in all previously enjoyable activities"
+                    ]
+                },
                 "professional_help_recommended": True,
                 "urgency_level": "low"
             }
         elif score <= 14:
             return {
-                "interpretation": "Your PHQ-9 score suggests moderate depression. You may benefit from professional support.",
+                "interpretation": "Your PHQ-9 score of {} indicates moderate depression symptoms. This level suggests that depression is having a noticeable impact on your daily life and functioning. The good news is that moderate depression is highly treatable with professional support, and many people see significant improvement with the right treatment approach.".format(score),
                 "recommendations": [
-                    "Seek professional counseling",
-                    "Consider therapy sessions",
-                    "Discuss with healthcare provider"
+                    "Schedule an appointment with a licensed mental health professional within the next 1-2 weeks",
+                    "Consider cognitive-behavioral therapy (CBT) or other evidence-based therapeutic approaches",
+                    "Discuss your symptoms with your primary healthcare provider to rule out medical causes",
+                    "Create a structured daily routine with regular sleep, meals, and activities",
+                    "Ask trusted friends or family members for additional support during this time",
+                    "Consider joining a depression support group or online community",
+                    "Keep a mood diary to track symptoms and identify triggers",
+                    "Discuss medication options with a psychiatrist if therapy alone isn't sufficient"
                 ],
                 "coping_strategies": [
-                    "Develop a daily routine",
-                    "Practice relaxation techniques",
-                    "Stay connected with support system"
+                    "Develop and maintain a consistent daily routine, even when motivation is low",
+                    "Practice progressive muscle relaxation and guided meditation for 10-20 minutes daily",
+                    "Stay connected with your support system - reach out even when you don't feel like it",
+                    "Break large tasks into smaller, manageable steps to avoid feeling overwhelmed",
+                    "Engage in 'behavioral activation' - do activities that used to bring joy, even if they don't feel appealing",
+                    "Practice the 'STOP' technique: Stop, Take a breath, Observe your thoughts, Proceed mindfully",
+                    "Use the '3-3-3 rule' when anxious: name 3 things you see, 3 sounds you hear, move 3 parts of your body",
+                    "Focus on basic self-care: regular showers, nutritious meals, and adequate sleep",
+                    "Limit news consumption and social media if they increase negative feelings",
+                    "Try light therapy, especially during winter months or if you spend lots of time indoors"
                 ],
+                "detailed_breakdown": {
+                    "score_range": "10-14 points",
+                    "severity_category": "Moderate Depression",
+                    "key_insights": [
+                        "Depression symptoms are significantly impacting your daily functioning and quality of life",
+                        "You may experience persistent low mood, fatigue, difficulty concentrating, or changes in sleep/appetite",
+                        "This level typically requires professional intervention for optimal recovery",
+                        "With proper treatment, most people with moderate depression see substantial improvement within 6-12 weeks",
+                        "Combination therapy (counseling + lifestyle changes) often shows the best outcomes"
+                    ],
+                    "warning_signs": [
+                        "Symptoms worsening rapidly or lasting more than 2 weeks without any improvement",
+                        "Increasing thoughts of self-harm, suicide, or feeling that life isn't worth living",
+                        "Complete inability to function at work, school, or in relationships",
+                        "Significant changes in eating patterns (eating much more or much less than usual)",
+                        "Sleeping much more or much less than normal for extended periods",
+                        "Increased use of alcohol or drugs to cope with feelings"
+                    ]
+                },
                 "professional_help_recommended": True,
                 "urgency_level": "medium"
             }
