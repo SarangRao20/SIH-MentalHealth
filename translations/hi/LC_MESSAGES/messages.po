@@ -20,11 +20,11 @@ msgstr ""
 
 #: templates/404.html:6 templates/404.html:9
 msgid "Page Not Found"
-msgstr ""
+msgstr "पेज नहीं मिला"
 
 #: templates/404.html:10
 msgid "Sorry, the page you are looking for does not exist."
-msgstr ""
+msgstr "क्षमा करें, आप जो पेज खोज रहे हैं वो मौजूद नहीं है।"
 
 #: templates/404.html:11
 #, fuzzy
@@ -33,19 +33,19 @@ msgstr "लॉग इन"
 
 #: templates/admin_dashboard.html:5
 msgid "Admin Analytics Dashboard"
-msgstr ""
+msgstr "एडमिन एनालिटिक्स डैशबोर्ड"
 
 #: templates/admin_dashboard.html:9
 msgid "Total Users"
-msgstr ""
+msgstr "कुल उपयोगकर्ता"
 
 #: templates/admin_dashboard.html:17
 msgid "Total Counsellors"
-msgstr ""
+msgstr "कुल परामर्शदाता"
 
 #: templates/admin_dashboard.html:25
 msgid "Total Bookings"
-msgstr ""
+msgstr "कुल बुकिंग"
 
 #: templates/admin_dashboard.html:40
 msgid "rated"
@@ -98,6 +98,207 @@ msgstr "ध्यान"
 
 #: templates/assessment_results.html:167
 msgid "Professional Support Recommended"
+msgstr "पेशेवर सहायता की सिफारिश की गई"
+
+# Landing page translations
+msgid "MindWell - Student Mental Health Support"
+msgstr "मिंडवेल - छात्र मानसिक स्वास्थ्य सहायता"
+
+msgid "Features"
+msgstr "विशेषताएं"
+
+msgid "Impact"
+msgstr "प्रभाव"
+
+msgid "Stories"
+msgstr "कहानियां"
+
+msgid "Contact"
+msgstr "संपर्क"
+
+msgid "Register"
+msgstr "रजिस्टर करें"
+
+msgid "Sign In"
+msgstr "साइन इन करें"
+
+msgid "Your Journey to"
+msgstr "आपकी यात्रा की शुरुआत"
+
+msgid "Mental Wellness"
+msgstr "मानसिक स्वास्थ्य"
+
+msgid "Starts Here"
+msgstr "यहाँ से होती है"
+
+msgid "A comprehensive platform designed specifically for high school students, providing professional mental health support, assessments, and counseling in a safe, confidential environment."
+msgstr "हाई स्कूल के छात्रों के लिए विशेष रूप से डिज़ाइन किया गया एक व्यापक प्लेटफॉर्म, जो सुरक्षित और गोपनीय वातावरण में पेशेवर मानसिक स्वास्थ्य सहायता, मूल्यांकन और परामर्श प्रदान करता है।"
+
+msgid "Comprehensive Wellness Support"
+msgstr "व्यापक कल्याण सहायता"
+
+msgid "Everything you need for mental wellness, designed with students in mind"
+msgstr "मानसिक कल्याण के लिए आपको जो कुछ भी चाहिए, छात्रों को ध्यान में रखते हुए डिज़ाइन किया गया"
+
+msgid "Mental Health Assessments"
+msgstr "मानसिक स्वास्थ्य मूल्यांकन"
+
+msgid "Professional PHQ-9, GAD-7, and GHQ assessments to understand your mental health."
+msgstr "आपके मानसिक स्वास्थ्य को समझने के लिए पेशेवर PHQ-9, GAD-7, और GHQ मूल्यांकन।"
+
+msgid "AI Wellness Companion"
+msgstr "AI कल्याण साथी"
+
+msgid "24/7 chatbot with crisis detection for immediate help and guidance."
+msgstr "तत्काल सहायता और मार्गदर्शन के लिए संकट का पता लगाने वाला 24/7 चैटबॉट।"
+
+msgid "Professional Counselors"
+msgstr "पेशेवर परामर्शदाता"
+
+msgid "Connect with qualified mental health professionals for personalized support."
+msgstr "व्यक्तिगत सहायता के लिए योग्य मानसिक स्वास्थ्य पेशेवरों से जुड़ें।"
+
+msgid "Mental Health: A Global Priority"
+msgstr "मानसिक स्वास्थ्य: एक वैश्विक प्राथमिकता"
+
+msgid "Students experience mental health issues"
+msgstr "छात्र मानसिक स्वास्थ्य समस्याओं का अनुभव करते हैं"
+
+msgid "Don't receive adequate support"
+msgstr "पर्याप्त सहायता नहीं मिलती"
+
+msgid "Conditions start by age 14"
+msgstr "स्थितियां 14 साल की उम्र से शुरू होती हैं"
+
+msgid "Improve with proper support"
+msgstr "उचित सहायता से सुधार होता है"
+
+msgid "Stories of Transformation"
+msgstr "परिवर्तन की कहानियां"
+
+msgid "Ready to Start Your Wellness Journey?"
+msgstr "अपनी कल्याण यात्रा शुरू करने के लिए तैयार हैं?"
+
+msgid "Join thousands of students who have found support, understanding, and tools for better mental health."
+msgstr "हजारों छात्रों के साथ जुड़ें जिन्होंने बेहतर मानसिक स्वास्थ्य के लिए सहायता, समझ और उपकरण पाए हैं।"
+
+msgid "Contact Support"
+msgstr "सहायता से संपर्क करें"
+
+msgid "Supporting student mental health with professional, accessible, and confidential care."
+msgstr "पेशेवर, सुलभ और गोपनीय देखभाल के साथ छात्र मानसिक स्वास्थ्य का समर्थन।"
+
+msgid "Platform"
+msgstr "प्लेटफॉर्म"
+
+msgid "Assessments"
+msgstr "मूल्यांकन"
+
+msgid "AI Support"
+msgstr "AI सहायता"
+
+msgid "Counselors"
+msgstr "परामर्शदाता"
+
+msgid "Wellness Tools"
+msgstr "कल्याण उपकरण"
+
+msgid "Support"
+msgstr "सहायता"
+
+msgid "Help Center"
+msgstr "सहायता केंद्र"
+
+msgid "Privacy Policy"
+msgstr "गोपनीयता नीति"
+
+msgid "Terms of Service"
+msgstr "सेवा की शर्तें"
+
+msgid "Crisis Resources"
+msgstr "संकट संसाधन"
+
+msgid "Emergency"
+msgstr "आपातकाल"
+
+msgid "If you're in crisis, please reach out:"
+msgstr "यदि आप संकट में हैं, तो कृपया संपर्क करें:"
+
+msgid "National Suicide Prevention Lifeline"
+msgstr "राष्ट्रीय आत्महत्या रोकथाम हेल्पलाइन"
+
+msgid "Crisis Text Line"
+msgstr "संकट टेक्स्ट लाइन"
+
+msgid "MindWell. All rights reserved."
+msgstr "मिंडवेल। सभी अधिकार सुरक्षित।"
+
+# Dashboard specific translations
+msgid "Welcome back"
+msgstr "वापस स्वागत है"
+
+msgid "Login Streak"
+msgstr "लॉगिन स्ट्रीक"
+
+msgid "days"
+msgstr "दिन"
+
+msgid "Meditation Sessions"
+msgstr "ध्यान सत्र"
+
+msgid "this week"
+msgstr "इस सप्ताह"
+
+msgid "Daily Inspiration"
+msgstr "दैनिक प्रेरणा"
+
+msgid "Every small step you take today brings you closer to a brighter tomorrow."
+msgstr "आज आप जो भी छोटा कदम उठाते हैं, वह आपको उज्ज्वल कल के करीब ले जाता है।"
+
+msgid "Meditation"
+msgstr "ध्यान"
+
+msgid "min"
+msgstr "मिनट"
+
+msgid "Sessions this week"
+msgstr "इस सप्ताह के सत्र"
+
+msgid "Tasks"
+msgstr "कार्य"
+
+msgid "Completed today"
+msgstr "आज पूरा किया"
+
+msgid "Assessment Progress"
+msgstr "मूल्यांकन प्रगति"
+
+msgid "Assessments completed"
+msgstr "मूल्यांकन पूरे किए गए"
+
+msgid "Take Assessment"
+msgstr "मूल्यांकन लें"
+
+msgid "Traditional mindfulness session"
+msgstr "पारंपरिक माइंडफुलनेस सत्र"
+
+msgid "Start"
+msgstr "शुरू करें"
+
+msgid "Consultation"
+msgstr "परामर्श"
+
+msgid "Connect with counsellors"
+msgstr "परामर्शदाताओं से जुड़ें"
+
+msgid "Book"
+msgstr "बुक करें"
+
+msgid "Chat with mental health bot"
+msgstr "मानसिक स्वास्थ्य बॉट के साथ चैट करें"
+
+msgid "Chat"
+msgstr "चैट"
 msgstr ""
 
 #: templates/assessment_results.html:170
@@ -182,15 +383,15 @@ msgstr ""
 
 #: templates/assessment_results.html:275
 msgid "Your assessment results are confidential and encrypted for your privacy."
-msgstr ""
+msgstr "आपके मूल्यांकन परिणाम गोपनीय हैं और आपकी निजता के लिए एन्क्रिप्टेड हैं।"
 
 #: templates/assessment_results.html:291
 msgid "Share Results"
-msgstr ""
+msgstr "परिणाम साझा करें"
 
 #: templates/assessment_results.html:296
 msgid "You can share these results with:"
-msgstr ""
+msgstr "आप इन परिणामों को इनके साथ साझा कर सकते हैं:"
 
 #: templates/assessment_results.html:301
 msgid "Email to Healthcare Provider"
@@ -2545,6 +2746,127 @@ msgstr "पेशेवर परामर्श"
 #~ msgid "Notes (Optional)"
 #~ msgstr "नोट्स (वैकल्पिक)"
 
+# Chatbot specific translations
+msgid "Share what's on your mind..."
+msgstr "अपने मन की बात साझा करें..."
+
+msgid "Need to talk"
+msgstr "बात करने की जरूरत है"
+
+msgid "Stress management"
+msgstr "तनाव प्रबंधन"
+
+msgid "End-to-end encrypted & confidential"
+msgstr "एंड-टू-एंड एन्क्रिप्टेड और गोपनीय"
+
+msgid "Press Enter to send"
+msgstr "भेजने के लिए Enter दबाएं"
+
+# Common navigation and UI terms
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+msgid "Resources"
+msgstr "संसाधन"
+
+msgid "Profile"
+msgstr "प्रोफ़ाइल"
+
+msgid "Settings"
+msgstr "सेटिंग्स"
+
+msgid "Logout"
+msgstr "लॉगआउट"
+
+msgid "Home"
+msgstr "होम"
+
+msgid "Back"
+msgstr "वापस"
+
+msgid "Next"
+msgstr "अगला"
+
+msgid "Previous"
+msgstr "पिछला"
+
+msgid "Submit"
+msgstr "सबमिट करें"
+
+msgid "Cancel"
+msgstr "रद्द करें"
+
+msgid "Save"
+msgstr "सेव करें"
+
+msgid "Delete"
+msgstr "डिलीट करें"
+
+msgid "Edit"
+msgstr "संपादित करें"
+
+msgid "View"
+msgstr "देखें"
+
+msgid "Close"
+msgstr "बंद करें"
+
+# Assessment and health terms
+msgid "Mild"
+msgstr "हल्का"
+
+msgid "Moderate"
+msgstr "मध्यम"
+
+msgid "Severe"
+msgstr "गंभीर"
+
+msgid "Depression"
+msgstr "अवसाद"
+
+msgid "Anxiety"
+msgstr "चिंता"
+
+msgid "Therapy"
+msgstr "चिकित्सा"
+
+msgid "Counseling"
+msgstr "परामर्श"
+
+msgid "Treatment"
+msgstr "उपचार"
+
+msgid "Wellness"
+msgstr "कल्याण"
+
+msgid "Mental Health"
+msgstr "मानसिक स्वास्थ्य"
+
+msgid "Progress"
+msgstr "प्रगति"
+
+msgid "Recovery"
+msgstr "रिकवरी"
+
+# Time-related terms
+msgid "Today"
+msgstr "आज"
+
+msgid "Yesterday"
+msgstr "कल"
+
+msgid "This Week"
+msgstr "इस सप्ताह"
+
+msgid "This Month"
+msgstr "इस महीने"
+
+msgid "Last Week"
+msgstr "पिछला सप्ताह"
+
+msgid "Last Month"
+msgstr "पिछला महीना"
+
 #~ msgid "Any additional details..."
 #~ msgstr "कोई अतिरिक्त विवरण..."
 
@@ -2712,3 +3034,67 @@ msgstr "संकट टेक्स्ट लाइन"
 
 msgid "MindWell. All rights reserved."
 msgstr "मिंडवेल। सर्वाधिकार सुरक्षित।"
+
+msgid "MindCare - Mental Health Support"
+msgstr "मिंडकेयर - मानसिक स्वास्थ्य सहायता"
+
+msgid "Mental Health Resources"
+msgstr "मानसिक स्वास्थ्य संसाधन"
+
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+msgid "Welcome"
+msgstr "स्वागत"
+
+msgid "Need Immediate Help?"
+msgstr "तत्काल सहायता चाहिए?"
+
+msgid "Crisis Support"
+msgstr "संकट सहायता"
+
+msgid "Chat Support"
+msgstr "चैट सहायता"
+
+msgid "Get Professional Help"
+msgstr "पेशेवर सहायता प्राप्त करें"
+
+msgid "Call"
+msgstr "कॉल करें"
+
+msgid "Types of Mental Health Professionals:"
+msgstr "मानसिक स्वास्थ्य पेशेवरों के प्रकार:"
+
+msgid "Welcome to the Venting Hall"
+msgstr "वेंटिंग हॉल में आपका स्वागत है"
+
+# More specific content translations
+msgid "Comprehensive tools and information for your mental wellness journey"
+msgstr "आपकी मानसिक कल्याण यात्रा के लिए व्यापक उपकरण और जानकारी"
+
+msgid "All Resources"
+msgstr "सभी संसाधन"
+
+msgid "Coping Techniques"
+msgstr "स्वीकार तकनीक"
+
+msgid "Difficulty with daily activities"
+msgstr "दैनिक गतिविधियों में कठिना"
+
+msgid "Using substances to cope"
+msgstr "मुकाबला करने के लिए पदार्थों का उपयोग"
+
+msgid "Relationship or academic problems"
+msgstr "रिश्ते या शैक्षणिक समस्याएं"
+
+msgid "Respond anonymously"
+msgstr "गुमनाम रूप से जवाब दें"
+
+msgid "Recommended for privacy and safety"
+msgstr "गोपनीयता और सुरक्षा के लिए अनुशंसित"
+
+msgid "Be kind and supportive to others"
+msgstr "दूसरों के लिए दयालु और सहयोगी बनें"
+
+msgid "No personal attacks or discrimination"
+msgstr "व्यक्तिगत हमले या भेदभाव नहीं"

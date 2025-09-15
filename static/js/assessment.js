@@ -499,7 +499,7 @@ function shareResults() {
 
 function viewResults(assessmentId) {
     // Navigate to results page
-    window.location.href = `/assessment/results/${assessmentId}`;
+    window.location.href = `/assessment_results/${assessmentId}`;
 }
 
 // Initialize assessment interface when DOM is ready

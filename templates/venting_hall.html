@@ -243,8 +243,8 @@
                         <a href="{{ url_for('chatbot') }}" class="support-btn">
                             <i class="fas fa-comments"></i> Need Immediate Support?
                         </a>
-                        <a href="tel:988" class="support-btn">
-                            <i class="fas fa-phone"></i> Crisis Support: 988
+                        <a href="tel:14416" class="support-btn">
+                            <i class="fas fa-phone"></i> {{ _('Crisis Support') }}: 14416
                         </a>
                     </div>
                 </div>
@@ -330,7 +330,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="anonymous" id="anonymous-{{ post.id }}" checked>
                                         <label class="form-check-label" for="anonymous-{{ post.id }}">
-                                            <small>Respond anonymously</small>
+                                            <small>{{ _('Respond anonymously') }}</small>
                                         </label>
                                     </div>
                                     <div>
@@ -384,7 +384,7 @@
                 <!-- Empty State -->
                 <div class="text-center py-5">
                     <i class="fas fa-users fa-3x text-muted mb-4"></i>
-                    <h4 class="text-muted">Welcome to the Venting Hall</h4>
+                    <h4 class="text-muted">{{ _('Welcome to the Venting Hall') }}</h4>
                     <p class="text-muted">
                         This is a safe space to share your thoughts and feelings. 
                         Be the first to start a conversation and connect with others.
@@ -435,7 +435,7 @@
                         <input class="form-check-input" type="checkbox" name="anonymous" id="anonymous" checked>
                         <label class="form-check-label" for="anonymous">
                             <i class="fas fa-user-secret"></i> Post anonymously
-                            <small class="text-muted d-block">Recommended for privacy and safety</small>
+                            <small class="text-muted d-block">{{ _('Recommended for privacy and safety') }}</small>
                         </label>
                     </div>
 
@@ -444,8 +444,8 @@
                             <i class="fas fa-heart text-danger"></i> Community Guidelines
                         </h6>
                         <ul class="mb-0 small">
-                            <li>Be kind and supportive to others</li>
-                            <li>No personal attacks or discrimination</li>
+                            <li>{{ _('Be kind and supportive to others') }}</li>
+                            <li>{{ _('No personal attacks or discrimination') }}</li>
                             <li>Respect privacy - don't share personal information</li>
                             <li>If you're in crisis, please seek immediate help</li>
                         </ul>
@@ -469,9 +469,9 @@
             <i class="fas fa-phone"></i> Crisis Support
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="tel:988">📞 Crisis Line: 988</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('chatbot') }}">💬 Chat Support</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('consultation') }}">👨‍⚕️ Get Professional Help</a></li>
+            <li><a class="dropdown-item" href="tel:14416">📞 {{ _('Crisis Support') }}: 14416</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('chatbot') }}">💬 {{ _('Chat Support') }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('consultation') }}">👨‍⚕️ {{ _('Get Professional Help') }}</a></li>
         </ul>
     </div>
 </div>

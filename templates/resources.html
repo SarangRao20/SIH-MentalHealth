@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Mental Health Resources - MindCare{% endblock %}
+{% block title %}{{ _('Mental Health Resources') }} - {{ _('MindCare - Mental Health Support') }}{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -72,12 +72,12 @@
 <div class="container mt-4">
     <!-- Crisis Support Alert -->
     <div class="crisis-alert text-center">
-        <h4><i class="fas fa-exclamation-triangle"></i> Need Immediate Help?</h4>
+        <h4><i class="fas fa-exclamation-triangle"></i> {{ _('Need Immediate Help?') }}</h4>
         <p class="mb-3">If you're having thoughts of self-harm or suicide, please reach out now:</p>
         <div class="row justify-content-center">
             <div class="col-md-4 mb-2">
-                <a href="tel:988" class="btn btn-light btn-lg">
-                    <i class="fas fa-phone"></i> Call 988
+                <a href="tel:14416" class="btn btn-light btn-lg">
+                    <i class="fas fa-phone"></i> {{ _('Call') }} 14416
                 </a>
             </div>
             <div class="col-md-4 mb-2">
@@ -90,18 +90,18 @@
 
     <!-- Page Header -->
     <div class="text-center mb-5">
-        <h1 class="display-4 text-primary">Mental Health Resources</h1>
-        <p class="lead">Comprehensive tools and information for your mental wellness journey</p>
+        <h1 class="display-4 text-primary">{{ _('Mental Health Resources') }}</h1>
+        <p class="lead">{{ _('Comprehensive tools and information for your mental wellness journey') }}</p>
     </div>
 
     <!-- Filter Buttons -->
     <div class="filter-buttons text-center">
-        <button class="btn filter-btn active" data-filter="all">All Resources</button>
+        <button class="btn filter-btn active" data-filter="all">{{ _('All Resources') }}</button>
         <button class="btn filter-btn" data-filter="anxiety">Anxiety</button>
         <button class="btn filter-btn" data-filter="stress">Stress</button>
         <button class="btn filter-btn" data-filter="depression">Depression</button>
         <button class="btn filter-btn" data-filter="wellness">Wellness</button>
-        <button class="btn filter-btn" data-filter="techniques">Coping Techniques</button>
+        <button class="btn filter-btn" data-filter="techniques">{{ _('Coping Techniques') }}</button>
     </div>
 
     <!-- Self-Help Articles Section -->
@@ -148,14 +148,14 @@
                             <h5>Consider professional help if you experience:</h5>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Symptoms persist for more than 2 weeks</li>
-                                <li class="list-group-item">Difficulty with daily activities</li>
+                                <li class="list-group-item">{{ _('Difficulty with daily activities') }}</li>
                                 <li class="list-group-item">Thoughts of self-harm</li>
-                                <li class="list-group-item">Using substances to cope</li>
-                                <li class="list-group-item">Relationship or academic problems</li>
+                                <li class="list-group-item">{{ _('Using substances to cope') }}</li>
+                                <li class="list-group-item">{{ _('Relationship or academic problems') }}</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <h5>Types of Mental Health Professionals:</h5>
+                            <h5>{{ _('Types of Mental Health Professionals:') }}</h5>
                             <div class="mb-3">
                                 <strong>Counselor:</strong> Licensed for talk therapy<br>
                                 <small class="text-muted">Good for: Anxiety, depression, stress, relationships</small>

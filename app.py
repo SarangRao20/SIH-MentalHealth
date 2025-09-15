@@ -24,7 +24,7 @@ app.config['LANGUAGES'] = {
     'en': 'English',
     'hi': 'हिंदी'
 }
-app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_DEFAULT_LOCALE'] = 'hi'
 app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///mental_health.db")

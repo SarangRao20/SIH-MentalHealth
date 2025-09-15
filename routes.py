@@ -405,6 +405,12 @@ def assessment_results(assessment_id):
                          analysis=analysis,
                          counsellors=counsellors)
 
+@app.route('/assessment/results/<int:assessment_id>')
+@login_required
+def assessment_results_redirect(assessment_id):
+    """Redirect old URL format to new format"""
+    return redirect(url_for('assessment_results', assessment_id=assessment_id))
+
 def generate_analysis(assessment_type, score):
     if assessment_type == 'PHQ-9':
         if score <= 4:
