@@ -340,9 +340,28 @@ def voice_chat():
     audio_path = voice_service.text_to_speech(text)
     
     if audio_path:
-        return jsonify({'audio_url': f'/audio/{audio_path}'})
+        import os
+        filename = os.path.basename(audio_path)
+        return jsonify({'audio_url': f'/audio/{filename}'})
     else:
         return jsonify({'error': 'Failed to generate speech'}), 500
+
+@app.route('/audio/<path:filename>')
+@login_required
+def serve_audio(filename):
+    """Serve generated audio files"""
+    import os
+    import tempfile
+    try:
+        # Construct the full path to the audio file
+        audio_file_path = os.path.join(tempfile.gettempdir(), filename)
+        if os.path.exists(audio_file_path):
+            return send_file(audio_file_path, mimetype='audio/mpeg')
+        else:
+            return jsonify({'error': 'Audio file not found'}), 404
+    except Exception as e:
+        app.logger.error(f"Error serving audio file: {e}")
+        return jsonify({'error': 'Failed to serve audio file'}), 500
 
 @app.route('/assessments')
 @login_required

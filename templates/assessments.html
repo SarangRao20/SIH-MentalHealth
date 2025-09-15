@@ -240,7 +240,7 @@
 {% block extra_scripts %}
 <script>
 function viewResults(assessmentId) {
-    window.location.href = `/assessment/results/${assessmentId}`;
+    window.location.href = `/assessment_results/${assessmentId}`;
 }
 </script>
 <script src="{{ url_for('static', filename='js/assessment.js') }}"></script>

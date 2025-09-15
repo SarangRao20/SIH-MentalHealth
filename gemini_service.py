@@ -13,7 +13,8 @@ CRISIS_KEYWORDS = [
     'suicide', 'kill myself', 'end my life', 'want to die', 'death wish',
     'self harm', 'cut myself', 'hurt myself', 'overdose', 'jump off',
     'not worth living', 'nobody cares', 'hopeless', 'worthless',
-    'can\'t go on', 'give up', 'end it all', 'better off dead'
+    'can\'t go on', 'give up', 'end it all', 'better off dead',
+    'marna hai', 'jaan deni hai', 'maut'
 ]
 
 def detect_crisis_keywords(text):
