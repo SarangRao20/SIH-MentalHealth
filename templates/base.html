@@ -55,6 +55,7 @@
                 {% else %}
                     <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt icon"></i><span class="label">{{ _('Dashboard') }}</span></a></li>
                     <li><a href="{{ url_for('chatbot') }}"><img id="chatbot-icon" src="{{ url_for('static', filename='images/bot.png') }}" class="icon" style="width: 20px; height: 20px; margin-right: 10px;"><span class="label">{{ _('Chat Support') }}</span></a></li>
+                    <li><a href="{{ url_for('perenall') }}"><i class="fas fa-seedling icon"></i><span class="label">🌱 {{ _('PerenAll AI') }}</span></a></li>
                     <li><a href="{{ url_for('assessments') }}"><i class="fas fa-clipboard-list icon"></i><span class="label">{{ _('Assessments') }}</span></a></li>
                     <li><a href="{{ url_for('meditation') }}"><i class="fas fa-leaf icon"></i><span class="label">{{ _('Meditation') }}</span></a></li>
                     <li><a href="{{ url_for('vr_meditation') }}"><i class="fas fa-vr-cardboard icon"></i><span class="label">🥽 {{ _('VR Meditation') }}</span></a></li>

@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PerrenAll 🌱</title>
-  <style>
+{% extends "base.html" %}
+
+{% block title %}PerenAll 🌱 - MindCare{% endblock %}
+
+{% block extra_head %}
+<style>
     body {
       margin: 0;
       font-family: "Inter", sans-serif;
@@ -119,10 +118,11 @@
     .hidden {
       display: none;
     }
-  </style>
-</head>
-<body>
-  <div class="container">
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1>PerrenAll 🌱</h1>
     <p>Discover your perfect plant companion! Answer a few questions and we’ll pair you with a plant that grows with your wellness journey.</p>
 
@@ -149,7 +149,7 @@
       </div>
 
       <button class="btn" onclick="resetQuiz()">Take Assessment Again</button>
-      <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
     </div>
 
     <!-- Growth Info -->
@@ -184,9 +184,11 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
+{% endblock %}
 
-  <script>
+{% block extra_scripts %}
+<script>
     const questions = [
       { question: "How would you describe your current stress level?", options: ["Very Low", "Low", "Moderate", "High", "Very High"] },
       { question: "How often do you feel overwhelmed by daily tasks?", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
@@ -280,6 +282,5 @@
 
     // Initialize first question
     loadQuestion();
-  </script>
-</body>
-</html>
+</script>
+{% endblock %}

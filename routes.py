@@ -206,6 +206,12 @@ def chatbot():
     
     return render_template('chatbot.html', messages=messages, session_id=chat_session.id)
 
+@app.route('/perenall')
+@login_required
+def perenall():
+    """PerenAll AI - Plant companion for wellness journey"""
+    return render_template('peranalAI.html')
+
 @app.route('/chat', methods=['POST'])
 @login_required
 def chat():
