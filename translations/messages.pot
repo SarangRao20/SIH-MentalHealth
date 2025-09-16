@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-13 10:49+0530\n"
+"POT-Creation-Date: 2025-09-16 14:04+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Assessment - MindCare"
 msgstr ""
 
-#: templates/assessment_form.html:11 templates/assessments.html:140
+#: templates/assessment_form.html:11 templates/assessments.html:139
 msgid "Assessment"
 msgstr ""
 
@@ -77,127 +77,256 @@ msgstr ""
 msgid "Submit Assessment"
 msgstr ""
 
-#: templates/assessment_results.html:99
+#: templates/assessment_results.html:202
+msgid "Results"
+msgstr ""
+
+#: templates/assessment_results.html:209
+msgid "Completed"
+msgstr ""
+
+#: templates/assessment_results.html:225
 msgid "Total Score"
 msgstr ""
 
-#: templates/assessment_results.html:104
+#: templates/assessment_results.html:230
 msgid "Score Interpretation"
 msgstr ""
 
-#: templates/assessment_results.html:122
-msgid "Recommendations"
+#: templates/assessment_results.html:235
+msgid "Level"
 msgstr ""
 
-#: templates/assessment_results.html:167
+#: templates/assessment_results.html:248
+msgid "Personalized Recommendations"
+msgstr ""
+
+#: templates/assessment_results.html:269
+msgid "Evidence-Based Coping Strategies"
+msgstr ""
+
+#: templates/assessment_results.html:294
+msgid "Detailed Analysis & Insights"
+msgstr ""
+
+#: templates/assessment_results.html:301
+msgid "Key Insights About Your Results"
+msgstr ""
+
+#: templates/assessment_results.html:304
+msgid "Score Range"
+msgstr ""
+
+#: templates/assessment_results.html:305
+msgid "Category"
+msgstr ""
+
+#: templates/assessment_results.html:319
+msgid "Important Warning Signs to Monitor"
+msgstr ""
+
+#: templates/assessment_results.html:322
+msgid "Please seek immediate help if you experience:"
+msgstr ""
+
+#: templates/assessment_results.html:347
 msgid "Professional Support Recommended"
 msgstr ""
 
-#: templates/assessment_results.html:170
+#: templates/assessment_results.html:350
 msgid ""
 "Your results suggest that speaking with a mental health professional "
 "could provide valuable support and insight!"
 msgstr ""
 
-#: templates/assessment_results.html:172
+#: templates/assessment_results.html:352
 msgid "Please consider seeking help soon."
 msgstr ""
 
-#: templates/assessment_results.html:179 templates/consultation.html:138
+#: templates/assessment_results.html:359 templates/consultation.html:138
 msgid "Request Consultation"
 msgstr ""
 
-#: templates/assessment_results.html:193 templates/chatbot.html:147
+#: templates/assessment_results.html:373 templates/chatbot.html:328
 msgid "Immediate Support Available"
 msgstr ""
 
-#: templates/assessment_results.html:196
+#: templates/assessment_results.html:376
 msgid ""
 "If you’re struggling with thoughts of self-harm or suicide, please seek "
 "help right away. Support is available, and you deserve care and safety."
 msgstr ""
 
-#: templates/assessment_results.html:201 templates/chatbot.html:156
+#: templates/assessment_results.html:381 templates/chatbot.html:337
 #: templates/consultation.html:152
 msgid "Call 988"
 msgstr ""
 
-#: templates/assessment_results.html:204
+#: templates/assessment_results.html:384
 msgid "Chat Now"
 msgstr ""
 
-#: templates/assessment_results.html:216
+#: templates/assessment_results.html:398
+msgid "Your Mental Health Journey & Follow-up Plan"
+msgstr ""
+
+#: templates/assessment_results.html:405
+msgid "Recommended Follow-up Schedule"
+msgstr ""
+
+#: templates/assessment_results.html:412
+msgid "Next 24-48 hours"
+msgstr ""
+
+#: templates/assessment_results.html:413
+msgid "Seek immediate professional support"
+msgstr ""
+
+#: templates/assessment_results.html:419
+msgid "1 week"
+msgstr ""
+
+#: templates/assessment_results.html:420
+msgid "Follow-up assessment recommended"
+msgstr ""
+
+#: templates/assessment_results.html:427
+msgid "Next 1-2 weeks"
+msgstr ""
+
+#: templates/assessment_results.html:428
+msgid "Schedule professional consultation"
+msgstr ""
+
+#: templates/assessment_results.html:434
+msgid "2-4 weeks"
+msgstr ""
+
+#: templates/assessment_results.html:435
+msgid "Retake assessment to track progress"
+msgstr ""
+
+#: templates/assessment_results.html:442
+msgid "4-6 weeks"
+msgstr ""
+
+#: templates/assessment_results.html:443
+msgid "Optional follow-up assessment"
+msgstr ""
+
+#: templates/assessment_results.html:450
+msgid "3 months"
+msgstr ""
+
+#: templates/assessment_results.html:451
+msgid "Comprehensive mental health review"
+msgstr ""
+
+#: templates/assessment_results.html:459
+msgid "Immediate Action Steps (Next 7 Days)"
+msgstr ""
+
+#: templates/assessment_results.html:466
+msgid "Contact crisis helpline or emergency services"
+msgstr ""
+
+#: templates/assessment_results.html:472
+msgid "Arrange to stay with trusted friend/family member"
+msgstr ""
+
+#: templates/assessment_results.html:479
+msgid "Schedule appointment with mental health professional"
+msgstr ""
+
+#: templates/assessment_results.html:485
+msgid "Start mood tracking journal"
+msgstr ""
+
+#: templates/assessment_results.html:492
+msgid "Continue current positive mental health practices"
+msgstr ""
+
+#: templates/assessment_results.html:498
+msgid "Schedule preventive check-in with counselor"
+msgstr ""
+
+#: templates/assessment_results.html:505
+msgid "Share results with trusted support person"
+msgstr ""
+
+#: templates/assessment_results.html:511
+msgid "Try 2-3 recommended coping strategies"
+msgstr ""
+
+#: templates/assessment_results.html:527
 msgid "Next Steps"
 msgstr ""
 
-#: templates/assessment_results.html:224 templates/base.html:54
-#: templates/chatbot.html:129 templates/consultation.html:154
-#: templates/dashboard.html:88
+#: templates/assessment_results.html:535 templates/base.html:57
+#: templates/consultation.html:154 templates/venting_hall.html:473
 msgid "Chat Support"
 msgstr ""
 
-#: templates/assessment_results.html:231 templates/base.html:66
-#: templates/dashboard.html:33
+#: templates/assessment_results.html:542 templates/base.html:59
+#: templates/dashboard.html:41 templates/dashboard.html:77
+#: templates/meditation.html:3
 msgid "Meditation"
 msgstr ""
 
-#: templates/assessment_results.html:238 templates/venting_hall.html:220
+#: templates/assessment_results.html:549 templates/venting_hall.html:220
 msgid "Venting Hall"
 msgstr ""
 
-#: templates/assessment_results.html:245
+#: templates/assessment_results.html:556
 msgid "More Assessments"
 msgstr ""
 
-#: templates/assessment_results.html:256 templates/base.html:48
+#: templates/assessment_results.html:567 templates/base.html:54
+#: templates/base.html:56
 msgid "Dashboard"
 msgstr ""
 
-#: templates/assessment_results.html:259
+#: templates/assessment_results.html:570
 msgid "Print Results"
 msgstr ""
 
-#: templates/assessment_results.html:262
+#: templates/assessment_results.html:573
 msgid "Share"
 msgstr ""
 
-#: templates/assessment_results.html:265 templates/assessment_results.html:314
+#: templates/assessment_results.html:576 templates/assessment_results.html:625
 msgid "Send to Counsellor"
 msgstr ""
 
-#: templates/assessment_results.html:268
+#: templates/assessment_results.html:579
 msgid "Your results have been sent to the counsellor!"
 msgstr ""
 
-#: templates/assessment_results.html:275
+#: templates/assessment_results.html:586
 msgid "Your assessment results are confidential and encrypted for your privacy."
 msgstr ""
 
-#: templates/assessment_results.html:291
+#: templates/assessment_results.html:602
 msgid "Share Results"
 msgstr ""
 
-#: templates/assessment_results.html:296
+#: templates/assessment_results.html:607
 msgid "You can share these results with:"
 msgstr ""
 
-#: templates/assessment_results.html:301
+#: templates/assessment_results.html:612
 msgid "Email to Healthcare Provider"
 msgstr ""
 
-#: templates/assessment_results.html:306 templates/consultation.html:415
+#: templates/assessment_results.html:617 templates/consultation.html:415
 msgid "Select Counsellor"
 msgstr ""
 
-#: templates/assessment_results.html:308 templates/consultation.html:418
+#: templates/assessment_results.html:619 templates/consultation.html:418
 msgid "Choose counsellor..."
 msgstr ""
 
-#: templates/assessment_results.html:315
-msgid "Send Result to Counsellor"
-msgstr ""
-
-#: templates/assessment_results.html:319 templates/assessments.html:233
+#: templates/assessment_results.html:629 templates/assessments.html:232
 #: templates/consultation.html:534
 msgid "Close"
 msgstr ""
@@ -236,7 +365,7 @@ msgstr ""
 msgid "Start Inkblot Test"
 msgstr ""
 
-#: templates/assessments.html:54 templates/assessments.html:154
+#: templates/assessments.html:54 templates/assessments.html:153
 msgid "Depression Screening"
 msgstr ""
 
@@ -246,7 +375,7 @@ msgid ""
 "measuring the severity of depression."
 msgstr ""
 
-#: templates/assessments.html:59 templates/assessments.html:86
+#: templates/assessments.html:59 templates/assessments.html:85
 msgid "Takes 2-3 minutes"
 msgstr ""
 
@@ -266,244 +395,302 @@ msgstr ""
 msgid "GAD-7"
 msgstr ""
 
-#: templates/assessments.html:81 templates/assessments.html:155
+#: templates/assessments.html:80 templates/assessments.html:154
 msgid "Anxiety Screening"
 msgstr ""
 
-#: templates/assessments.html:83
+#: templates/assessments.html:82
 msgid ""
 "The GAD-7 is a validated tool for screening and measuring the severity of"
 " generalized anxiety disorder."
 msgstr ""
 
-#: templates/assessments.html:87
+#: templates/assessments.html:86
 msgid "7 questions"
 msgstr ""
 
-#: templates/assessments.html:88
+#: templates/assessments.html:87
 msgid "Anxiety levels"
 msgstr ""
 
-#: templates/assessments.html:93
+#: templates/assessments.html:92
 msgid "Start GAD-7"
 msgstr ""
 
-#: templates/assessments.html:103
+#: templates/assessments.html:102
 msgid "GHQ"
 msgstr ""
 
-#: templates/assessments.html:107
+#: templates/assessments.html:106
 msgid "General Health Questionnaire"
 msgstr ""
 
-#: templates/assessments.html:109
+#: templates/assessments.html:108
 msgid ""
 "The GHQ is designed to detect psychiatric disorders in community settings"
 " and general medical practice."
 msgstr ""
 
-#: templates/assessments.html:112
+#: templates/assessments.html:111
 msgid "Takes 3-4 minutes"
 msgstr ""
 
-#: templates/assessments.html:113
+#: templates/assessments.html:112
 msgid "12 questions"
 msgstr ""
 
-#: templates/assessments.html:114
+#: templates/assessments.html:113
 msgid "Overall wellbeing"
 msgstr ""
 
-#: templates/assessments.html:119
+#: templates/assessments.html:118
 msgid "Start GHQ"
 msgstr ""
 
-#: templates/assessments.html:131
+#: templates/assessments.html:130
 msgid "Your Assessment History"
 msgstr ""
 
-#: templates/assessments.html:141 templates/dashboard.html:109
+#: templates/assessments.html:140 templates/dashboard.html:148
 msgid "Date"
 msgstr ""
 
-#: templates/assessments.html:142 templates/dashboard.html:111
+#: templates/assessments.html:141 templates/dashboard.html:150
 msgid "Score"
 msgstr ""
 
-#: templates/assessments.html:143 templates/dashboard.html:112
+#: templates/assessments.html:142 templates/dashboard.html:151
 msgid "Severity"
 msgstr ""
 
-#: templates/assessments.html:144
+#: templates/assessments.html:143
 msgid "Actions"
 msgstr ""
 
-#: templates/assessments.html:156
+#: templates/assessments.html:155
 msgid "General Health"
 msgstr ""
 
-#: templates/assessments.html:175
+#: templates/assessments.html:174
 msgid "View Results"
 msgstr ""
 
-#: templates/assessments.html:186
+#: templates/assessments.html:185
 msgid "No Assessments Yet"
 msgstr ""
 
-#: templates/assessments.html:188
+#: templates/assessments.html:187
 msgid "Take your first assessment to start tracking your mental health journey."
 msgstr ""
 
-#: templates/assessments.html:203
+#: templates/assessments.html:202
 msgid "About Mental Health Assessments"
 msgstr ""
 
-#: templates/assessments.html:210
+#: templates/assessments.html:209
 msgid "Why Take These Assessments?"
 msgstr ""
 
-#: templates/assessments.html:212
+#: templates/assessments.html:211
 msgid ""
 "These standardized tools help identify symptoms and track your mental "
 "health over time."
 msgstr ""
 
-#: templates/assessments.html:213
+#: templates/assessments.html:212
 msgid ""
 "They are used by healthcare professionals worldwide and provide valuable "
 "insights into your wellbeing."
 msgstr ""
 
-#: templates/assessments.html:216
+#: templates/assessments.html:215
 msgid "Important Notes:"
 msgstr ""
 
-#: templates/assessments.html:218
+#: templates/assessments.html:217
 msgid "These assessments are"
 msgstr ""
 
-#: templates/assessments.html:218
+#: templates/assessments.html:217
 msgid "not"
 msgstr ""
 
-#: templates/assessments.html:218
+#: templates/assessments.html:217
 msgid "a substitute for professional diagnosis"
 msgstr ""
 
-#: templates/assessments.html:219
+#: templates/assessments.html:218
 msgid "Results are confidential and encrypted for your privacy"
 msgstr ""
 
-#: templates/assessments.html:220
+#: templates/assessments.html:219
 msgid ""
 "Regular monitoring can help track progress and identify concerning "
 "patterns"
 msgstr ""
 
-#: templates/assessments.html:221
+#: templates/assessments.html:220
 msgid "Consider sharing results with a mental health professional"
 msgstr ""
 
-#: templates/assessments.html:226
+#: templates/assessments.html:225
 msgid "Remember:"
 msgstr ""
 
-#: templates/assessments.html:226
+#: templates/assessments.html:225
 msgid "If you're experiencing thoughts of self-harm or suicide,"
 msgstr ""
 
-#: templates/assessments.html:227
+#: templates/assessments.html:226
 msgid ""
 "please seek immediate help by calling 988 or visiting your nearest "
 "emergency room."
 msgstr ""
 
-#: templates/base.html:60
+#: templates/base.html:6
+msgid "EN"
+msgstr ""
+
+#: templates/base.html:7
+msgid "हिं"
+msgstr ""
+
+#: templates/base.html:11
+msgid "Nivana - Mental Health Support"
+msgstr ""
+
+#: templates/base.html:58 templates/landing.html:185
 msgid "Assessments"
 msgstr ""
 
-#: templates/base.html:72
+#: templates/base.html:60 templates/dashboard.html:111
+msgid "VR Meditation"
+msgstr ""
+
+#: templates/base.html:61 templates/dashboard.html:114
+msgid "AR Breathing"
+msgstr ""
+
+#: templates/base.html:62
+msgid "Resources"
+msgstr ""
+
+#: templates/base.html:63 templates/venting_room.html:3
+#: templates/venting_room.html:315
 msgid "Private Venting Room"
 msgstr ""
 
-#: templates/base.html:78
+#: templates/base.html:64
+msgid "Sound Venting"
+msgstr ""
+
+#: templates/base.html:65
 msgid "Community Support"
 msgstr ""
 
-#: templates/base.html:84
+#: templates/base.html:66 templates/dashboard.html:86
 msgid "Consultation"
 msgstr ""
 
-#: templates/base.html:90
+#: templates/base.html:67
 msgid "Routine"
 msgstr ""
 
-#: templates/base.html:97
+#: templates/base.html:69 templates/mentor_dashboard.html:143
 msgid "Mentor Dashboard"
 msgstr ""
 
-#: templates/base.html:126
+#: templates/base.html:91 templates/dashboard.html:18
 msgid "days"
 msgstr ""
 
-#: templates/base.html:131
+#: templates/base.html:96
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:136 templates/login.html:31
+#: templates/base.html:101 templates/login.html:31
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:140
+#: templates/base.html:105 templates/landing.html:50 templates/landing.html:71
+#: templates/landing.html:154
 msgid "Register"
 msgstr ""
 
-#: templates/chatbot.html:133
-msgid "Clear Chat"
+#: templates/chatbot.html:307
+msgid "AI Mental Health Assistant"
 msgstr ""
 
-#: templates/chatbot.html:136
-msgid "Voice Mode"
+#: templates/chatbot.html:308
+msgid "Your caring companion for mental wellness"
 msgstr ""
 
-#: templates/chatbot.html:149
+#: templates/chatbot.html:313
+msgid "Clear"
+msgstr ""
+
+#: templates/chatbot.html:316
+msgid "Voice"
+msgstr ""
+
+#: templates/chatbot.html:330
 msgid "Crisis Support Available"
 msgstr ""
 
-#: templates/chatbot.html:151
+#: templates/chatbot.html:332
 msgid ""
 "We noticed you might be going through a difficult time. Please consider "
 "reaching out for immediate help:"
 msgstr ""
 
-#: templates/chatbot.html:159
+#: templates/chatbot.html:340
 msgid "Get Help"
 msgstr ""
 
-#: templates/chatbot.html:169
+#: templates/chatbot.html:350
 msgid "Assessment Recommended"
 msgstr ""
 
-#: templates/chatbot.html:175
+#: templates/chatbot.html:356 templates/dashboard.html:66
 msgid "Take Assessment"
 msgstr ""
 
-#: templates/chatbot.html:205
-msgid "Welcome to Chat Support"
+#: templates/chatbot.html:390
+msgid "Hello! I'm here to help"
 msgstr ""
 
-#: templates/chatbot.html:207
+#: templates/chatbot.html:392
 msgid ""
-"I'm here to listen and provide support. Feel free to share what's on your"
-" mind."
+"I'm your AI mental health companion. Share whatever is on your mind - I'm"
+" here to listen, support, and guide you."
 msgstr ""
 
-#: templates/chatbot.html:218
-msgid "Type your message here..."
+#: templates/chatbot.html:395
+msgid "Try starting with:"
 msgstr ""
 
-#: templates/chatbot.html:228
-msgid "Your conversations are private and secure"
+#: templates/chatbot.html:398
+msgid "I'm feeling anxious"
+msgstr ""
+
+#: templates/chatbot.html:401
+msgid "Need to talk"
+msgstr ""
+
+#: templates/chatbot.html:404
+msgid "Stress management"
+msgstr ""
+
+#: templates/chatbot.html:419
+msgid "Share what's on your mind..."
+msgstr ""
+
+#: templates/chatbot.html:430
+msgid "End-to-end encrypted & confidential"
+msgstr ""
+
+#: templates/chatbot.html:434
+msgid "Press Enter to send"
 msgstr ""
 
 #: templates/consultation.html:3
@@ -600,7 +787,7 @@ msgstr ""
 msgid "Immediate availability"
 msgstr ""
 
-#: templates/consultation.html:224
+#: templates/consultation.html:224 templates/counsellor_dashboard.html:143
 msgid "Your Consultation Requests"
 msgstr ""
 
@@ -608,7 +795,7 @@ msgstr ""
 msgid "Date Requested"
 msgstr ""
 
-#: templates/consultation.html:234
+#: templates/consultation.html:234 templates/counsellor_dashboard.html:156
 msgid "Urgency"
 msgstr ""
 
@@ -620,7 +807,8 @@ msgstr ""
 msgid "Contact Method"
 msgstr ""
 
-#: templates/consultation.html:237
+#: templates/consultation.html:237 templates/counsellor_availability.html:34
+#: templates/counsellor_dashboard.html:159
 msgid "Status"
 msgstr ""
 
@@ -628,7 +816,7 @@ msgstr ""
 msgid "Session Date/Time"
 msgstr ""
 
-#: templates/consultation.html:251
+#: templates/consultation.html:251 templates/counsellor_dashboard.html:214
 msgid "Join Session"
 msgstr ""
 
@@ -778,7 +966,8 @@ msgstr ""
 msgid "Video call"
 msgstr ""
 
-#: templates/consultation.html:448 templates/register.html:33
+#: templates/consultation.html:448 templates/counsellor_dashboard.html:167
+#: templates/register.html:33
 msgid "Email"
 msgstr ""
 
@@ -869,96 +1058,451 @@ msgstr ""
 msgid "Consultation Details"
 msgstr ""
 
+#: templates/counsellor_availability.html:2
+#: templates/counsellor_availability.html:6
+#: templates/counsellor_dashboard.html:144
+msgid "Manage Availability"
+msgstr ""
+
+#: templates/counsellor_availability.html:7
+msgid "Back"
+msgstr ""
+
+#: templates/counsellor_availability.html:11
+#: templates/counsellor_availability.html:32 templates/dashboard.html:79
+msgid "Start"
+msgstr ""
+
+#: templates/counsellor_availability.html:15
+#: templates/counsellor_availability.html:33
+msgid "End"
+msgstr ""
+
+#: templates/counsellor_availability.html:19
+msgid "Add Slot"
+msgstr ""
+
+#: templates/counsellor_availability.html:24
+msgid "Your Slots"
+msgstr ""
+
+#: templates/counsellor_availability.html:25
+msgid "Back to Dashboard"
+msgstr ""
+
+#: templates/counsellor_availability.html:43
+#: templates/counsellor_dashboard.html:149
+#: templates/counsellor_dashboard.html:175
+msgid "Booked"
+msgstr ""
+
+#: templates/counsellor_availability.html:43
+msgid "Open"
+msgstr ""
+
+#: templates/counsellor_availability.html:50
+msgid "No slots yet. Add your first availability above."
+msgstr ""
+
+#: templates/counsellor_dashboard.html:2
+msgid "Counsellor Dashboard"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:148
+#: templates/counsellor_dashboard.html:173
+msgid "Pending"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:150
+#: templates/counsellor_dashboard.html:177
+msgid "Rejected"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:155
+msgid "User"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:157
+msgid "Time Slot"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:158 templates/landing.html:31
+msgid "Contact"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:160
+msgid "Notes"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:161
+msgid "Actions & Details"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:186
+msgid "View Assessment"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:191
+msgid "Accept"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:194
+msgid "Reject"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:199
+msgid "Schedule Follow-up"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:201
+msgid "Set Follow-up"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:204
+msgid "Follow-up"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:209
+msgid "Chat/Video Link"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:210
+msgid "Paste secure link here"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:211
+msgid "Set Link"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:219
+#: templates/counsellor_dashboard.html:227
+msgid "Session Notes"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:222
+msgid "Save Notes"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:223
+#: templates/counsellor_dashboard.html:228
+msgid "Download PDF"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:232
+msgid "Schedule Session"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:235
+msgid "Set Session"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:242
+msgid "Cancel Booking"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:247
+msgid "Scheduled"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:252
+msgid "Recent Assessments"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:260
+msgid "No test results"
+msgstr ""
+
+#: templates/counsellor_dashboard.html:269
+msgid "No consultation requests yet."
+msgstr ""
+
 #: templates/dashboard.html:13
 msgid "Welcome back"
 msgstr ""
 
-#: templates/dashboard.html:23
+#: templates/dashboard.html:18
+msgid "Login Streak"
+msgstr ""
+
+#: templates/dashboard.html:21
+msgid "Meditation Sessions"
+msgstr ""
+
+#: templates/dashboard.html:21
+msgid "this week"
+msgstr ""
+
+#: templates/dashboard.html:31
 msgid "Daily Inspiration"
 msgstr ""
 
-#: templates/dashboard.html:24
+#: templates/dashboard.html:32
 msgid "Every small step you take today brings you closer to a brighter tomorrow."
 msgstr ""
 
-#: templates/dashboard.html:34
+#: templates/dashboard.html:42
 msgid "min"
 msgstr ""
 
-#: templates/dashboard.html:35
+#: templates/dashboard.html:43
 msgid "Sessions this week"
 msgstr ""
 
-#: templates/dashboard.html:42
+#: templates/dashboard.html:50
 msgid "Tasks"
 msgstr ""
 
-#: templates/dashboard.html:44
+#: templates/dashboard.html:52
 msgid "Completed today"
 msgstr ""
 
-#: templates/dashboard.html:54
-msgid "How are you feeling?"
-msgstr ""
-
 #: templates/dashboard.html:62
-msgid "Tap an emoji to quickly log your mood (stored locally)"
+msgid "Assessment Progress"
 msgstr ""
 
-#: templates/dashboard.html:72
-msgid "Start Meditation"
+#: templates/dashboard.html:64
+msgid "Assessments completed"
 msgstr ""
 
-#: templates/dashboard.html:73
-msgid "Take a calm 5–10 minute session."
+#: templates/dashboard.html:78
+msgid "Traditional mindfulness session"
 msgstr ""
 
-#: templates/dashboard.html:74
-msgid "Start"
+#: templates/dashboard.html:87
+msgid "Connect with counsellors"
 msgstr ""
 
-#: templates/dashboard.html:80
-msgid "Plan Your Day"
+#: templates/dashboard.html:88
+msgid "Book"
 msgstr ""
 
-#: templates/dashboard.html:81
-msgid "Organize tasks and keep focus."
+#: templates/dashboard.html:95 templates/landing.html:186
+msgid "AI Support"
 msgstr ""
 
-#: templates/dashboard.html:82
-msgid "Plan"
+#: templates/dashboard.html:96
+msgid "Chat with mental health bot"
 msgstr ""
 
-#: templates/dashboard.html:89
-msgid "Immediate help when you need it."
-msgstr ""
-
-#: templates/dashboard.html:90
+#: templates/dashboard.html:97
 msgid "Chat"
 msgstr ""
 
-#: templates/dashboard.html:100
+#: templates/dashboard.html:107
+msgid "Next-Gen Mental Wellness"
+msgstr ""
+
+#: templates/dashboard.html:108
+msgid ""
+"Experience cutting-edge VR meditation, AR-guided breathing, and "
+"therapeutic soundscapes designed for your mental health journey."
+msgstr ""
+
+#: templates/dashboard.html:117
+msgid "Sound Therapy"
+msgstr ""
+
+#: templates/dashboard.html:139
 msgid "Assessment History"
 msgstr ""
 
-#: templates/dashboard.html:101
+#: templates/dashboard.html:140
 msgid "View all"
 msgstr ""
 
-#: templates/dashboard.html:110
+#: templates/dashboard.html:149
 msgid "Type"
 msgstr ""
 
-#: templates/dashboard.html:113
+#: templates/dashboard.html:152
 msgid "Action"
 msgstr ""
 
-#: templates/dashboard.html:127
+#: templates/dashboard.html:166
 msgid "View"
 msgstr ""
 
-#: templates/dashboard.html:134
+#: templates/dashboard.html:173
 msgid "No assessments found. Try completing one to track progress."
+msgstr ""
+
+#: templates/dashboard.html:299
+msgid "VR not supported on this device. Redirecting to regular meditation..."
+msgstr ""
+
+#: templates/landing.html:6
+msgid "MindWell - Student Mental Health Support"
+msgstr ""
+
+#: templates/landing.html:23 templates/landing.html:177
+msgid "MindWell"
+msgstr ""
+
+#: templates/landing.html:28
+msgid "Features"
+msgstr ""
+
+#: templates/landing.html:29
+msgid "Impact"
+msgstr ""
+
+#: templates/landing.html:30
+msgid "Stories"
+msgstr ""
+
+#: templates/landing.html:54
+msgid "Sign In"
+msgstr ""
+
+#: templates/landing.html:64
+msgid "Your Journey to"
+msgstr ""
+
+#: templates/landing.html:64
+msgid "Mental Wellness"
+msgstr ""
+
+#: templates/landing.html:64
+msgid "Starts Here"
+msgstr ""
+
+#: templates/landing.html:67
+msgid ""
+"A comprehensive platform designed specifically for high school students, "
+"providing professional mental health support, assessments, and counseling"
+" in a safe, confidential environment."
+msgstr ""
+
+#: templates/landing.html:80
+msgid "Comprehensive Wellness Support"
+msgstr ""
+
+#: templates/landing.html:82
+msgid "Everything you need for mental wellness, designed with students in mind"
+msgstr ""
+
+#: templates/landing.html:87
+msgid "Mental Health Assessments"
+msgstr ""
+
+#: templates/landing.html:88
+msgid ""
+"Professional PHQ-9, GAD-7, and GHQ assessments to understand your mental "
+"health."
+msgstr ""
+
+#: templates/landing.html:91
+msgid "AI Wellness Companion"
+msgstr ""
+
+#: templates/landing.html:92
+msgid "24/7 chatbot with crisis detection for immediate help and guidance."
+msgstr ""
+
+#: templates/landing.html:95
+msgid "Professional Counselors"
+msgstr ""
+
+#: templates/landing.html:96
+msgid ""
+"Connect with qualified mental health professionals for personalized "
+"support."
+msgstr ""
+
+#: templates/landing.html:105
+msgid "Mental Health: A Global Priority"
+msgstr ""
+
+#: templates/landing.html:109
+msgid "Students experience mental health issues"
+msgstr ""
+
+#: templates/landing.html:113
+msgid "Don't receive adequate support"
+msgstr ""
+
+#: templates/landing.html:117
+msgid "Conditions start by age 14"
+msgstr ""
+
+#: templates/landing.html:121
+msgid "Improve with proper support"
+msgstr ""
+
+#: templates/landing.html:128
+msgid "Stories of Transformation"
+msgstr ""
+
+#: templates/landing.html:149
+msgid "Ready to Start Your Wellness Journey?"
+msgstr ""
+
+#: templates/landing.html:150
+msgid ""
+"Join thousands of students who have found support, understanding, and "
+"tools for better mental health."
+msgstr ""
+
+#: templates/landing.html:158
+msgid "Contact Support"
+msgstr ""
+
+#: templates/landing.html:179
+msgid ""
+"Supporting student mental health with professional, accessible, and "
+"confidential care."
+msgstr ""
+
+#: templates/landing.html:183
+msgid "Platform"
+msgstr ""
+
+#: templates/landing.html:187
+msgid "Counselors"
+msgstr ""
+
+#: templates/landing.html:188
+msgid "Wellness Tools"
+msgstr ""
+
+#: templates/landing.html:193
+msgid "Support"
+msgstr ""
+
+#: templates/landing.html:195
+msgid "Help Center"
+msgstr ""
+
+#: templates/landing.html:196
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/landing.html:197
+msgid "Terms of Service"
+msgstr ""
+
+#: templates/landing.html:198
+msgid "Crisis Resources"
+msgstr ""
+
+#: templates/landing.html:203
+msgid "Emergency"
+msgstr ""
+
+#: templates/landing.html:204
+msgid "If you're in crisis, please reach out:"
+msgstr ""
+
+#: templates/landing.html:205
+msgid "National Suicide Prevention Lifeline"
+msgstr ""
+
+#: templates/landing.html:207
+msgid "Crisis Text Line"
+msgstr ""
+
+#: templates/landing.html:212
+msgid "MindWell. All rights reserved."
 msgstr ""
 
 #: templates/login.html:11
@@ -1013,6 +1557,114 @@ msgstr ""
 
 #: templates/meditation.html:298
 msgid "Choose your meditation journey:"
+msgstr ""
+
+#: templates/meditation.html:305 templates/meditation.html:313
+msgid "Start Session"
+msgstr ""
+
+#: templates/meditation.html:323
+msgid "Play"
+msgstr ""
+
+#: templates/meditation.html:324
+msgid "Pause"
+msgstr ""
+
+#: templates/meditation.html:325
+msgid "Stop"
+msgstr ""
+
+#: templates/mentor_dashboard.html:145
+msgid "Monitor student mental health and wellness trends"
+msgstr ""
+
+#: templates/mentor_dashboard.html:149
+msgid "Export Data"
+msgstr ""
+
+#: templates/mentor_dashboard.html:152
+msgid "Generate Report"
+msgstr ""
+
+#: templates/mentor_dashboard.html:168
+msgid "Total Students"
+msgstr ""
+
+#: templates/mentor_dashboard.html:170
+msgid "Registered users"
+msgstr ""
+
+#: templates/mentor_dashboard.html:186
+msgid "Active This Week"
+msgstr ""
+
+#: templates/mentor_dashboard.html:188
+msgid "Regular engagement"
+msgstr ""
+
+#: templates/mentor_dashboard.html:204
+msgid "Crisis Alerts"
+msgstr ""
+
+#: templates/mentor_dashboard.html:206
+msgid "Last 30 days"
+msgstr ""
+
+#: templates/mentor_dashboard.html:224
+msgid "Assessments Taken"
+msgstr ""
+
+#: templates/mentor_dashboard.html:226
+msgid "This month"
+msgstr ""
+
+#: templates/mentor_dashboard.html:243
+msgid "Stress Level Comparison"
+msgstr ""
+
+#: templates/mentor_dashboard.html:252
+msgid "Hostel Students"
+msgstr ""
+
+#: templates/mentor_dashboard.html:253 templates/mentor_dashboard.html:261
+msgid "students"
+msgstr ""
+
+#: templates/mentor_dashboard.html:260
+msgid "Local Students"
+msgstr ""
+
+#: templates/mentor_dashboard.html:298
+msgid "Assessment Distribution"
+msgstr ""
+
+#: templates/mentor_dashboard.html:314
+msgid "Mental Health Trends"
+msgstr ""
+
+#: templates/mentor_dashboard.html:327
+msgid "Key Insights"
+msgstr ""
+
+#: templates/mentor_dashboard.html:332
+msgid "Engagement Patterns"
+msgstr ""
+
+#: templates/mentor_dashboard.html:346
+msgid "Risk Factors"
+msgstr ""
+
+#: templates/mentor_dashboard.html:362
+msgid "Recommendations"
+msgstr ""
+
+#: templates/mentor_dashboard.html:387
+msgid "Quick Actions"
+msgstr ""
+
+#: templates/mentor_dashboard.html:416
+msgid "Recent Assessment Activity"
 msgstr ""
 
 #: templates/register.html:11
@@ -1083,6 +1735,50 @@ msgstr ""
 msgid ""
 "Your personal information is encrypted and secure. Student IDs are hashed"
 " for privacy protection."
+msgstr ""
+
+#: templates/resources.html:3 templates/resources.html:93
+msgid "Mental Health Resources"
+msgstr ""
+
+#: templates/resources.html:3
+msgid "MindCare - Mental Health Support"
+msgstr ""
+
+#: templates/resources.html:75
+msgid "Need Immediate Help?"
+msgstr ""
+
+#: templates/resources.html:80
+msgid "Call"
+msgstr ""
+
+#: templates/resources.html:94
+msgid "Comprehensive tools and information for your mental wellness journey"
+msgstr ""
+
+#: templates/resources.html:99
+msgid "All Resources"
+msgstr ""
+
+#: templates/resources.html:104
+msgid "Coping Techniques"
+msgstr ""
+
+#: templates/resources.html:151
+msgid "Difficulty with daily activities"
+msgstr ""
+
+#: templates/resources.html:153
+msgid "Using substances to cope"
+msgstr ""
+
+#: templates/resources.html:154
+msgid "Relationship or academic problems"
+msgstr ""
+
+#: templates/resources.html:158
+msgid "Types of Mental Health Professionals:"
 msgstr ""
 
 #: templates/routine.html:48
@@ -1169,5 +1865,97 @@ msgstr ""
 msgid ""
 "This is a supportive community where everyone is valued. Please be kind, "
 "respectful, and remember that sharing can be healing."
+msgstr ""
+
+#: templates/venting_hall.html:247 templates/venting_hall.html:472
+msgid "Crisis Support"
+msgstr ""
+
+#: templates/venting_hall.html:333
+msgid "Respond anonymously"
+msgstr ""
+
+#: templates/venting_hall.html:387
+msgid "Welcome to the Venting Hall"
+msgstr ""
+
+#: templates/venting_hall.html:438
+msgid "Recommended for privacy and safety"
+msgstr ""
+
+#: templates/venting_hall.html:447
+msgid "Be kind and supportive to others"
+msgstr ""
+
+#: templates/venting_hall.html:448
+msgid "No personal attacks or discrimination"
+msgstr ""
+
+#: templates/venting_hall.html:474
+msgid "Get Professional Help"
+msgstr ""
+
+#: templates/venting_room.html:316
+msgid "Write your worries on a sticky note, then burn them away to let go"
+msgstr ""
+
+#: templates/venting_room.html:320
+msgid "How it works"
+msgstr ""
+
+#: templates/venting_room.html:321
+msgid "Click \"New Note\" to create a sticky note"
+msgstr ""
+
+#: templates/venting_room.html:322
+msgid "Write down what's bothering you"
+msgstr ""
+
+#: templates/venting_room.html:323
+msgid "Drag the note to the fire zone to burn it"
+msgstr ""
+
+#: templates/venting_room.html:324
+msgid "Watch your worries turn to ash and disappear"
+msgstr ""
+
+#: templates/venting_room.html:330
+msgid "Drop to Burn"
+msgstr ""
+
+#: templates/venting_room.html:334
+msgid "New Note"
+msgstr ""
+
+#: templates/venting_room.html:341
+msgid "Your worries have been released"
+msgstr ""
+
+#: templates/venting_room.html:342
+msgid "Sometimes letting go is the first step toward healing."
+msgstr ""
+
+#: templates/venting_room.html:347
+msgid "Continue"
+msgstr ""
+
+#: templates/venting_room.html:398
+msgid "Write what's bothering you..."
+msgstr ""
+
+#: templates/venting_room.html:399
+msgid "Then let it go."
+msgstr ""
+
+#: templates/venting_room.html:638
+msgid "Welcome to your private space!"
+msgstr ""
+
+#: templates/venting_room.html:639
+msgid "Write anything that's weighing on your mind..."
+msgstr ""
+
+#: templates/venting_room.html:640
+msgid "Then drag this note to the fire to let it go."
 msgstr ""
 
