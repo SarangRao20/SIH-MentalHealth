@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PerrenAll 🌱</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: #f9fafb;
+      color: #111827;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-family: serif;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    p {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .progress {
+      height: 100%;
+      background: #4f46e5;
+      width: 0%;
+      transition: width 0.6s ease;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .options button:hover {
+      background: #f3f4f6;
+    }
+    .plant-emoji {
+      font-size: 5rem;
+      margin: 1rem 0;
+      animation: sway 2s infinite ease-in-out;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(5deg); }
+    }
+    .traits span {
+      display: inline-block;
+      margin: 0.3rem;
+      padding: 0.4rem 0.8rem;
+      background: #f3f4f6;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 0.5rem;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background: #f3f4f6;
+    }
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+      border: none;
+    }
+    .growth-section {
+      margin-top: 2rem;
+    }
+    .growth-item {
+      display: flex;
+      align-items: center;
+      margin: 1rem 0;
+    }
+    .growth-item span {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+    .growth-item p {
+      margin: 0;
+      text-align: left;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PerrenAll 🌱</h1>
+    <p>Discover your perfect plant companion! Answer a few questions and we’ll pair you with a plant that grows with your wellness journey.</p>
+
+    <!-- Quiz Card -->
+    <div id="quizCard" class="card">
+      <h2 id="questionTitle">Question 1 of 5</h2>
+      <p id="questionText">Loading...</p>
+      <div class="progress-bar"><div id="quizProgress" class="progress"></div></div>
+      <div id="options" class="options"></div>
+    </div>
+
+    <!-- Result Card -->
+    <div id="resultCard" class="card hidden" style="text-align:center;">
+      <h2>Meet Your Plant Companion!</h2>
+      <div id="plantEmoji" class="plant-emoji"></div>
+      <h3 id="plantName"></h3>
+      <p id="plantDesc"></p>
+      <div id="plantTraits" class="traits"></div>
+
+      <div class="growth-section">
+        <h4>Your Plant’s Growth Progress</h4>
+        <div class="progress-bar"><div id="growthProgress" class="progress"></div></div>
+        <p>Your plant grows as you engage with wellness activities!</p>
+      </div>
+
+      <button class="btn" onclick="resetQuiz()">Take Assessment Again</button>
+      <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+    </div>
+
+    <!-- Growth Info -->
+    <div class="card">
+      <h2>How Your Plant Grows</h2>
+      <div class="growth-item">
+        <span>🧘</span>
+        <div>
+          <p><strong>Meditation Sessions</strong></p>
+          <p>+5 growth points</p>
+        </div>
+      </div>
+      <div class="growth-item">
+        <span>✅</span>
+        <div>
+          <p><strong>Completed Routines</strong></p>
+          <p>+3 growth points</p>
+        </div>
+      </div>
+      <div class="growth-item">
+        <span>📊</span>
+        <div>
+          <p><strong>Assessment Check-ins</strong></p>
+          <p>+7 growth points</p>
+        </div>
+      </div>
+      <div class="growth-item">
+        <span>💬</span>
+        <div>
+          <p><strong>Support Interactions</strong></p>
+          <p>+4 growth points</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { question: "How would you describe your current stress level?", options: ["Very Low", "Low", "Moderate", "High", "Very High"] },
+      { question: "How often do you feel overwhelmed by daily tasks?", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+      { question: "What time of day do you feel most energetic?", options: ["Early Morning", "Mid Morning", "Afternoon", "Evening", "Night"] },
+      { question: "How do you prefer to handle challenges?", options: ["Head-on", "Step by step", "With support", "Take breaks", "Avoid initially"] },
+      { question: "What environment helps you feel most calm?", options: ["Bright & Sunny", "Dim & Cozy", "Natural & Green", "Minimal & Clean", "Colorful & Vibrant"] }
+    ];
+
+    const plants = {
+      "Resilient Oak": { emoji: "🌳", description: "Strong and steady, the Oak represents resilience and grounding. Perfect for those who face challenges head-on.", traits: ["Stability", "Strength", "Endurance"] },
+      "Gentle Fern": { emoji: "🌿", description: "Delicate yet persistent, the Fern thrives in gentle environments and represents gradual growth.", traits: ["Patience", "Adaptability", "Grace"] },
+      "Bright Sunflower": { emoji: "🌻", description: "Always reaching toward the light, the Sunflower embodies optimism and energy.", traits: ["Positivity", "Energy", "Growth"] },
+      "Calm Lavender": { emoji: "💜", description: "Soothing and peaceful, Lavender brings tranquility and helps manage stress naturally.", traits: ["Serenity", "Balance", "Healing"] },
+      "Vibrant Lotus": { emoji: "🪷", description: "Rising from muddy waters to bloom beautifully, the Lotus represents transformation and renewal.", traits: ["Transformation", "Purity", "Enlightenment"] }
+    };
+
+    let currentQuestion = 0;
+    let answers = [];
+
+    const quizCard = document.getElementById("quizCard");
+    const resultCard = document.getElementById("resultCard");
+    const questionTitle = document.getElementById("questionTitle");
+    const questionText = document.getElementById("questionText");
+    const optionsDiv = document.getElementById("options");
+    const quizProgress = document.getElementById("quizProgress");
+
+    const plantEmoji = document.getElementById("plantEmoji");
+    const plantName = document.getElementById("plantName");
+    const plantDesc = document.getElementById("plantDesc");
+    const plantTraits = document.getElementById("plantTraits");
+    const growthProgress = document.getElementById("growthProgress");
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      questionTitle.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      questionText.textContent = q.question;
+      quizProgress.style.width = `${(currentQuestion / questions.length) * 100}%`;
+
+      optionsDiv.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => handleAnswer(opt);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(answer) {
+      answers.push(answer);
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      quizCard.classList.add("hidden");
+      resultCard.classList.remove("hidden");
+
+      const plantNames = Object.keys(plants);
+      const selectedPlant = plantNames[Math.floor(Math.random() * plantNames.length)];
+      const plant = plants[selectedPlant];
+
+      plantEmoji.textContent = plant.emoji;
+      plantName.textContent = selectedPlant;
+      plantDesc.textContent = plant.description;
+
+      plantTraits.innerHTML = "";
+      plant.traits.forEach(t => {
+        const span = document.createElement("span");
+        span.textContent = t;
+        plantTraits.appendChild(span);
+      });
+
+      growthProgress.style.width = "0%";
+      setTimeout(() => (growthProgress.style.width = "25%"), 500);
+      setTimeout(() => (growthProgress.style.width = "50%"), 1500);
+      setTimeout(() => (growthProgress.style.width = "75%"), 2500);
+      setTimeout(() => (growthProgress.style.width = "100%"), 3500);
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      answers = [];
+      quizCard.classList.remove("hidden");
+      resultCard.classList.add("hidden");
+      loadQuestion();
+    }
+
+    // Initialize first question
+    loadQuestion();
+  </script>
+</body>
+</html>
