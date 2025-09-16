@@ -1,8 +1,8 @@
-# MindCare Mental Health Platform!!
+# Nivana Mental Health Platform!!
 
 ## Overview
 
-MindCare is a comprehensive mental health support platform built with Flask that provides students with AI-powered chat support, standardized mental health assessments, meditation resources, and professional consultation services. The platform serves multiple user types (students, teachers, administrators) and includes features for anonymous venting, progress tracking, and crisis intervention protocols.
+Nivana is a comprehensive mental health support platform built with Flask that provides students with AI-powered chat support, standardized mental health assessments, meditation resources, and professional consultation services. The platform serves multiple user types (students, teachers, administrators) and includes features for anonymous venting, progress tracking, and crisis intervention protocols.
 
 ## User Preferences
 
