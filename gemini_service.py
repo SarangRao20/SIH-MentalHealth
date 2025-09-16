@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 import json
 import os
 import logging
@@ -5,8 +7,10 @@ from google import genai
 from google.genai import types
 
 # Initialize Gemini client with API key from environment
-# GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-client = genai.Client(api_key="AIzaSyBDgEFF_h8nE17JoyN0z7wBxn4x0Nibg2w")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY environment variable not set. Please set it in your environment.")
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Crisis keywords for detection
 CRISIS_KEYWORDS = [
@@ -114,8 +118,8 @@ Respond in JSON format with these fields:
         
         try:
             return json.loads(response.text)
-        except json.JSONDecodeError:
-            # Fallback if JSON parsing fails
+        except json.JSONDecodeError as jde:
+            logging.error(f"JSON decode error in analyze_assessment_results: {jde}\nRaw response: {response.text}")
             return {
                 "interpretation": response.text[:200] + "..." if len(response.text) > 200 else response.text,
                 "recommendations": ["Please consult with a mental health professional for proper evaluation."],
@@ -125,9 +129,9 @@ Respond in JSON format with these fields:
             }
         
     except Exception as e:
-        logging.error(f"Error analyzing assessment: {e}")
+        logging.error(f"Error analyzing assessment: {e}", exc_info=True)
         return {
-            "interpretation": "Unable to analyze results at this time.",
+            "interpretation": f"Unable to analyze results at this time. Error: {e}",
             "recommendations": ["Please consult with a mental health professional for proper evaluation."],
             "coping_strategies": ["Practice deep breathing", "Maintain regular sleep schedule", "Stay connected with friends and family"],
             "professional_help_recommended": True,
@@ -166,7 +170,8 @@ Respond in JSON format:
         
         try:
             return json.loads(response.text)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as jde:
+            logging.error(f"JSON decode error in suggest_assessment: {jde}\nRaw response: {response.text}")
             return {
                 "suggested_assessment": "none",
                 "reason": "Unable to analyze conversation for assessment suggestion.",
@@ -174,9 +179,9 @@ Respond in JSON format:
             }
         
     except Exception as e:
-        logging.error(f"Error suggesting assessment: {e}")
+        logging.error(f"Error suggesting assessment: {e}", exc_info=True)
         return {
             "suggested_assessment": "none",
-            "reason": "Unable to analyze conversation for assessment suggestion.",
+            "reason": f"Unable to analyze conversation for assessment suggestion. Error: {e}",
             "confidence": 0
         }

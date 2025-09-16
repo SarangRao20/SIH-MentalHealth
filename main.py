@@ -1,5 +1,5 @@
 from app import app
-import routes  # noqa: F401
+import routes  
 from routes import send_email
 
 @app.route('/test_email')
