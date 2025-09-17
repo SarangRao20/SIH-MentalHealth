@@ -47,7 +47,29 @@ body{background:var(--bg); color:var(--fg);}
 	--sidebar-border: #e5e7eb;
 }
 
-body { font-family: 'Georgia','Times New Roman',serif; line-height:1.6; color:var(--card-foreground); background:var(--background); min-height:100vh; }
+/* Global Typography */
+body {
+    font-family: 'Inter', 'Nunito', sans-serif;
+    line-height: 1.6;
+    color: var(--card-foreground);
+    background: var(--background);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Nunito', 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+}
+
+p, .card, .btn, .nav-link, .sidebar-menu a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
 
 /* Navbar */
 .navbar { background-color: var(--card); box-shadow:0 2px 5px rgba(0,0,0,0.1); }
