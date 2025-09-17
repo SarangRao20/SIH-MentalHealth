@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ get_locale() }}">
 <head>
-    <!-- <meta char                    <div class="d-flex justify-content-center">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <a href="{{ url_for('set_language', language='en') }}" class="btn btn-outline-secondary {% if session.language == 'en' or not session.language %}active{% endif %}">🇺🇸 {{ _('EN') }}</a>
-                        <a href="{{ url_for('set_language', language='hi') }}" class="btn btn-outline-secondary {% if session.language == 'hi' %}active{% endif %}">🇮🇳 {{ _('हिं') }}</a>
-                    </div>
-                </div>TF-8"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ _('Nivana - Mental Health Support') }}{% endblock %}</title>
 
@@ -28,6 +22,11 @@
         .sidebar.collapsed + .content,
         .content.expanded {
             margin-left: 70px;
+        }
+
+        /* Hide logo + text when collapsed */
+        .sidebar.collapsed .logo-section {
+            display: none !important;
         }
     </style>
 
@@ -183,9 +182,6 @@ initTooltips();
 
         </script>
         
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
